@@ -1,8 +1,9 @@
 import { useStyletron } from "baseui";
-import { Button, SIZE } from "baseui/button";
+import { Button, KIND, SIZE } from "baseui/button";
+import { ChevronLeft } from "baseui/icon";
 import React from "react";
 
-export default function Toolbar({ openSettings }) {
+export default function Toolbar({ openSettings, pull, push, navigateWelcome }) {
   const [, theme] = useStyletron();
 
   return (
@@ -19,10 +20,25 @@ export default function Toolbar({ openSettings }) {
     >
       <div
         style={{
-          ...theme.typography.font550,
+          display: "flex",
+          gap: "10px",
         }}
       >
-        i18n Editor
+        <Button
+          kind={KIND.tertiary}
+          size={SIZE.compact}
+          onClick={navigateWelcome}
+        >
+          <ChevronLeft />
+        </Button>
+
+        <Button kind={KIND.secondary} size={SIZE.compact} onClick={pull}>
+          Pull
+        </Button>
+
+        <Button kind={KIND.secondary} size={SIZE.compact} onClick={push}>
+          Push
+        </Button>
       </div>
 
       <div>

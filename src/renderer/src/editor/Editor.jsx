@@ -3,6 +3,7 @@ import { createNode } from "@/core/tree";
 import Settings from "@/settings/Settings";
 import React, { useMemo, useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   addTranslation,
   clickTranslation,
@@ -30,6 +31,7 @@ function Editor({
   addTranslation,
   renameTranslation,
 }) {
+  const navigate = useNavigate();
   const [isPathModalOpen, setIsPathModalOpen] = useState(false);
   const [newTranslation, setNewTranslation] = useState(null);
   const [isSettingsPageOpen, setIsSettingsPageOpen] = useState(false);
@@ -105,6 +107,14 @@ function Editor({
     setIsSettingsPageOpen(true);
   }
 
+  function pull() {}
+
+  function push() {}
+
+  function navigateWelcome() {
+    navigate("/");
+  }
+
   function saveTranslation(translation) {
     setNewTranslation(null);
     addTranslation(translation);
@@ -133,7 +143,12 @@ function Editor({
           overflow: "hidden",
         }}
       >
-        <Toolbar openSettings={openSettings} />
+        <Toolbar
+          openSettings={openSettings}
+          pull={pull}
+          push={push}
+          navigateWelcome={navigateWelcome}
+        />
         <div
           style={{
             height: "100%",

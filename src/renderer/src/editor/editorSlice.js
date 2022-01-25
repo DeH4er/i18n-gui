@@ -26,7 +26,7 @@ import { store } from "../samples/electron-store";
 export const loadRecentProjects = createAsyncThunk(
   "editor/loadRecentProjects",
   async () => {
-    return await store.get("recent-projects");
+    return (await store.get("recent-projects")) ?? {};
   }
 );
 

@@ -42,7 +42,11 @@ export default function Toolbar({ openSettings, pull, push, navigateWelcome }) {
       </div>
 
       <div>
-        <Button size={SIZE.compact} onClick={openSettings}>
+        <Button
+          kind={KIND.secondary}
+          size={SIZE.compact}
+          onClick={openSettings}
+        >
           Settings
         </Button>
       </div>

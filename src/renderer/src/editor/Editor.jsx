@@ -168,7 +168,6 @@ function Editor({
       <section
         style={{
           boxSizing: "border-box",
-          padding: "20px",
           overflow: "auto",
           height: "100%",
           width: "100%",

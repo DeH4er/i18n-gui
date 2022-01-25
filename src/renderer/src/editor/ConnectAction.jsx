@@ -1,8 +1,9 @@
-import { Button, KIND } from "baseui/button";
+import Action from "../components/Action";
 
 export default function ConnectToggle({
   connectedLanguages,
   setConnectedLanguages,
+  onClick,
 }) {
   const connectAllMode = isConnectAllMode();
 
@@ -20,11 +21,13 @@ export default function ConnectToggle({
         {}
       )
     );
+    onClick();
   }
 
   return (
-    <Button onClick={toggle} kind={KIND.secondary}>
-      {connectAllMode ? "Connect all" : "Disconnect all"}
-    </Button>
+    <Action
+      onClick={toggle}
+      label={connectAllMode ? "Connect all" : "Disconnect all"}
+    />
   );
 }

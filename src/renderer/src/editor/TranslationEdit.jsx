@@ -1,10 +1,8 @@
-import { Button, KIND } from "baseui/button";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import ConnectToggle from "./ConnectToggle";
 import { selectGenerationRules, selectLanguages } from "./editorSlice";
 import TranslationControl from "./TranslationControl";
-import TranslationPath from "./TranslationPath";
+import TranslationEditHeader from "./TranslationEditHeader";
 import TranslationRemoveModal from "./TranslationRemoveModal";
 
 function useEdited(translation) {
@@ -56,59 +54,33 @@ function TranslationEdit({
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "20px",
+        height: "100%",
+        overflow: "hidden",
       }}
     >
+      <TranslationEditHeader
+        translation={translation}
+        select={select}
+        connectedLanguages={connectedLanguages}
+        setConnectedLanguages={setConnectedLanguages}
+        setRemoveModalOpen={setRemoveModalOpen}
+        rename={rename}
+        isUpdating={isUpdating}
+        edited={edited}
+        save={save}
+      />
       <section
         style={{
+          height: "100%",
+          overflow: "auto",
+          padding: "20px",
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
+          flexDirection: "column",
+          gap: "40px",
         }}
       >
-        <TranslationPath translation={translation} select={select} />
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-          }}
-        >
-          {isUpdating && (
-            <>
-              <Button
-                onClick={() => setRemoveModalOpen(true)}
-                kind={KIND.secondary}
-              >
-                Delete
-              </Button>
-              <Button onClick={rename} kind={KIND.secondary}>
-                Rename
-              </Button>
-            </>
-          )}
-          {Object.keys(connectedLanguages).length > 0 && (
-            <ConnectToggle
-              connectedLanguages={connectedLanguages}
-              setConnectedLanguages={setConnectedLanguages}
-            />
-          )}
-          <Button
-            onClick={() => {
-              save(edited);
-            }}
-          >
-            Save
-          </Button>
-        </div>
-      </section>
-      <section>
         {languages.map((language) => (
-          <div
-            key={language}
-            style={{
-              marginBottom: "40px",
-            }}
-          >
+          <div key={language} style={{}}>
             <TranslationControl
               language={language}
               translation={edited.translations[language]}

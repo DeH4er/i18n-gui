@@ -29,7 +29,7 @@ export function useLoading() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #282c34;
+  background: #141414;
   z-index: 9;
 }
     `;

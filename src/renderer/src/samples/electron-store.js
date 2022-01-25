@@ -1,5 +1,5 @@
 // Use 'electron-store'
-const store = {
+export const store = {
   async get(key) {
     const { invoke } = window.ipcRenderer
     let value = await invoke('electron-store', 'get', key)

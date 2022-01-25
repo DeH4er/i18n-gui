@@ -1,3 +1,4 @@
+import { readTranslationFile, writeJson } from "@/core/file";
 import {
   createNestedPath,
   expandPath,
@@ -13,7 +14,130 @@ import {
   replaceNodeOrPush,
   sortTreeArray
 } from "@/core/tree";
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice
+} from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
+import { treeToJsons } from "../core/tree";
+import { store } from "../samples/electron-store";
+
+export const loadRecentProjects = createAsyncThunk(
+  "editor/loadRecentProjects",
+  async () => {
+    return await store.get("recent-projects");
+  }
+);
+
+export const changeProject = createAsyncThunk(
+  "editor/changeProject",
+  async (projectChanges, thunk) => {
+    const state = thunk.getState();
+    const recentProjects = selectRecentProjects(state);
+    const projectId = selectProjectId(state);
+    const newProject = { ...recentProjects[projectId], ...projectChanges };
+    const newRecentProjects = { ...recentProjects, [projectId]: newProject };
+    await store.set("recent-projects", newRecentProjects);
+    return newRecentProjects;
+  }
+);
+
+export const createProject = createAsyncThunk(
+  "editor/createProject",
+  async ({ paths, projectName }, thunk) => {
+    const state = thunk.getState();
+    const files = await Promise.all(paths.map(readTranslationFile));
+    const languages = files.map((f) => f.name);
+    const generationRules = languages.reduce(
+      (acc, language) => ({
+        ...acc,
+        [language]: "",
+      }),
+      {}
+    );
+
+    const project = {
+      id: uuidv4(),
+      timestamp: Date.now(),
+      name: projectName,
+      paths: files.map((f) => ({ path: f.path, language: f.name })),
+      languages,
+      generationRules,
+    };
+
+    const recentProjects = selectRecentProjects(state);
+    const newRecentProjects = { ...recentProjects, [project.id]: project };
+    const translations = jsonsToTree(
+      files.map((f) => f.content),
+      files.map((f) => f.name)
+    );
+
+    await store.set("recent-projects", newRecentProjects);
+    return { id: project.id, recentProjects: newRecentProjects, translations };
+  }
+);
+
+export const openRecentProject = createAsyncThunk(
+  "editor/openRecentProject",
+  async (id, thunk) => {
+    const state = thunk.getState();
+    const recentProjects = selectRecentProjects(state);
+    const project = recentProjects[id];
+    const files = await Promise.all(
+      project.paths.map((p) => readTranslationFile(p.path))
+    );
+    const newRecentProjects = {
+      ...recentProjects,
+      [id]: { ...project, timestamp: Date.now() },
+    };
+
+    const translations = jsonsToTree(
+      files.map((f) => f.content),
+      files.map((f) => f.name)
+    );
+
+    await store.set("recent-project", newRecentProjects);
+    return { id, recentProjects: newRecentProjects, translations };
+  }
+);
+
+export const removeProject = createAsyncThunk(
+  "editor/removeProject",
+  async (id, thunk) => {
+    const state = thunk.getState();
+    const recentProjects = selectRecentProjects(state);
+    const { [id]: removedProject, ...newRecentProjects } = recentProjects;
+    await store.set("recent-project", newRecentProjects);
+    return newRecentProjects;
+  }
+);
+
+export const pull = createAsyncThunk("editor/pull", async (_, thunk) => {
+  const state = thunk.getState();
+  const project = selectProject(state);
+  const files = await Promise.all(
+    project.paths.map((p) => readTranslationFile(p.path))
+  );
+  const translations = jsonsToTree(
+    files.map((f) => f.content),
+    files.map((f) => f.name)
+  );
+  return translations;
+});
+
+export const push = createAsyncThunk("editor/push", async (_, thunk) => {
+  const state = thunk.getState();
+  const translations = selectTranslations(state);
+  const project = selectProject(state);
+  const languages = selectLanguages(state);
+  const jsons = treeToJsons(translations, languages);
+  await Promise.all(
+    project.paths.map((p) =>
+      writeJson(jsons[p.language], p.path, { tabSize: 2 })
+    )
+  );
+});
 
 function unselectTranslation(state) {
   if (state.selectedTranslation) {
@@ -43,35 +167,12 @@ function selectTranslationByPath(state, path) {
 export const editorSlice = createSlice({
   name: "editor",
   initialState: {
-    files: [],
+    projectId: null,
+    recentProjects: {},
     translations: [],
     selectedTranslation: null,
-    settings: {
-      languages: [],
-      generationRules: [],
-    },
   },
   reducers: {
-    loadTranslations: (state, action) => {
-      const files = action.payload;
-      const languages = files.map((f) => f.name);
-      state.files = files;
-      state.translations = jsonsToTree(
-        files.map((f) => f.content),
-        languages
-      );
-
-      state.settings.languages = languages;
-      state.settings.generationRules = languages.reduce((acc, language) => ({
-        ...acc,
-        [language]: "",
-      }), {});
-    },
-    changeSettings: (state, action) => {
-      Object.keys(action.payload).forEach((key) => {
-        state.settings[key] = action.payload[key];
-      });
-    },
     clickTranslation: (state, action) => {
       const node = action.payload;
 
@@ -146,31 +247,76 @@ export const editorSlice = createSlice({
       expandPath(state.translations, node.path);
     },
   },
+  extraReducers: {
+    [changeProject.fulfilled]: (state, action) => {
+      state.recentProjects = action.payload;
+    },
+    [createProject.fulfilled]: (state, action) => {
+      const { id, recentProjects, translations } = action.payload;
+      state.projectId = id;
+      state.recentProjects = recentProjects;
+      state.translations = translations;
+      state.selectedTranslation = null;
+    },
+    [openRecentProject.fulfilled]: (state, action) => {
+      const { id, recentProjects, translations } = action.payload;
+      state.projectId = id;
+      state.recentProjects = recentProjects;
+      state.translations = translations;
+      state.selectedTranslation = null;
+    },
+    [removeProject.fulfilled]: (state, action) => {
+      state.recentProjects = action.payload;
+    },
+    [loadRecentProjects.fulfilled]: (state, action) => {
+      state.recentProjects = action.payload;
+    },
+    [pull.fulfilled]: (state, action) => {
+      state.translations = action.payload;
+
+      if (state.selectedTranslation) {
+        const node = getNode(
+          state.translations,
+          state.selectedTranslation.path
+        );
+
+        state.selectedTranslation = node;
+
+        if (node) {
+          expandPath(state.translations, node.path);
+          node.isSelected = true;
+        }
+      }
+    },
+  },
 });
 
-export const selectFiles = (state) => state.editor.files;
 export const selectTranslations = (state) => state.editor.translations;
-export const selectSettings = (state) => state.editor.settings;
+export const selectRecentProjects = (state) => state.editor.recentProjects;
+export const selectProjectId = (state) => state.editor.projectId;
+export const selectProject = createSelector(
+  selectRecentProjects,
+  selectProjectId,
+  (recentProjects, projectId) => recentProjects[projectId]
+);
 export const selectSelectedTranslation = (state) =>
   state.editor.selectedTranslation;
 export const selectLanguages = createSelector(
-  selectSettings,
-  (settings) => settings.languages
+  selectProject,
+  (project) => project.languages
 );
 export const selectGenerationRules = createSelector(
-  selectSettings,
-  (settings) => settings.generationRules
+  selectProject,
+  (project) => project.generationRules
 );
 
 export const {
   clickTranslation,
-  loadTranslations,
   updateTranslation,
   removeTranslation,
   selectTranslation,
   addTranslation,
   renameTranslation,
-  changeSettings,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;

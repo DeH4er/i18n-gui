@@ -1,6 +1,6 @@
 import LanguageLabel from "@/components/LanguageLabel";
 import {
-  changeSettings,
+  changeProject,
   selectGenerationRules,
   selectLanguages
 } from "@/editor/editorSlice";
@@ -28,7 +28,7 @@ function Settings({
   onClose,
   languages,
   generationRules,
-  changeSettings,
+  changeProject,
 }) {
   const [newLanguages, setNewLanguages] = useState([]);
   const [newGenerationRules, setNewGenerationRules] = useState({});
@@ -53,8 +53,8 @@ function Settings({
     setNewGenerationRules({ ...newGenerationRules, [language]: rule });
   }
 
-  function onConfirm() {
-    changeSettings({
+  async function onConfirm() {
+    await changeProject({
       languages: newLanguages,
       generationRules: newGenerationRules,
     });
@@ -179,5 +179,5 @@ export default connect(
     generationRules: selectGenerationRules(state),
     ...componentProps,
   }),
-  { changeSettings }
+  { changeProject }
 )(Settings);

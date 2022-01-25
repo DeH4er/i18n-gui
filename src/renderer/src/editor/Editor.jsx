@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import {
   addTranslation,
   clickTranslation,
+  pull,
+  push,
   removeTranslation,
   renameTranslation,
   selectLanguages,
@@ -30,6 +32,8 @@ function Editor({
   selectTranslation,
   addTranslation,
   renameTranslation,
+  pull,
+  push
 }) {
   const navigate = useNavigate();
   const [isPathModalOpen, setIsPathModalOpen] = useState(false);
@@ -107,9 +111,13 @@ function Editor({
     setIsSettingsPageOpen(true);
   }
 
-  function pull() {}
+  function onPull() {
+    pull();
+  }
 
-  function push() {}
+  function onPush() {
+    push();
+  }
 
   function navigateWelcome() {
     navigate("/");
@@ -145,8 +153,8 @@ function Editor({
       >
         <Toolbar
           openSettings={openSettings}
-          pull={pull}
-          push={push}
+          pull={onPull}
+          push={onPush}
           navigateWelcome={navigateWelcome}
         />
         <div
@@ -234,5 +242,7 @@ export default connect(
     selectTranslation,
     addTranslation,
     renameTranslation,
+    pull,
+    push,
   }
 )(Editor);

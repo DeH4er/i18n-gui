@@ -1,5 +1,29 @@
 import { v4 as uuidv4 } from "uuid";
 
+function nodeToJson(node, language, json = {}) {
+  if (!node.children) {
+    const translation = node.translations[language];
+    json[node.label] = translation;
+    return json;
+  }
+
+  json[node.label] = {};
+  node.children.forEach((child) => {
+    nodeToJson(child, language, json[node.label]);
+  });
+}
+
+export function treeToJsons(tree, languages) {
+  const jsons = languages.reduce((acc, language) => {
+    const rootNode = {};
+    tree.forEach((node) => {
+      nodeToJson(node, language, rootNode);
+    });
+    return { ...acc, [language]: rootNode };
+  }, {});
+  return jsons;
+}
+
 export function jsonsToTree(jsons, languages, path = []) {
   const firstJson = jsons[0];
   const keys = Object.keys(firstJson);

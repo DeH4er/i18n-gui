@@ -1,26 +1,13 @@
-import { useStyletron } from "baseui";
-import { H4 } from "baseui/typography";
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { loadRecentProjects } from "../editor/editorSlice";
 import CreateProject from "./CreateProject";
+import RecentProjects from "./RecentProjects";
 
-function RecentProjects() {
-  const [, theme] = useStyletron();
-  return (
-    <div
-      style={{
-        maxWidth: "350px",
-        width: "100%",
-        background: theme.colors.backgroundSecondary,
-        padding: "20px",
-        boxSizing: "border-box",
-      }}
-    >
-      <H4>Recent projects</H4>
-    </div>
-  );
-}
-
-export default function Welcome() {
+function Welcome({ loadRecentProjects }) {
+  useEffect(() => {
+    loadRecentProjects();
+  }, []);
   return (
     <div
       style={{
@@ -34,3 +21,4 @@ export default function Welcome() {
     </div>
   );
 }
+export default connect(null, { loadRecentProjects })(Welcome);

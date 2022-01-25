@@ -1,4 +1,8 @@
 import { app, BrowserWindow } from "electron";
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} from "electron-devtools-installer";
 import os from "os";
 import { join } from "path";
 import "./samples/electron-store";
@@ -40,7 +44,16 @@ async function createWindow() {
   });
 }
 
-app.whenReady().then(createWindow);
+app
+  .whenReady()
+  .then(createWindow)
+  .then(() => {
+    if (!app.isPackaged) {
+      installExtension([REDUX_DEVTOOLS.id, REACT_DEVELOPER_TOOLS.id])
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log("An error occurred: ", err));
+    }
+  });
 
 app.on("window-all-closed", () => {
   win = null;

@@ -3,11 +3,11 @@ import { ChevronDown, ChevronRight } from "baseui/icon";
 import React from "react";
 
 export default function TreeViewLabel({ node, onClick }) {
-  const [, theme] = useStyletron();
+  const [css, theme] = useStyletron();
 
   return (
     <div
-      style={{
+      className={css({
         ...theme.typography.font300,
         color: theme.colors.primary,
         userSelect: "none",
@@ -17,7 +17,7 @@ export default function TreeViewLabel({ node, onClick }) {
         ":hover": {
           background: theme.colors.mono300,
         },
-      }}
+      })}
       onClick={() => onClick(node)}
     >
       <div

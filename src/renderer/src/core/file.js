@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 const fs = window.fs;
+const path = window.path;
 
-export function readJson(path) {
+export function readJson(filepath) {
   return new Promise((res, rej) => {
-    fs.readFile(path, "UTF-8", (err, f) => {
+    fs.readFile(filepath, "UTF-8", (err, f) => {
       if (!err) {
         try {
           const parsed = JSON.parse(f);
@@ -18,15 +19,31 @@ export function readJson(path) {
   });
 }
 
-export async function readParseJson(file) {
-  const f = await readJson(file.path);
-  const parts = file.name.split(".");
+export function writeJson(json, filepath, options) {
+  return new Promise((res, rej) => {
+    try {
+      const str = JSON.stringify(json, undefined, options.tabSize);
+      fs.writeFile(filepath, str, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res();
+        }
+      });
+    } catch (e) {
+      rej(e);
+    }
+  });
+}
+
+export async function readTranslationFile(filepath) {
+  const f = await readJson(filepath);
+  const ext = path.extname(filepath);
   return {
     content: f,
-    name: parts.slice(0, -1).join("."),
-    fullname: file.name,
-    path: file.path,
-    extension: parts[parts.length - 1],
+    name: path.basename(filepath, ext),
+    path: filepath,
+    extension: ext,
     id: uuidv4(),
   };
 }

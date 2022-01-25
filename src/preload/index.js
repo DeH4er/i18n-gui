@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import fs from "fs";
+import path from "path";
 import { useLoading } from "./loading";
 import { domReady } from "./utils";
 
@@ -14,6 +15,7 @@ const { appendLoading, removeLoading } = useLoading();
 
 // --------- Expose some API to Renderer process. ---------
 contextBridge.exposeInMainWorld("fs", fs);
+contextBridge.exposeInMainWorld("path", path);
 contextBridge.exposeInMainWorld("removeLoading", removeLoading);
 contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(ipcRenderer));
 

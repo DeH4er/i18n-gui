@@ -1,6 +1,5 @@
 import { useStyletron } from "baseui";
 import { Button, KIND, SIZE } from "baseui/button";
-import { StatefulPopover, TRIGGER_TYPE } from "baseui/popover";
 import React from "react";
 import {
   FiBox,
@@ -8,27 +7,12 @@ import {
   FiDownload,
   FiKey,
   FiSettings,
-  FiUpload,
+  FiUpload
 } from "react-icons/fi";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Tooltip from "src/components/Tooltip";
 import { pull, push } from "./editorSlice";
-
-function ToolbarTooltip({ tooltip, children }) {
-  const [, theme] = useStyletron();
-  return (
-    <StatefulPopover
-      content={() => (
-        <div style={{ ...theme.typography.font200, padding: "10px 20px" }}>
-          {tooltip}
-        </div>
-      )}
-      triggerType={TRIGGER_TYPE.hover}
-    >
-      {children}
-    </StatefulPopover>
-  );
-}
 
 function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
   const [, theme] = useStyletron();
@@ -51,7 +35,7 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
         flexWrap: "wrap",
       }}
     >
-      <ToolbarTooltip tooltip="Go to projects">
+      <Tooltip tooltip="Go to projects">
         <Button
           kind={KIND.secondary}
           size={SIZE.compact}
@@ -59,21 +43,21 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
         >
           <FiChevronLeft />
         </Button>
-      </ToolbarTooltip>
+      </Tooltip>
 
-      <ToolbarTooltip tooltip="Reload files">
+      <Tooltip tooltip="Reload files">
         <Button kind={KIND.secondary} size={SIZE.compact} onClick={pull}>
           <FiDownload />
         </Button>
-      </ToolbarTooltip>
+      </Tooltip>
 
-      <ToolbarTooltip tooltip="Save to files">
+      <Tooltip tooltip="Save to files">
         <Button kind={KIND.secondary} size={SIZE.compact} onClick={push}>
           <FiUpload />
         </Button>
-      </ToolbarTooltip>
+      </Tooltip>
 
-      <ToolbarTooltip tooltip="Settings">
+      <Tooltip tooltip="Settings">
         <Button
           kind={KIND.secondary}
           size={SIZE.compact}
@@ -81,19 +65,19 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
         >
           <FiSettings />
         </Button>
-      </ToolbarTooltip>
+      </Tooltip>
 
-      <ToolbarTooltip tooltip="Add group">
+      <Tooltip tooltip="Add group">
         <Button size={SIZE.compact} onClick={addGroup}>
           <FiBox />
         </Button>
-      </ToolbarTooltip>
+      </Tooltip>
 
-      <ToolbarTooltip tooltip="Add key">
+      <Tooltip tooltip="Add key">
         <Button size={SIZE.compact} onClick={addKey}>
           <FiKey />
         </Button>
-      </ToolbarTooltip>
+      </Tooltip>
     </div>
   );
 }

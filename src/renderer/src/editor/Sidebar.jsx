@@ -1,9 +1,14 @@
 import { useStyletron } from "baseui";
-import { Input, SIZE } from "baseui/input";
+import { Button, KIND, SIZE } from "baseui/button";
+import { Input, SIZE as INPUT_SIZE } from "baseui/input";
 import React, { useCallback, useEffect, useState } from "react";
+import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
 import { connect } from "react-redux";
+import Tooltip from "src/components/Tooltip";
 import TreeView from "src/components/TreeView";
 import {
+  collapseAll,
+  expandAll,
   pull,
   push,
   selectFilteredTranslations,
@@ -17,6 +22,8 @@ function Sidebar({
   search,
   onTranslationClick,
   translations,
+  expandAll,
+  collapseAll,
   ...toolbarProps
 }) {
   const minWidth = 300;
@@ -64,14 +71,35 @@ function Sidebar({
         <div
           style={{
             margin: "10px 0",
+            display: "flex",
           }}
         >
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            size={SIZE.compact}
+            size={INPUT_SIZE.compact}
             placeholder="Search..."
           />
+
+          <Tooltip tooltip="Expand all">
+            <Button
+              size={SIZE.compact}
+              kind={KIND.secondary}
+              onClick={expandAll}
+            >
+              <VscExpandAll />
+            </Button>
+          </Tooltip>
+
+          <Tooltip tooltip="Collapse all">
+            <Button
+              size={SIZE.compact}
+              kind={KIND.secondary}
+              onClick={collapseAll}
+            >
+              <VscCollapseAll />
+            </Button>
+          </Tooltip>
         </div>
         <div
           style={{
@@ -108,5 +136,7 @@ export default connect(
     push,
     pull,
     setSearch,
+    expandAll,
+    collapseAll,
   }
 )(Sidebar);

@@ -14,6 +14,7 @@ import {
   isPathExist,
   isRootNode,
   jsonsToTree,
+  modifyEveryChildNode,
   modifyNode,
   rebuildChildrenPath,
   removeNode,
@@ -251,6 +252,20 @@ export const editorSlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+    expandAll: (state) => {
+      state.translations.forEach((node) =>
+        modifyEveryChildNode(node, (node) => {
+          node.isExpanded = true;
+        })
+      );
+    },
+    collapseAll: (state) => {
+      state.translations.forEach((node) =>
+        modifyEveryChildNode(node, (node) => {
+          node.isExpanded = false;
+        })
+      );
+    },
   },
   extraReducers: {
     [changeProject.fulfilled]: (state, action) => {
@@ -360,6 +375,8 @@ export const {
   renameTranslation,
   setSearch,
   setSearchType,
+  expandAll,
+  collapseAll,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;

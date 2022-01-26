@@ -1,8 +1,8 @@
-import LanguageLabel from "@/components/LanguageLabel";
-import { replaceTags } from "@/core/generation";
 import { FormControl } from "baseui/form-control";
 import { Textarea } from "baseui/textarea";
 import { useEffect } from "react";
+import LanguageLabel from "src/components/LanguageLabel";
+import { replaceTags } from "src/core/generation";
 import ConnectButton from "./ConnectButton";
 
 export default function TranslationControl({

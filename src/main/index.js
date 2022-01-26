@@ -1,11 +1,7 @@
 import { app, BrowserWindow } from "electron";
-import installExtension, {
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS
-} from "electron-devtools-installer";
 import os from "os";
 import { join } from "path";
-import "./samples/electron-store";
+import "./offline-storage/offline-storage";
 
 const isWin7 = os.release().startsWith("6.1");
 if (isWin7) app.disableHardwareAcceleration();
@@ -49,6 +45,11 @@ app
   .then(createWindow)
   .then(() => {
     if (!app.isPackaged) {
+      const {
+        default: installExtension,
+        REACT_DEVELOPER_TOOLS,
+        REDUX_DEVTOOLS,
+      } = await import("electron-devtools-installer");
       installExtension([REDUX_DEVTOOLS.id, REACT_DEVELOPER_TOOLS.id])
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log("An error occurred: ", err));

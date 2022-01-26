@@ -1,32 +1,32 @@
-import { readTranslationFile, writeJson } from "@/core/file";
 import {
-  createNestedPath,
-  expandPath,
-  getNode,
-  getParentNode,
-  isParentOrSamePath,
-  isPathExist,
-  isRootNode,
-  jsonsToTree,
-  modifyNode,
-  rebuildChildrenPath,
-  removeNode,
-  replaceNodeOrPush,
-  sortTreeArray
-} from "@/core/tree";
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice
+    createAsyncThunk,
+    createSelector,
+    createSlice
 } from "@reduxjs/toolkit";
+import { readTranslationFile, writeJson } from "src/core/file";
+import {
+    createNestedPath,
+    expandPath,
+    getNode,
+    getParentNode,
+    isParentOrSamePath,
+    isPathExist,
+    isRootNode,
+    jsonsToTree,
+    modifyNode,
+    rebuildChildrenPath,
+    removeNode,
+    replaceNodeOrPush,
+    sortTreeArray
+} from "src/core/tree";
 import { v4 as uuidv4 } from "uuid";
 import { treeToJsons } from "../core/tree";
-import { store } from "../samples/electron-store";
+import { offlineStorage } from "../offline-storage/offline-storage";
 
 export const loadRecentProjects = createAsyncThunk(
   "editor/loadRecentProjects",
   async () => {
-    return (await store.get("recent-projects")) ?? {};
+    return await offlineStorage.get("recent-projects");
   }
 );
 
@@ -38,7 +38,7 @@ export const changeProject = createAsyncThunk(
     const projectId = selectProjectId(state);
     const newProject = { ...recentProjects[projectId], ...projectChanges };
     const newRecentProjects = { ...recentProjects, [projectId]: newProject };
-    await store.set("recent-projects", newRecentProjects);
+    await offlineStorage.set("recent-projects", newRecentProjects);
     return newRecentProjects;
   }
 );
@@ -73,7 +73,7 @@ export const createProject = createAsyncThunk(
       files.map((f) => f.name)
     );
 
-    await store.set("recent-projects", newRecentProjects);
+    await offlineStorage.set("recent-projects", newRecentProjects);
     return { id: project.id, recentProjects: newRecentProjects, translations };
   }
 );
@@ -97,7 +97,7 @@ export const openRecentProject = createAsyncThunk(
       files.map((f) => f.name)
     );
 
-    await store.set("recent-project", newRecentProjects);
+    await offlineStorage.set("recent-project", newRecentProjects);
     return { id, recentProjects: newRecentProjects, translations };
   }
 );
@@ -108,7 +108,7 @@ export const removeProject = createAsyncThunk(
     const state = thunk.getState();
     const recentProjects = selectRecentProjects(state);
     const { [id]: removedProject, ...newRecentProjects } = recentProjects;
-    await store.set("recent-project", newRecentProjects);
+    await offlineStorage.set("recent-project", newRecentProjects);
     return newRecentProjects;
   }
 );

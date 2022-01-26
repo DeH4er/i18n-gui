@@ -1,4 +1,3 @@
-import { translateLanguage } from "@/core/utils";
 import { useStyletron } from "baseui";
 import { Button, SHAPE } from "baseui/button";
 import { Input } from "baseui/input";
@@ -7,6 +6,7 @@ import { H1 } from "baseui/typography";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { translateLanguage } from "src/core/utils";
 import { v4 as uuidv4 } from "uuid";
 import FileUploader from "../components/FileUploader";
 import { createProject } from "../editor/editorSlice";

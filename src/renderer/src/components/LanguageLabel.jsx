@@ -1,5 +1,5 @@
-import { translateLanguage } from "@/core/utils";
 import { useStyletron } from "baseui";
+import { translateLanguage } from "src/core/utils";
 
 export default function LanguageLabel({ language }) {
   const translated = translateLanguage(language);

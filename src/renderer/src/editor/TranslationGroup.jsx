@@ -1,7 +1,7 @@
-import { countLeafs } from "@/core/tree";
 import { Button } from "baseui/button";
 import { Paragraph1 } from "baseui/typography";
 import React, { useMemo, useState } from "react";
+import { countLeafs } from "src/core/tree";
 import Action from "../components/Action";
 import Actions from "../components/Actions";
 import TranslationPath from "./TranslationPath";

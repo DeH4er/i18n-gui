@@ -1,21 +1,21 @@
-import TreeView from "@/components/TreeView";
-import { createNode } from "@/core/tree";
-import Settings from "@/settings/Settings";
 import React, { useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import TreeView from "src/components/TreeView";
+import { createNode } from "src/core/tree";
+import Settings from "src/settings/Settings";
 import {
-  addTranslation,
-  clickTranslation,
-  pull,
-  push,
-  removeTranslation,
-  renameTranslation,
-  selectLanguages,
-  selectSelectedTranslation,
-  selectTranslation,
-  selectTranslations,
-  updateTranslation
+    addTranslation,
+    clickTranslation,
+    pull,
+    push,
+    removeTranslation,
+    renameTranslation,
+    selectLanguages,
+    selectSelectedTranslation,
+    selectTranslation,
+    selectTranslations,
+    updateTranslation
 } from "./editorSlice";
 import Toolbar from "./Toolbar";
 import TranslationEdit from "./TranslationEdit";

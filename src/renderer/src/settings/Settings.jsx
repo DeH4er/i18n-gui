@@ -1,24 +1,24 @@
-import LanguageLabel from "@/components/LanguageLabel";
-import {
-  changeProject,
-  selectGenerationRules,
-  selectLanguages
-} from "@/editor/editorSlice";
 import { KIND } from "baseui/button";
 import { arrayMove, List } from "baseui/dnd-list";
 import { FormControl } from "baseui/form-control";
 import {
-  Modal,
-  ModalBody,
-  ModalButton,
-  ModalFooter,
-  ModalHeader,
-  ROLE,
-  SIZE as ModalSize
+    Modal,
+    ModalBody,
+    ModalButton,
+    ModalFooter,
+    ModalHeader,
+    ROLE,
+    SIZE as ModalSize
 } from "baseui/modal";
 import { Textarea } from "baseui/textarea";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import LanguageLabel from "src/components/LanguageLabel";
+import {
+    changeProject,
+    selectGenerationRules,
+    selectLanguages
+} from "src/editor/editorSlice";
 import SettingsHeader from "./SettingsHeader";
 import SettingsSection from "./SettingsSection";
 import SettingsTip from "./SettingsTip";

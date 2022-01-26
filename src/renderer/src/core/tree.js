@@ -1,5 +1,30 @@
 import { v4 as uuidv4 } from "uuid";
 
+export function filterChildrenTree(node, fn, searchType) {
+  if (node.children) {
+    const newChildren = node.children
+      .map((child) => {
+        return filterChildrenTree(child, fn, searchType);
+      })
+      .filter(Boolean);
+
+    if (newChildren.length === 0) {
+      return null;
+    }
+
+    return {
+      ...node,
+      children: newChildren,
+    };
+  }
+
+  if (!fn(node)) {
+    return null;
+  }
+
+  return node;
+}
+
 function nodeToJson(node, language, json = {}) {
   if (!node.children) {
     const translation = node.translations[language];

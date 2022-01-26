@@ -1,11 +1,24 @@
 import { useStyletron } from "baseui";
+import { Input, SIZE } from "baseui/input";
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import TreeView from "src/components/TreeView";
-import { pull, push, selectTranslations } from "./editorSlice";
+import {
+  pull,
+  push,
+  selectFilteredTranslations,
+  selectSearch,
+  setSearch
+} from "./editorSlice";
 import Toolbar from "./Toolbar";
 
-function Sidebar({ onTranslationClick, translations, ...toolbarProps }) {
+function Sidebar({
+  setSearch,
+  search,
+  onTranslationClick,
+  translations,
+  ...toolbarProps
+}) {
   const minWidth = 300;
   const [barWidth, setBarWidth] = useState(minWidth);
   const [css, theme] = useStyletron();
@@ -50,6 +63,18 @@ function Sidebar({ onTranslationClick, translations, ...toolbarProps }) {
         <Toolbar {...toolbarProps} />
         <div
           style={{
+            margin: "10px 0",
+          }}
+        >
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            size={SIZE.compact}
+            placeholder="Search..."
+          />
+        </div>
+        <div
+          style={{
             height: "100%",
             overflow: "auto",
           }}
@@ -75,11 +100,13 @@ function Sidebar({ onTranslationClick, translations, ...toolbarProps }) {
 
 export default connect(
   (state, props) => ({
-    translations: selectTranslations(state),
+    translations: selectFilteredTranslations(state),
+    search: selectSearch(state),
     ...props,
   }),
   {
     push,
     pull,
+    setSearch,
   }
 )(Sidebar);

@@ -1,12 +1,13 @@
 import {
   createAsyncThunk,
   createSelector,
-  createSlice,
+  createSlice
 } from "@reduxjs/toolkit";
 import { readTranslationFile, writeJson } from "src/core/file";
 import {
   createNestedPath,
   expandPath,
+  filterChildrenTree,
   getNode,
   getParentNode,
   isParentOrSamePath,
@@ -17,7 +18,7 @@ import {
   rebuildChildrenPath,
   removeNode,
   replaceNodeOrPush,
-  sortTreeArray,
+  sortTreeArray
 } from "src/core/tree";
 import { v4 as uuidv4 } from "uuid";
 import { treeToJsons } from "../core/tree";
@@ -171,6 +172,7 @@ export const editorSlice = createSlice({
     recentProjects: {},
     translations: null,
     selectedTranslation: null,
+    search: "",
   },
   reducers: {
     clickTranslation: (state, action) => {
@@ -246,6 +248,9 @@ export const editorSlice = createSlice({
       selectTranslationByPath(state, node.path);
       expandPath(state.translations, node.path);
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    },
   },
   extraReducers: {
     [changeProject.fulfilled]: (state, action) => {
@@ -292,7 +297,9 @@ export const editorSlice = createSlice({
 });
 
 export const selectTranslations = (state) => state.editor.translations;
+
 export const selectRecentProjects = (state) => state.editor.recentProjects;
+
 export const selectOrderedRecentProjects = createSelector(
   selectRecentProjects,
   (recentProjects) => {
@@ -302,21 +309,46 @@ export const selectOrderedRecentProjects = createSelector(
     return res;
   }
 );
+
 export const selectProjectId = (state) => state.editor.projectId;
+
 export const selectProject = createSelector(
   selectRecentProjects,
   selectProjectId,
   (recentProjects, projectId) => recentProjects[projectId]
 );
+
 export const selectSelectedTranslation = (state) =>
   state.editor.selectedTranslation;
+
 export const selectLanguages = createSelector(
   selectProject,
   (project) => project.languages
 );
+
 export const selectGenerationRules = createSelector(
   selectProject,
   (project) => project.generationRules
+);
+
+export const selectSearch = (state) => state.editor.search;
+
+export const selectFilteredTranslations = createSelector(
+  selectSearch,
+  selectTranslations,
+  (search, translations) => {
+    if (!search) {
+      return translations;
+    }
+
+    return translations
+      .map((node) => {
+        return filterChildrenTree(node, (node) =>
+          node.label.toLowerCase().includes(search.toLowerCase())
+        );
+      })
+      .filter(Boolean);
+  }
 );
 
 export const {
@@ -326,6 +358,8 @@ export const {
   selectTranslation,
   addTranslation,
   renameTranslation,
+  setSearch,
+  setSearchType,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;

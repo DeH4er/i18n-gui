@@ -13,6 +13,6 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #333;    /* color of the scroll thumb */
-  border: 3px solid transparent;  /* creates padding around scroll thumb */
+  background-color: #333; /* color of the scroll thumb */
+  border: 3px solid transparent; /* creates padding around scroll thumb */
 }

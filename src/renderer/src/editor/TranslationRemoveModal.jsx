@@ -6,7 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
   ROLE,
-  SIZE as ModalSize
+  SIZE as ModalSize,
 } from "baseui/modal";
 import React from "react";
 

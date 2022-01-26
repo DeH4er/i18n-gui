@@ -1,4 +1,3 @@
-
 export function translateLanguage(language) {
   const map = {
     de: "German",

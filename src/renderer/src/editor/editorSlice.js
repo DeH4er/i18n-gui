@@ -1,23 +1,23 @@
 import {
-    createAsyncThunk,
-    createSelector,
-    createSlice
+  createAsyncThunk,
+  createSelector,
+  createSlice,
 } from "@reduxjs/toolkit";
 import { readTranslationFile, writeJson } from "src/core/file";
 import {
-    createNestedPath,
-    expandPath,
-    getNode,
-    getParentNode,
-    isParentOrSamePath,
-    isPathExist,
-    isRootNode,
-    jsonsToTree,
-    modifyNode,
-    rebuildChildrenPath,
-    removeNode,
-    replaceNodeOrPush,
-    sortTreeArray
+  createNestedPath,
+  expandPath,
+  getNode,
+  getParentNode,
+  isParentOrSamePath,
+  isPathExist,
+  isRootNode,
+  jsonsToTree,
+  modifyNode,
+  rebuildChildrenPath,
+  removeNode,
+  replaceNodeOrPush,
+  sortTreeArray,
 } from "src/core/tree";
 import { v4 as uuidv4 } from "uuid";
 import { treeToJsons } from "../core/tree";

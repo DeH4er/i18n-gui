@@ -1,4 +1,3 @@
-
 import { Button } from "baseui/button";
 import { useState } from "react";
 import Action from "../components/Action";
@@ -15,7 +14,7 @@ export default function TranslationEditHeader({
   rename,
   save,
   select,
-  setRemoveModalOpen
+  setRemoveModalOpen,
 }) {
   const [isActionsOpen, setIsActionsOpen] = useState(false);
 
@@ -34,7 +33,7 @@ export default function TranslationEditHeader({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "baseline",
-        padding: "20px"
+        padding: "20px",
       }}
     >
       <TranslationPath translation={translation} select={select} />

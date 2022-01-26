@@ -40,21 +40,20 @@ async function createWindow() {
   });
 }
 
-app
-  .whenReady()
-  .then(createWindow)
-  .then(() => {
-    if (!app.isPackaged) {
-      const {
-        default: installExtension,
-        REACT_DEVELOPER_TOOLS,
-        REDUX_DEVTOOLS,
-      } = await import("electron-devtools-installer");
-      installExtension([REDUX_DEVTOOLS.id, REACT_DEVELOPER_TOOLS.id])
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log("An error occurred: ", err));
-    }
-  });
+async function loadDevtools() {
+  if (!app.isPackaged) {
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS,
+    } = await import("electron-devtools-installer");
+    installExtension([REDUX_DEVTOOLS.id, REACT_DEVELOPER_TOOLS.id])
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log("An error occurred: ", err));
+  }
+}
+
+app.whenReady().then(createWindow).then(loadDevtools);
 
 app.on("window-all-closed", () => {
   win = null;

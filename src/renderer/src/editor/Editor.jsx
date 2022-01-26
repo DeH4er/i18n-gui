@@ -5,17 +5,17 @@ import TreeView from "src/components/TreeView";
 import { createNode } from "src/core/tree";
 import Settings from "src/settings/Settings";
 import {
-    addTranslation,
-    clickTranslation,
-    pull,
-    push,
-    removeTranslation,
-    renameTranslation,
-    selectLanguages,
-    selectSelectedTranslation,
-    selectTranslation,
-    selectTranslations,
-    updateTranslation
+  addTranslation,
+  clickTranslation,
+  pull,
+  push,
+  removeTranslation,
+  renameTranslation,
+  selectLanguages,
+  selectSelectedTranslation,
+  selectTranslation,
+  selectTranslations,
+  updateTranslation,
 } from "./editorSlice";
 import Toolbar from "./Toolbar";
 import TranslationEdit from "./TranslationEdit";
@@ -33,7 +33,7 @@ function Editor({
   addTranslation,
   renameTranslation,
   pull,
-  push
+  push,
 }) {
   const navigate = useNavigate();
   const [isPathModalOpen, setIsPathModalOpen] = useState(false);

@@ -2,13 +2,13 @@ import { KIND } from "baseui/button";
 import { FormControl } from "baseui/form-control";
 import { Input } from "baseui/input";
 import {
-    Modal,
-    ModalBody,
-    ModalButton,
-    ModalFooter,
-    ModalHeader,
-    ROLE,
-    SIZE as ModalSize
+  Modal,
+  ModalBody,
+  ModalButton,
+  ModalFooter,
+  ModalHeader,
+  ROLE,
+  SIZE as ModalSize,
 } from "baseui/modal";
 import React, { useEffect, useState } from "react";
 import { isPathExist } from "src/core/tree";

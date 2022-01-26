@@ -22,5 +22,4 @@ export const offlineStorage = {
   },
 };
 
-export { };
-
+export {};

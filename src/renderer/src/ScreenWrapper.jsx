@@ -9,7 +9,7 @@ export default function ScreenWrapper({ children }) {
         width: "100vw",
         height: "100vh",
         background: theme.colors.backgroundPrimary,
-        overflow: 'auto',
+        overflow: "auto",
       }}
     >
       {children}

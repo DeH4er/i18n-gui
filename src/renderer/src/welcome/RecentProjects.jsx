@@ -5,9 +5,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-    openRecentProject,
-    removeProject,
-    selectRecentProjects
+  openRecentProject,
+  removeProject,
+  selectRecentProjects,
 } from "src/editor/editorSlice";
 
 function formatDate(date) {

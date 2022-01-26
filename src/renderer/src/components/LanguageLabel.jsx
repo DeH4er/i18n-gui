@@ -12,12 +12,12 @@ export default function LanguageLabel({ language }) {
           ...theme.typography.font300,
           display: "flex",
           gap: "10px",
-          alignItems: 'baseline'
+          alignItems: "baseline",
         }}
       >
         <div>{translated}</div>
         <div
-         style={{
+          style={{
             ...theme.typography.font150,
             color: theme.colors.primary400,
             marignLeft: "20px",

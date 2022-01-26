@@ -15,7 +15,9 @@ export default function Actions({ children, isOpen, setIsOpen, maxVisible }) {
     <Popover
       isOpen={isOpen}
       content={() => (
-        <div style={{ display: "flex", flexDirection: "column", width: '180px' }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "180px" }}
+        >
           {visibleChildren}
         </div>
       )}

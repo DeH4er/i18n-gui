@@ -17,7 +17,6 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
     const files = Array.from(e.dataTransfer.files).filter(
       (f) => f.type === accept
     );
-    console.log(files);
     onDropAccepted(files);
   }
 

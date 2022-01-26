@@ -1,4 +1,4 @@
-import { FormControl } from "baseui/form-control";
+import { useStyletron } from "baseui";
 import { Textarea } from "baseui/textarea";
 import { useEffect } from "react";
 import LanguageLabel from "src/components/LanguageLabel";
@@ -14,6 +14,7 @@ export default function TranslationControl({
   connected,
   setConnected,
 }) {
+  const [, theme] = useStyletron();
   useEffect(() => {
     if (rule && connected) {
       const replacedTags = replaceTags(rule, translations);
@@ -21,29 +22,30 @@ export default function TranslationControl({
         setTranslation(replacedTags);
       }
     }
-  }, [rule, translations, connected, setTranslation, translation]);
+  }, [rule, translations, connected]);
 
   return (
-    <FormControl
-      label={() => (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "space-between",
-          }}
-        >
-          <LanguageLabel language={language} />
-          {rule && (
-            <ConnectButton connected={connected} setConnected={setConnected} />
-          )}
-        </div>
-      )}
-    >
+    <div>
+      <div
+        style={{
+          ...theme.typography.font350,
+          display: "flex",
+          alignItems: "baseline",
+          justifyContent: "space-between",
+          color: theme.colors.primary,
+          marginBottom: "5px",
+        }}
+      >
+        <LanguageLabel language={language} />
+        {rule && (
+          <ConnectButton connected={connected} setConnected={setConnected} />
+        )}
+      </div>
+
       <Textarea
         value={translation}
         onChange={(e) => setTranslation(e.target.value)}
       />
-    </FormControl>
+    </div>
   );
 }

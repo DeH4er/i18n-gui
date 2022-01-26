@@ -76,7 +76,7 @@ function TranslationEdit({
           padding: "20px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: "20px",
         }}
       >
         {languages.map((language) => (

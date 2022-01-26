@@ -1,7 +1,5 @@
-import { Button } from "baseui/button";
-import { useState } from "react";
-import Action from "../components/Action";
-import Actions from "../components/Actions";
+import { Button, KIND } from "baseui/button";
+import { FiEdit, FiSave, FiTrash } from "react-icons/fi";
 import ConnectAction from "./ConnectAction";
 import TranslationPath from "./TranslationPath";
 
@@ -16,17 +14,6 @@ export default function TranslationEditHeader({
   select,
   setRemoveModalOpen,
 }) {
-  const [isActionsOpen, setIsActionsOpen] = useState(false);
-
-  function onActionClick(fn) {
-    return () => {
-      setIsActionsOpen(false);
-      if (typeof fn === "function") {
-        fn();
-      }
-    };
-  }
-
   return (
     <section
       style={{
@@ -46,34 +33,33 @@ export default function TranslationEditHeader({
           alignSelf: "center",
         }}
       >
-        <Actions
-          isOpen={isActionsOpen}
-          setIsOpen={setIsActionsOpen}
-          maxVisible={2}
-        >
+        {Object.keys(connectedLanguages).length > 0 && (
           <ConnectAction
             connectedLanguages={connectedLanguages}
             setConnectedLanguages={setConnectedLanguages}
-            onClick={onActionClick()}
             isVisible={Object.keys(connectedLanguages).length > 0}
           />
-          <Action
-            label="Rename"
-            onClick={onActionClick(rename)}
-            isVisible={isUpdating}
-          />
-          <Action
-            label="Delete"
-            onClick={onActionClick(() => setRemoveModalOpen(true))}
-            isVisible={isUpdating}
-          />
-        </Actions>
+        )}
+        {isUpdating && (
+          <>
+            <Button kind={KIND.secondary} onClick={rename}>
+              <FiEdit />
+            </Button>
+
+            <Button
+              kind={KIND.secondary}
+              onClick={() => setRemoveModalOpen(true)}
+            >
+              <FiTrash />
+            </Button>
+          </>
+        )}
         <Button
           onClick={() => {
             save(edited);
           }}
         >
-          Save
+          <FiSave />
         </Button>
       </div>
     </section>

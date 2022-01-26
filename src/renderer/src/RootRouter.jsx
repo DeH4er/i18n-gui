@@ -12,7 +12,7 @@ function RootRouter({ translations }) {
         <Route path="/" element={<Welcome />}></Route>
         <Route
           path="/editor"
-          element={translations.length > 0 ? <Editor /> : <Navigate to="/" />}
+          element={translations ? <Editor /> : <Navigate to="/" />}
         ></Route>
       </Routes>
     </HashRouter>

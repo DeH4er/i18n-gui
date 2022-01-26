@@ -1,9 +1,9 @@
-import Action from "../components/Action";
+import { Button, KIND } from "baseui/button";
+import { FiLock, FiUnlock } from "react-icons/fi";
 
 export default function ConnectToggle({
   connectedLanguages,
   setConnectedLanguages,
-  onClick,
 }) {
   const connectAllMode = isConnectAllMode();
 
@@ -21,13 +21,11 @@ export default function ConnectToggle({
         {}
       )
     );
-    onClick();
   }
 
   return (
-    <Action
-      onClick={toggle}
-      label={connectAllMode ? "Connect all" : "Disconnect all"}
-    />
+    <Button kind={KIND.secondary} onClick={toggle}>
+      {connectAllMode ? <FiUnlock /> : <FiLock />}
+    </Button>
   );
 }

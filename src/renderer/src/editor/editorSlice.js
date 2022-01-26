@@ -169,7 +169,7 @@ export const editorSlice = createSlice({
   initialState: {
     projectId: null,
     recentProjects: {},
-    translations: [],
+    translations: null,
     selectedTranslation: null,
   },
   reducers: {

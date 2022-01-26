@@ -11,9 +11,9 @@ import {
   selectSelectedTranslation,
   selectTranslation,
   selectTranslations,
-  updateTranslation,
+  updateTranslation
 } from "./editorSlice";
-import LeftBar from "./LeftBar";
+import Sidebar from "./Sidebar";
 import TranslationEdit from "./TranslationEdit";
 import TranslationGroup from "./TranslationGroup";
 import TranslationPathModal from "./TranslationPathModal";
@@ -36,7 +36,7 @@ function Editor({
 
   const viewMode = useMemo(() => {
     if (newTranslation) {
-      return "add-translation";
+      return "add-key";
     } else if (selectedTranslation && !selectedTranslation.children) {
       return "select-translation";
     } else if (selectedTranslation && selectedTranslation.children) {
@@ -56,8 +56,8 @@ function Editor({
     setIsPathModalOpen(false);
   }
 
-  function addTranslationAction() {
-    startPathAction("add-translation");
+  function addKeyAction() {
+    startPathAction("add-key");
   }
 
   function addGroupAction() {
@@ -78,7 +78,7 @@ function Editor({
       );
     }
 
-    if (pathAction === "add-translation") {
+    if (pathAction === "add-key") {
       setNewTranslation(
         createNode({
           translations: languages.reduce(
@@ -122,8 +122,10 @@ function Editor({
         display: "flex",
       }}
     >
-      <LeftBar
+      <Sidebar
         openSettings={openSettings}
+        addKey={addKeyAction}
+        addGroup={addGroupAction}
         onTranslationClick={(translation) => {
           setNewTranslation(null);
           clickTranslation(translation);
@@ -148,7 +150,7 @@ function Editor({
             rename={renameAction}
           ></TranslationEdit>
         )}
-        {viewMode === "add-translation" && (
+        {viewMode === "add-key" && (
           <TranslationEdit
             isUpdating={false}
             translation={newTranslation}
@@ -161,22 +163,18 @@ function Editor({
             translation={selectedTranslation}
             select={onSelectTranslation}
             remove={removeTranslation}
-            addTranslation={addTranslationAction}
-            addGroup={addGroupAction}
             rename={renameAction}
           />
         )}
       </section>
-      {selectedTranslation && (
-        <TranslationPathModal
-          pathExistError={true}
-          path={selectedTranslation.path}
-          tree={translations}
-          isOpen={isPathModalOpen}
-          onCancel={stopPathAction}
-          onConfirm={confirmPathAction}
-        />
-      )}
+      <TranslationPathModal
+        pathExistError={true}
+        path={selectedTranslation?.path ?? []}
+        tree={translations}
+        isOpen={isPathModalOpen}
+        onCancel={stopPathAction}
+        onConfirm={confirmPathAction}
+      />
       <Settings
         isOpen={isSettingsPageOpen}
         onClose={() => setIsSettingsPageOpen(false)}

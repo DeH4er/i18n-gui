@@ -1,9 +1,8 @@
-import { Button } from "baseui/button";
+import { Button, KIND } from "baseui/button";
 import { Paragraph1 } from "baseui/typography";
 import React, { useMemo, useState } from "react";
+import { FiEdit, FiTrash } from "react-icons/fi";
 import { countLeafs } from "src/core/tree";
-import Action from "../components/Action";
-import Actions from "../components/Actions";
 import TranslationPath from "./TranslationPath";
 import TranslationRemoveModal from "./TranslationRemoveModal";
 
@@ -11,22 +10,10 @@ export default function TranslationGroup({
   translation,
   select,
   remove,
-  addTranslation,
-  addGroup,
   rename,
 }) {
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const count = useMemo(() => countLeafs(translation), [translation]);
-  const [isActionsOpen, setIsActionsOpen] = useState(false);
-
-  function onActionClick(fn) {
-    return () => {
-      setIsActionsOpen(false);
-      if (typeof fn === "function") {
-        fn();
-      }
-    };
-  }
 
   function confirmRemove() {
     setRemoveModalOpen(false);
@@ -52,20 +39,15 @@ export default function TranslationGroup({
             gap: "10px",
           }}
         >
-          <Actions
-            isOpen={isActionsOpen}
-            setIsOpen={setIsActionsOpen}
-            maxVisible={2}
+          <Button kind={KIND.secondary} onClick={rename}>
+            <FiEdit />
+          </Button>
+          <Button
+            kind={KIND.secondary}
+            onClick={() => setRemoveModalOpen(true)}
           >
-            <Action label="Add group" onClick={onActionClick(addGroup)} />
-            <Action label="Rename" onClick={onActionClick(rename)} />
-            <Action
-              label="Delete"
-              onClick={onActionClick(() => setRemoveModalOpen(true))}
-            />
-          </Actions>
-
-          <Button onClick={addTranslation}>Add translation</Button>
+            <FiTrash />
+          </Button>
         </div>
       </section>
 

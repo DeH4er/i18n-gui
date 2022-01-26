@@ -1,20 +1,13 @@
 import { useStyletron } from "baseui";
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import TreeView from "src/components/TreeView";
 import { pull, push, selectTranslations } from "./editorSlice";
 import Toolbar from "./Toolbar";
 
-function LeftBar({
-  push,
-  pull,
-  openSettings,
-  onTranslationClick,
-  translations,
-}) {
-  const navigate = useNavigate();
-  const [barWidth, setBarWidth] = useState(500);
+function Sidebar({ onTranslationClick, translations, ...toolbarProps }) {
+  const minWidth = 300;
+  const [barWidth, setBarWidth] = useState(minWidth);
   const [css, theme] = useStyletron();
 
   function handleMouseDown() {
@@ -35,14 +28,8 @@ function LeftBar({
 
   const handleMouseMove = useCallback((e) => {
     e.preventDefault();
-    requestAnimationFrame(() => {
-      setBarWidth(e.clientX - 10);
-    });
+    setBarWidth(Math.max(minWidth, e.clientX - 10));
   });
-
-  function navigateWelcome() {
-    navigate("/");
-  }
 
   return (
     <div
@@ -60,12 +47,7 @@ function LeftBar({
           maxWidth: `${barWidth}px`,
         }}
       >
-        <Toolbar
-          openSettings={openSettings}
-          pull={pull}
-          push={push}
-          navigateWelcome={navigateWelcome}
-        />
+        <Toolbar {...toolbarProps} />
         <div
           style={{
             height: "100%",
@@ -100,4 +82,4 @@ export default connect(
     push,
     pull,
   }
-)(LeftBar);
+)(Sidebar);

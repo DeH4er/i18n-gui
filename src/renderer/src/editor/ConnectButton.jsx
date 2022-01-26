@@ -1,13 +1,13 @@
-import { Button, KIND, SIZE } from "baseui/button";
+import { Button, KIND } from "baseui/button";
+import { FiLock, FiUnlock } from "react-icons/fi";
 
 export default function ConnectButton({ connected, setConnected }) {
   return (
     <Button
-      size={SIZE.mini}
       kind={KIND.tertiary}
       onClick={() => setConnected(!connected)}
     >
-      {connected ? "Disconnect" : "Connect"}
+      {connected ? <FiLock /> : <FiUnlock />}
     </Button>
   );
 }

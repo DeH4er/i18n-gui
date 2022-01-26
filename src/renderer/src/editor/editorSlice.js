@@ -1,7 +1,7 @@
 import {
   createAsyncThunk,
   createSelector,
-  createSlice
+  createSlice,
 } from "@reduxjs/toolkit";
 import { readTranslationFile, writeJson } from "src/core/file";
 import {
@@ -17,7 +17,7 @@ import {
   rebuildChildrenPath,
   removeNode,
   replaceNodeOrPush,
-  sortTreeArray
+  sortTreeArray,
 } from "src/core/tree";
 import { v4 as uuidv4 } from "uuid";
 import { treeToJsons } from "../core/tree";

@@ -1,7 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import os from "os";
 import { join } from "path";
-import "./offline-storage/offline-storage";
+import "./offline-storage";
 
 const isWin7 = os.release().startsWith("6.1");
 if (isWin7) app.disableHardwareAcceleration();
@@ -17,6 +17,7 @@ async function createWindow() {
   win = new BrowserWindow({
     title: "Main window a",
     width: 1000,
+    titleBarStyle: "hidden",
     height: 700,
     webPreferences: {
       preload: join(__dirname, "../preload/index.cjs"),
@@ -77,4 +78,12 @@ app.on("activate", () => {
   } else {
     createWindow();
   }
+});
+
+ipcMain.on("close", () => {
+  win.close();
+});
+
+ipcMain.on("minimize", () => {
+  win.minimize();
 });

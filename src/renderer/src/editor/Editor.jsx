@@ -11,7 +11,7 @@ import {
   selectSelectedTranslation,
   selectTranslation,
   selectTranslations,
-  updateTranslation
+  updateTranslation,
 } from "./editorSlice";
 import Sidebar from "./Sidebar";
 import TranslationEdit from "./TranslationEdit";
@@ -117,8 +117,7 @@ function Editor({
   return (
     <main
       style={{
-        height: "100vh",
-        overflow: "hidden",
+        height: "100%",
         display: "flex",
       }}
     >
@@ -138,7 +137,7 @@ function Editor({
           overflow: "auto",
           height: "100%",
           width: "100%",
-          maxWidth: "1000px"
+          maxWidth: "1000px",
         }}
       >
         {viewMode === "select-translation" && (

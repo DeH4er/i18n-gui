@@ -6,15 +6,13 @@ import {
   FiBox,
   FiChevronLeft,
   FiDownload,
-  FiKey, FiSettings,
-  FiUpload
+  FiKey,
+  FiSettings,
+  FiUpload,
 } from "react-icons/fi";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  pull,
-  push
-} from "./editorSlice";
+import { pull, push } from "./editorSlice";
 
 function ToolbarTooltip({ tooltip, children }) {
   const [, theme] = useStyletron();

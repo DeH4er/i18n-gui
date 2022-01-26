@@ -1,5 +1,6 @@
 import { useStyletron } from "baseui";
 import React from "react";
+import Titlebar from "./components/Titlebar";
 
 export default function ScreenWrapper({ children }) {
   const [, theme] = useStyletron();
@@ -10,9 +11,19 @@ export default function ScreenWrapper({ children }) {
         height: "100vh",
         background: theme.colors.backgroundPrimary,
         overflow: "auto",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {children}
+      <Titlebar />
+      <div
+        style={{
+          flex: "1",
+          overflow: "auto",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

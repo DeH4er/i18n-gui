@@ -85,7 +85,7 @@ function Sidebar({
             <Button
               size={SIZE.compact}
               kind={KIND.secondary}
-              onClick={expandAll}
+              onClick={() => expandAll()}
             >
               <VscExpandAll />
             </Button>
@@ -95,7 +95,7 @@ function Sidebar({
             <Button
               size={SIZE.compact}
               kind={KIND.secondary}
-              onClick={collapseAll}
+              onClick={() => collapseAll()}
             >
               <VscCollapseAll />
             </Button>

@@ -2,6 +2,7 @@ import { Button, KIND } from "baseui/button";
 import { Paragraph1 } from "baseui/typography";
 import React, { useMemo, useState } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
+import Tooltip from "src/components/Tooltip";
 import { countLeafs } from "src/core/tree";
 import TranslationPath from "./TranslationPath";
 import TranslationRemoveModal from "./TranslationRemoveModal";
@@ -39,15 +40,20 @@ export default function TranslationGroup({
             gap: "10px",
           }}
         >
-          <Button kind={KIND.secondary} onClick={rename}>
-            <FiEdit />
-          </Button>
-          <Button
-            kind={KIND.secondary}
-            onClick={() => setRemoveModalOpen(true)}
-          >
-            <FiTrash />
-          </Button>
+          <Tooltip tooltip="Rename">
+            <Button kind={KIND.secondary} onClick={rename}>
+              <FiEdit />
+            </Button>
+          </Tooltip>
+
+          <Tooltip tooltip="Delete">
+            <Button
+              kind={KIND.secondary}
+              onClick={() => setRemoveModalOpen(true)}
+            >
+              <FiTrash />
+            </Button>
+          </Tooltip>
         </div>
       </section>
 

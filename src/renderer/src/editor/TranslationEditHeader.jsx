@@ -1,5 +1,6 @@
 import { Button, KIND } from "baseui/button";
 import { FiEdit, FiSave, FiTrash } from "react-icons/fi";
+import Tooltip from "src/components/Tooltip";
 import ConnectAction from "./ConnectAction";
 import TranslationPath from "./TranslationPath";
 
@@ -37,30 +38,35 @@ export default function TranslationEditHeader({
           <ConnectAction
             connectedLanguages={connectedLanguages}
             setConnectedLanguages={setConnectedLanguages}
-            isVisible={Object.keys(connectedLanguages).length > 0}
           />
         )}
         {isUpdating && (
           <>
-            <Button kind={KIND.secondary} onClick={rename}>
-              <FiEdit />
-            </Button>
+            <Tooltip tooltip="Rename">
+              <Button kind={KIND.secondary} onClick={rename}>
+                <FiEdit />
+              </Button>
+            </Tooltip>
 
-            <Button
-              kind={KIND.secondary}
-              onClick={() => setRemoveModalOpen(true)}
-            >
-              <FiTrash />
-            </Button>
+            <Tooltip tooltip="Remove">
+              <Button
+                kind={KIND.secondary}
+                onClick={() => setRemoveModalOpen(true)}
+              >
+                <FiTrash />
+              </Button>
+            </Tooltip>
           </>
         )}
-        <Button
-          onClick={() => {
-            save(edited);
-          }}
-        >
-          <FiSave />
-        </Button>
+        <Tooltip tooltip="Confirm changes">
+          <Button
+            onClick={() => {
+              save(edited);
+            }}
+          >
+            <FiSave />
+          </Button>
+        </Tooltip>
       </div>
     </section>
   );

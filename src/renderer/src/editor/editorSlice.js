@@ -299,7 +299,6 @@ export const selectOrderedRecentProjects = createSelector(
     const res = Object.keys(recentProjects)
       .map((projectId) => recentProjects[projectId])
       .sort((p1, p2) => p2.timestamp - p1.timestamp);
-    console.log({ res });
     return res;
   }
 );

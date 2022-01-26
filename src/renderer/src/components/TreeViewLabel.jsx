@@ -7,17 +7,14 @@ export default function TreeViewLabel({ node, onClick }) {
 
   return (
     <div
-      className={css({
+      style={{
         ...theme.typography.font300,
         color: theme.colors.primary,
         userSelect: "none",
         padding: node.children ? "3px 5px" : "3px 5px 3px 30px",
         cursor: "pointer",
         background: node.isSelected ? theme.colors.mono300 : "",
-        ":hover": {
-          background: theme.colors.mono300,
-        },
-      })}
+      }}
       onClick={() => onClick(node)}
     >
       <div

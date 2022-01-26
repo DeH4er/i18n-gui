@@ -16,6 +16,7 @@ export default function Toolbar({ openSettings, pull, push, navigateWelcome }) {
         padding: "10px",
         color: theme.colors.primary,
         boxShadow: `0px 0px 10px ${theme.colors.backgroundOverlayDark}`,
+        gap: "10px",
       }}
     >
       <div

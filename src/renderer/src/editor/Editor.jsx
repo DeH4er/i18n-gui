@@ -1,14 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import TreeView from "src/components/TreeView";
 import { createNode } from "src/core/tree";
 import Settings from "src/settings/Settings";
 import {
   addTranslation,
   clickTranslation,
-  pull,
-  push,
   removeTranslation,
   renameTranslation,
   selectLanguages,
@@ -17,7 +13,7 @@ import {
   selectTranslations,
   updateTranslation,
 } from "./editorSlice";
-import Toolbar from "./Toolbar";
+import LeftBar from "./LeftBar";
 import TranslationEdit from "./TranslationEdit";
 import TranslationGroup from "./TranslationGroup";
 import TranslationPathModal from "./TranslationPathModal";
@@ -32,10 +28,7 @@ function Editor({
   selectTranslation,
   addTranslation,
   renameTranslation,
-  pull,
-  push,
 }) {
-  const navigate = useNavigate();
   const [isPathModalOpen, setIsPathModalOpen] = useState(false);
   const [newTranslation, setNewTranslation] = useState(null);
   const [isSettingsPageOpen, setIsSettingsPageOpen] = useState(false);
@@ -111,18 +104,6 @@ function Editor({
     setIsSettingsPageOpen(true);
   }
 
-  function onPull() {
-    pull();
-  }
-
-  function onPush() {
-    push();
-  }
-
-  function navigateWelcome() {
-    navigate("/");
-  }
-
   function saveTranslation(translation) {
     setNewTranslation(null);
     addTranslation(translation);
@@ -136,42 +117,18 @@ function Editor({
   return (
     <main
       style={{
-        display: "flex",
         height: "100vh",
+        overflow: "hidden",
+        display: "flex",
       }}
     >
-      <section
-        style={{
-          boxSizing: "border-box",
-          height: "100%",
-          maxWidth: "500px",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
+      <LeftBar
+        openSettings={openSettings}
+        onTranslationClick={(translation) => {
+          setNewTranslation(null);
+          clickTranslation(translation);
         }}
-      >
-        <Toolbar
-          openSettings={openSettings}
-          pull={onPull}
-          push={onPush}
-          navigateWelcome={navigateWelcome}
-        />
-        <div
-          style={{
-            height: "100%",
-            overflow: "auto",
-          }}
-        >
-          <TreeView
-            data={translations}
-            onClick={(translation) => {
-              setNewTranslation(null);
-              clickTranslation(translation);
-            }}
-          />
-        </div>
-      </section>
+      />
 
       <section
         style={{
@@ -242,7 +199,5 @@ export default connect(
     selectTranslation,
     addTranslation,
     renameTranslation,
-    pull,
-    push,
   }
 )(Editor);

@@ -23,7 +23,7 @@ function BlinkingCursor() {
         animationDuration: "1s",
         animationTimingFunction: "steps(3, start)",
         animationName: {
-          '100%': {
+          "100%": {
             visibility: "hidden",
           },
         },

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {
   openRecentProject,
   removeProject,
-  selectOrderedRecentProjects
+  selectOrderedRecentProjects,
 } from "src/editor/editorSlice";
 
 function formatDate(date) {

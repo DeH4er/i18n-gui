@@ -1,13 +1,14 @@
 import { translateLanguage } from "@/core/utils";
 import { useStyletron } from "baseui";
 import { Button, SHAPE } from "baseui/button";
-import { FileUploader } from "baseui/file-uploader";
 import { Input } from "baseui/input";
 import { Tag } from "baseui/tag";
 import { H1 } from "baseui/typography";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import FileUploader from "../components/FileUploader";
 import { createProject } from "../editor/editorSlice";
 import css from "./CreateProject.module.css";
 
@@ -65,6 +66,10 @@ function CreateProject({ createProject }) {
   const [projectName, setProjectName] = useState("");
 
   function onFilesLoaded(filesToRead) {
+    filesToRead.forEach((f) => {
+      f.id = uuidv4();
+    });
+
     setFiles([...files, ...filesToRead]);
   }
 
@@ -124,7 +129,7 @@ function CreateProject({ createProject }) {
         >
           {files.map((file) => (
             <Tag
-              key={file.name}
+              key={file.id}
               onActionClick={() => onRemoveFile(file)}
               overrides={{
                 Text: {
@@ -143,7 +148,6 @@ function CreateProject({ createProject }) {
           onDropAccepted={onFilesLoaded}
           multiple
           accept="application/json"
-          overrides={{ ContentMessage: () => "" }}
         ></FileUploader>
       </div>
     </div>

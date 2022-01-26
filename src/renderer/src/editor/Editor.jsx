@@ -138,6 +138,7 @@ function Editor({
           overflow: "auto",
           height: "100%",
           width: "100%",
+          maxWidth: "1000px"
         }}
       >
         {viewMode === "select-translation" && (

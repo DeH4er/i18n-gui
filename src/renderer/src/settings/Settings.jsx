@@ -8,7 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ROLE,
-  SIZE as ModalSize,
+  SIZE as ModalSize
 } from "baseui/modal";
 import { Textarea } from "baseui/textarea";
 import { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import LanguageLabel from "src/components/LanguageLabel";
 import {
   changeProject,
   selectGenerationRules,
-  selectLanguages,
+  selectLanguages
 } from "src/editor/editorSlice";
 import SettingsHeader from "./SettingsHeader";
 import SettingsSection from "./SettingsSection";
@@ -71,6 +71,7 @@ function Settings({
             flexDirection: "column",
             height: "90vh",
             overflow: "hidden",
+            maxWidth: "800px"
           },
         },
       }}

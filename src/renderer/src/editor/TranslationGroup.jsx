@@ -39,8 +39,10 @@ export default function TranslationGroup({
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "baseline",
+          alignItems: "center",
           padding: "20px",
+          flexWrap: "wrap",
+          rowGap: "20px",
         }}
       >
         <TranslationPath translation={translation} select={select} />

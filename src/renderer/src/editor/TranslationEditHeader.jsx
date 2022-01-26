@@ -32,8 +32,10 @@ export default function TranslationEditHeader({
       style={{
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "baseline",
+        alignItems: "center",
         padding: "20px",
+        flexWrap: "wrap",
+        rowGap: "20px"
       }}
     >
       <TranslationPath translation={translation} select={select} />
@@ -41,6 +43,7 @@ export default function TranslationEditHeader({
         style={{
           display: "flex",
           gap: "10px",
+          alignSelf: "center"
         }}
       >
         <Actions

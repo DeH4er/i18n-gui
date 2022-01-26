@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {
   openRecentProject,
   removeProject,
-  selectRecentProjects,
+  selectOrderedRecentProjects
 } from "src/editor/editorSlice";
 
 function formatDate(date) {
@@ -53,9 +53,9 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
           overflow: "auto",
         }}
       >
-        {Object.keys(recentProjects).map((projectId) => (
+        {recentProjects.map((project) => (
           <div
-            key={projectId}
+            key={project.id}
             className={css({
               padding: "20px",
               cursor: "pointer",
@@ -63,7 +63,7 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
                 background: theme.colors.backgroundPrimary,
               },
             })}
-            onClick={() => onOpenRecentProject(projectId)}
+            onClick={() => onOpenRecentProject(project.id)}
           >
             <div
               style={{
@@ -79,14 +79,14 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
                   justifyContent: "space-between",
                 })}
               >
-                <H6 margin={0}>{recentProjects[projectId].name}</H6>
+                <H6 margin={0}>{project.name}</H6>
                 <div
                   style={{
                     ...theme.typography.font150,
                     color: theme.colors.primary400,
                   }}
                 >
-                  <div>{formatDate(recentProjects[projectId].timestamp)}</div>
+                  <div>{formatDate(project.timestamp)}</div>
                 </div>
               </div>
 
@@ -103,14 +103,14 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
                     color: theme.colors.primary300,
                   }}
                 >
-                  {recentProjects[projectId].languages.length} languages
+                  {project.languages.length} languages
                 </div>
                 <Button
                   kind={KIND.secondary}
                   size={SIZE.mini}
                   onClick={(e) => {
                     e.stopPropagation();
-                    onRemoveProject(projectId);
+                    onRemoveProject(project.id);
                   }}
                 >
                   Delete
@@ -131,7 +131,7 @@ const mapDispatchToProps = {
 
 export default connect(
   (state, props) => ({
-    recentProjects: selectRecentProjects(state),
+    recentProjects: selectOrderedRecentProjects(state),
     ...props,
   }),
   mapDispatchToProps

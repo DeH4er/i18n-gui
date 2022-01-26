@@ -1,7 +1,7 @@
 import {
   createAsyncThunk,
   createSelector,
-  createSlice,
+  createSlice
 } from "@reduxjs/toolkit";
 import { readTranslationFile, writeJson } from "src/core/file";
 import {
@@ -17,7 +17,7 @@ import {
   rebuildChildrenPath,
   removeNode,
   replaceNodeOrPush,
-  sortTreeArray,
+  sortTreeArray
 } from "src/core/tree";
 import { v4 as uuidv4 } from "uuid";
 import { treeToJsons } from "../core/tree";
@@ -97,7 +97,7 @@ export const openRecentProject = createAsyncThunk(
       files.map((f) => f.name)
     );
 
-    await offlineStorage.set("recent-project", newRecentProjects);
+    await offlineStorage.set("recent-projects", newRecentProjects);
     return { id, recentProjects: newRecentProjects, translations };
   }
 );
@@ -293,6 +293,16 @@ export const editorSlice = createSlice({
 
 export const selectTranslations = (state) => state.editor.translations;
 export const selectRecentProjects = (state) => state.editor.recentProjects;
+export const selectOrderedRecentProjects = createSelector(
+  selectRecentProjects,
+  (recentProjects) => {
+    const res = Object.keys(recentProjects)
+      .map((projectId) => recentProjects[projectId])
+      .sort((p1, p2) => p2.timestamp - p1.timestamp);
+    console.log({ res });
+    return res;
+  }
+);
 export const selectProjectId = (state) => state.editor.projectId;
 export const selectProject = createSelector(
   selectRecentProjects,

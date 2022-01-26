@@ -10,17 +10,27 @@ import { translateLanguage } from "src/core/utils";
 import { v4 as uuidv4 } from "uuid";
 import FileUploader from "../components/FileUploader";
 import { createProject } from "../editor/editorSlice";
-import css from "./CreateProject.module.css";
 
 function BlinkingCursor() {
-  const [, theme] = useStyletron();
+  const [css, theme] = useStyletron();
   return (
     <div
-      className={css.cursor}
-      style={{ background: theme.colors.primary100, marginRight: "10px" }}
-    >
-      <div></div>
-    </div>
+      className={css({
+        height: "30px",
+        width: "4px",
+        display: "inline-block",
+        animationIterationCount: "infinite",
+        animationDuration: "1s",
+        animationTimingFunction: "steps(3, start)",
+        animationName: {
+          '100%': {
+            visibility: "hidden",
+          },
+        },
+        background: theme.colors.primary100,
+        marginRight: "10px",
+      })}
+    ></div>
   );
 }
 

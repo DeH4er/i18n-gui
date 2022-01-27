@@ -46,8 +46,8 @@ export default function Titlebar() {
     >
       <div
         style={{
-          "-webkit-user-select": "none",
-          "-webkit-app-region": "drag",
+          WebkitUserSelect: "none",
+          WebkitAppRegion: "drag",
           width: "100%",
           display: "flex",
           alignItems: "center",
@@ -58,7 +58,7 @@ export default function Titlebar() {
       </div>
       <div
         style={{
-          "-webkit-app-region": "no-drag",
+          WebkitAppRegion: "no-drag",
           display: "flex",
         }}
       >

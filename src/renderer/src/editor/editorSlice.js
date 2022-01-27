@@ -282,6 +282,8 @@ export const editorSlice = createSlice({
       state.recentProjects = recentProjects;
       state.translations = translations;
       state.selectedTranslation = null;
+      state.keyMode = "tree";
+      state.search = "";
     },
     [openRecentProject.fulfilled]: (state, action) => {
       const { id, recentProjects, translations } = action.payload;
@@ -289,6 +291,8 @@ export const editorSlice = createSlice({
       state.recentProjects = recentProjects;
       state.translations = translations;
       state.selectedTranslation = null;
+      state.keyMode = "tree";
+      state.search = "";
     },
     [removeProject.fulfilled]: (state, action) => {
       state.recentProjects = action.payload;
@@ -367,9 +371,18 @@ export const selectFilteredTranslations = createSelector(
     } else {
       filteredTranslations = translations
         .map((node) => {
-          return filterChildrenTree(node, (node) =>
-            node.label.toLowerCase().includes(search.toLowerCase())
-          );
+          return filterChildrenTree(node, (node) => {
+            const searchLower = search.toLowerCase();
+
+            return (
+              node.label.toLowerCase().includes(searchLower) ||
+              Object.keys(node.translations).some((language) =>
+                node.translations[language]
+                  ?.toLowerCase?.()
+                  ?.includes?.(searchLower)
+              )
+            );
+          });
         })
         .filter(Boolean);
     }

@@ -2,7 +2,7 @@ import { useStyletron } from "baseui";
 import { ChevronDown, ChevronRight } from "baseui/icon";
 import React from "react";
 
-export default function TreeViewLabel({ node, onClick }) {
+export default function TreeViewLabel({ node, onClick, keyMode }) {
   const [css, theme] = useStyletron();
 
   return (
@@ -33,7 +33,7 @@ export default function TreeViewLabel({ node, onClick }) {
           </span>
         )}
 
-        {typeof node.label === "function" ? node.label() : node.label}
+        {keyMode === "tree" ? node.label : node.path.join(".")}
       </div>
     </div>
   );

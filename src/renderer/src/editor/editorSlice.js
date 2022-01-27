@@ -8,6 +8,7 @@ import {
   createNestedPath,
   expandPath,
   filterChildrenTree,
+  getChildArray,
   getNode,
   getParentNode,
   isParentOrSamePath,
@@ -174,6 +175,7 @@ export const editorSlice = createSlice({
     translations: null,
     selectedTranslation: null,
     search: "",
+    keyMode: "tree",
   },
   reducers: {
     clickTranslation: (state, action) => {
@@ -266,6 +268,9 @@ export const editorSlice = createSlice({
         })
       );
     },
+    setKeyMode: (state, action) => {
+      state.keyMode = action.payload;
+    },
   },
   extraReducers: {
     [changeProject.fulfilled]: (state, action) => {
@@ -348,21 +353,36 @@ export const selectGenerationRules = createSelector(
 
 export const selectSearch = (state) => state.editor.search;
 
+export const selectKeyMode = (state) => state.editor.keyMode;
+
 export const selectFilteredTranslations = createSelector(
   selectSearch,
   selectTranslations,
-  (search, translations) => {
+  selectKeyMode,
+  (search, translations, keyMode) => {
+    let filteredTranslations;
+
     if (!search) {
-      return translations;
+      filteredTranslations = translations;
+    } else {
+      filteredTranslations = translations
+        .map((node) => {
+          return filterChildrenTree(node, (node) =>
+            node.label.toLowerCase().includes(search.toLowerCase())
+          );
+        })
+        .filter(Boolean);
     }
 
-    return translations
-      .map((node) => {
-        return filterChildrenTree(node, (node) =>
-          node.label.toLowerCase().includes(search.toLowerCase())
-        );
-      })
-      .filter(Boolean);
+    if (keyMode === "list") {
+      const list = filteredTranslations
+        .map((node) => getChildArray(node))
+        .reduce((total, arr) => [...total, ...arr], []);
+
+      return list;
+    }
+
+    return filteredTranslations;
   }
 );
 
@@ -377,6 +397,7 @@ export const {
   setSearchType,
   expandAll,
   collapseAll,
+  setKeyMode,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;

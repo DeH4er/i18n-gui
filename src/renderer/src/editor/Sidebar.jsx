@@ -2,6 +2,7 @@ import { useStyletron } from "baseui";
 import { Button, KIND, SIZE } from "baseui/button";
 import { Input, SIZE as INPUT_SIZE } from "baseui/input";
 import React, { useCallback, useEffect, useState } from "react";
+import { BsListUl, BsTree } from "react-icons/bs";
 import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
 import { connect } from "react-redux";
 import Tooltip from "src/components/Tooltip";
@@ -12,7 +13,9 @@ import {
   pull,
   push,
   selectFilteredTranslations,
+  selectKeyMode,
   selectSearch,
+  setKeyMode,
   setSearch
 } from "./editorSlice";
 import Toolbar from "./Toolbar";
@@ -24,6 +27,8 @@ function Sidebar({
   translations,
   expandAll,
   collapseAll,
+  keyMode,
+  setKeyMode,
   ...toolbarProps
 }) {
   const minWidth = 300;
@@ -81,25 +86,51 @@ function Sidebar({
             placeholder="Search..."
           />
 
-          <Tooltip tooltip="Expand all">
-            <Button
-              size={SIZE.compact}
-              kind={KIND.secondary}
-              onClick={() => expandAll()}
-            >
-              <VscExpandAll />
-            </Button>
-          </Tooltip>
+          {keyMode === "tree" && (
+            <>
+              <Tooltip tooltip="Expand all">
+                <Button
+                  size={SIZE.compact}
+                  kind={KIND.secondary}
+                  onClick={() => expandAll()}
+                >
+                  <VscExpandAll />
+                </Button>
+              </Tooltip>
 
-          <Tooltip tooltip="Collapse all">
-            <Button
-              size={SIZE.compact}
-              kind={KIND.secondary}
-              onClick={() => collapseAll()}
-            >
-              <VscCollapseAll />
-            </Button>
-          </Tooltip>
+              <Tooltip tooltip="Collapse all">
+                <Button
+                  size={SIZE.compact}
+                  kind={KIND.secondary}
+                  onClick={() => collapseAll()}
+                >
+                  <VscCollapseAll />
+                </Button>
+              </Tooltip>
+
+              <Tooltip tooltip="List view">
+                <Button
+                  size={SIZE.compact}
+                  kind={KIND.secondary}
+                  onClick={() => setKeyMode("list")}
+                >
+                  <BsListUl />
+                </Button>
+              </Tooltip>
+            </>
+          )}
+
+          {keyMode === "list" && (
+            <Tooltip tooltip="Tree view">
+              <Button
+                size={SIZE.compact}
+                kind={KIND.secondary}
+                onClick={() => setKeyMode("tree")}
+              >
+                <BsTree />
+              </Button>
+            </Tooltip>
+          )}
         </div>
         <div
           style={{
@@ -107,7 +138,11 @@ function Sidebar({
             overflow: "auto",
           }}
         >
-          <TreeView data={translations} onClick={onTranslationClick} />
+          <TreeView
+            data={translations}
+            onClick={onTranslationClick}
+            keyMode={keyMode}
+          />
         </div>
       </section>
       <div
@@ -130,6 +165,7 @@ export default connect(
   (state, props) => ({
     translations: selectFilteredTranslations(state),
     search: selectSearch(state),
+    keyMode: selectKeyMode(state),
     ...props,
   }),
   {
@@ -138,5 +174,6 @@ export default connect(
     setSearch,
     expandAll,
     collapseAll,
+    setKeyMode,
   }
 )(Sidebar);

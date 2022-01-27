@@ -1,10 +1,20 @@
 import { v4 as uuidv4 } from "uuid";
 
-export function filterChildrenTree(node, fn, searchType) {
+export function getChildArray(node) {
+  if (node.children) {
+    return node.children
+      .map((child) => getChildArray(child))
+      .reduce((total, arr) => [...total, ...arr]);
+  }
+
+  return [node];
+}
+
+export function filterChildrenTree(node, fn) {
   if (node.children) {
     const newChildren = node.children
       .map((child) => {
-        return filterChildrenTree(child, fn, searchType);
+        return filterChildrenTree(child, fn);
       })
       .filter(Boolean);
 

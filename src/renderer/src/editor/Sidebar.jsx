@@ -84,6 +84,7 @@ function Sidebar({
             onChange={(e) => setSearch(e.target.value)}
             size={INPUT_SIZE.compact}
             placeholder="Search..."
+            clearable
           />
 
           {keyMode === "tree" && (

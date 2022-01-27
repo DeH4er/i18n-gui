@@ -1,26 +1,40 @@
 import { useStyletron } from "baseui";
 import { Button, KIND, SIZE } from "baseui/button";
-import React from "react";
+import React, { memo, useCallback } from "react";
 import {
-  FiBox,
-  FiChevronLeft,
-  FiDownload,
-  FiKey,
-  FiSettings,
-  FiUpload
+    FiBox,
+    FiChevronLeft,
+    FiDownload,
+    FiKey,
+    FiSettings,
+    FiUpload
 } from "react-icons/fi";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "src/components/Tooltip";
 import { pull, push } from "./editorSlice";
 
+function NavigateWelcome() {
+  const navigate = useNavigate();
+  const navigateWelcome = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
+  return (
+    <Tooltip tooltip="Go to projects">
+      <Button
+        kind={KIND.secondary}
+        size={SIZE.compact}
+        onClick={navigateWelcome}
+      >
+        <FiChevronLeft />
+      </Button>
+    </Tooltip>
+  );
+}
+
 function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
   const [, theme] = useStyletron();
-  const navigate = useNavigate();
-
-  function navigateWelcome() {
-    navigate("/");
-  }
 
   return (
     <div
@@ -35,15 +49,7 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
         flexWrap: "wrap",
       }}
     >
-      <Tooltip tooltip="Go to projects">
-        <Button
-          kind={KIND.secondary}
-          size={SIZE.compact}
-          onClick={navigateWelcome}
-        >
-          <FiChevronLeft />
-        </Button>
-      </Tooltip>
+      <NavigateWelcome />
 
       <Tooltip tooltip="Reload files">
         <Button kind={KIND.secondary} size={SIZE.compact} onClick={pull}>
@@ -82,7 +88,9 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
   );
 }
 
-export default connect(null, {
-  pull,
-  push,
-})(Toolbar);
+export default memo(
+  connect(null, {
+    pull,
+    push,
+  })(Toolbar)
+);

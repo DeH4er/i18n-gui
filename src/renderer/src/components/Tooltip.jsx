@@ -1,7 +1,8 @@
 import { useStyletron } from "baseui";
 import { PLACEMENT, StatefulPopover, TRIGGER_TYPE } from "baseui/popover";
+import React from "react";
 
-export default function Tooltip({ tooltip, children, ...rest }) {
+function Tooltip({ tooltip, children, ...rest }) {
   const [, theme] = useStyletron();
 
   return (
@@ -20,3 +21,5 @@ export default function Tooltip({ tooltip, children, ...rest }) {
     </StatefulPopover>
   );
 }
+
+export default React.memo(Tooltip);

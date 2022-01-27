@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import Tooltip from "src/components/Tooltip";
 import { countLeafs } from "src/core/tree";
-import TranslationPath from "./TranslationPath";
+import TranslationHeader from "./TranslationHeader";
 import TranslationRemoveModal from "./TranslationRemoveModal";
 
 export default function TranslationGroup({
@@ -23,39 +23,22 @@ export default function TranslationGroup({
 
   return (
     <div>
-      <section
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "20px",
-          flexWrap: "wrap",
-          rowGap: "20px",
-        }}
-      >
-        <TranslationPath translation={translation} select={select} />
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-          }}
-        >
-          <Tooltip tooltip="Rename">
-            <Button kind={KIND.secondary} onClick={rename}>
-              <FiEdit />
-            </Button>
-          </Tooltip>
+      <TranslationHeader path={translation.path} select={select}>
+        <Tooltip tooltip="Delete">
+          <Button
+            kind={KIND.secondary}
+            onClick={() => setRemoveModalOpen(true)}
+          >
+            <FiTrash />
+          </Button>
+        </Tooltip>
 
-          <Tooltip tooltip="Delete">
-            <Button
-              kind={KIND.secondary}
-              onClick={() => setRemoveModalOpen(true)}
-            >
-              <FiTrash />
-            </Button>
-          </Tooltip>
-        </div>
-      </section>
+        <Tooltip tooltip="Rename">
+          <Button kind={KIND.secondary} onClick={rename}>
+            <FiEdit />
+          </Button>
+        </Tooltip>
+      </TranslationHeader>
 
       <section style={{ padding: "20px" }}>
         <Paragraph1>Has {count} translations.</Paragraph1>

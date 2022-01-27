@@ -1,9 +1,13 @@
 import { useStyletron } from "baseui";
 import { ChevronDown, ChevronRight } from "baseui/icon";
-import React from "react";
+import React, { useCallback } from "react";
 
-export default function TreeViewLabel({ node, onClick, keyMode }) {
-  const [css, theme] = useStyletron();
+function TreeViewLabel({ node, onClick, keyMode }) {
+  const [, theme] = useStyletron();
+
+  const onNodeClick = useCallback(() => {
+    onClick(node);
+  }, [node]);
 
   return (
     <div
@@ -15,7 +19,7 @@ export default function TreeViewLabel({ node, onClick, keyMode }) {
         cursor: "pointer",
         background: node.isSelected ? theme.colors.mono300 : "",
       }}
-      onClick={() => onClick(node)}
+      onClick={onNodeClick}
     >
       <div
         style={{
@@ -38,3 +42,5 @@ export default function TreeViewLabel({ node, onClick, keyMode }) {
     </div>
   );
 }
+
+export default React.memo(TreeViewLabel);

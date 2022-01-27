@@ -1,9 +1,8 @@
 import { Breadcrumbs } from "baseui/breadcrumbs";
 import { StyledLink } from "baseui/link";
-import React from "react";
+import React, { memo } from "react";
 
-export default function TranslationPath({ translation, select }) {
-  const path = translation.path;
+function TranslationPath({ path, select }) {
   const withoutLastPath = path.slice(0, path.length - 1);
   const lastPath = path[path.length - 1];
 
@@ -22,3 +21,5 @@ export default function TranslationPath({ translation, select }) {
     </Breadcrumbs>
   );
 }
+
+export default memo(TranslationPath);

@@ -1,17 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { createNode } from "src/core/tree";
 import Settings from "src/settings/Settings";
 import {
-  addTranslation,
-  clickTranslation,
-  removeTranslation,
-  renameTranslation,
-  selectLanguages,
-  selectSelectedTranslation,
-  selectTranslation,
-  selectTranslations,
-  updateTranslation,
+    addTranslation,
+    clickTranslation,
+    removeTranslation,
+    renameTranslation,
+    selectLanguages,
+    selectSelectedTranslation,
+    selectTranslation,
+    selectTranslations,
+    updateTranslation
 } from "./editorSlice";
 import Sidebar from "./Sidebar";
 import TranslationEdit from "./TranslationEdit";
@@ -46,73 +46,81 @@ function Editor({
     return "";
   }, [newTranslation, selectedTranslation]);
 
-  function startPathAction(action) {
+  const startPathAction = useCallback((action) => {
     setPathAction(action);
     setIsPathModalOpen(true);
-  }
+  }, []);
 
-  function stopPathAction() {
+  const stopPathAction = useCallback(() => {
     setPathAction(null);
     setIsPathModalOpen(false);
-  }
+  }, []);
 
-  function addKeyAction() {
+  const addKeyAction = useCallback(() => {
     startPathAction("add-key");
-  }
+  }, []);
 
-  function addGroupAction() {
+  const addGroupAction = useCallback(() => {
     startPathAction("add-group");
-  }
+  }, []);
 
-  function renameAction() {
+  const renameAction = useCallback(() => {
     startPathAction("rename");
-  }
+  }, []);
 
-  function confirmPathAction(path) {
-    if (pathAction === "add-group") {
-      addTranslation(
-        createNode({
-          path,
-          children: [],
-        })
-      );
-    }
+  const confirmPathAction = useCallback(
+    (path) => {
+      if (pathAction === "add-group") {
+        addTranslation(
+          createNode({
+            path,
+            children: [],
+          })
+        );
+      }
 
-    if (pathAction === "add-key") {
-      setNewTranslation(
-        createNode({
-          translations: languages.reduce(
-            (acc, language) => ({ ...acc, [language]: "" }),
-            {}
-          ),
-          path: path,
-        })
-      );
-    }
+      if (pathAction === "add-key") {
+        setNewTranslation(
+          createNode({
+            translations: languages.reduce(
+              (acc, language) => ({ ...acc, [language]: "" }),
+              {}
+            ),
+            path: path,
+          })
+        );
+      }
 
-    if (pathAction === "rename") {
-      renameTranslation({
-        oldPath: selectedTranslation.path,
-        newPath: path,
-      });
-    }
+      if (pathAction === "rename") {
+        renameTranslation({
+          oldPath: selectedTranslation.path,
+          newPath: path,
+        });
+      }
 
-    stopPathAction();
-  }
+      stopPathAction();
+    },
+    [languages, selectedTranslation?.path, pathAction]
+  );
 
-  function openSettings() {
+  const openSettings = useCallback(() => {
     setIsSettingsPageOpen(true);
-  }
+  }, []);
 
-  function saveTranslation(translation) {
+  const saveTranslation = useCallback((translation) => {
     setNewTranslation(null);
     addTranslation(translation);
-  }
+  }, []);
 
-  function onSelectTranslation(path) {
+  const onSelectTranslation = useCallback((path) => {
     setNewTranslation(null);
     selectTranslation(path);
-  }
+  }, []);
+
+  const onTranslationClick = useCallback((translation) => {
+    setNewTranslation(null);
+    clickTranslation(translation);
+  }, []);
 
   return (
     <main
@@ -125,10 +133,7 @@ function Editor({
         openSettings={openSettings}
         addKey={addKeyAction}
         addGroup={addGroupAction}
-        onTranslationClick={(translation) => {
-          setNewTranslation(null);
-          clickTranslation(translation);
-        }}
+        onTranslationClick={onTranslationClick}
       />
 
       <section

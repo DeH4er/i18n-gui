@@ -1,6 +1,7 @@
 import { useStyletron } from "baseui";
 import { Button, KIND, SIZE } from "baseui/button";
 import { Input, SIZE as INPUT_SIZE } from "baseui/input";
+import { PLACEMENT } from "baseui/popover";
 import React, { useCallback, useEffect, useState } from "react";
 import { BsListUl, BsTree } from "react-icons/bs";
 import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
@@ -79,17 +80,24 @@ function Sidebar({
             display: "flex",
           }}
         >
-          <Input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            size={INPUT_SIZE.compact}
-            placeholder="Search..."
-            clearable
-          />
+          <Tooltip
+            tooltip="Search keys by translations or key name"
+            placement={PLACEMENT.right}
+          >
+            <div style={{ flex: "1" }}>
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                size={INPUT_SIZE.compact}
+                placeholder="Search..."
+                clearable
+              />
+            </div>
+          </Tooltip>
 
           {keyMode === "tree" && (
             <>
-              <Tooltip tooltip="Expand all">
+              <Tooltip tooltip="Expand all" placement={PLACEMENT.right}>
                 <Button
                   size={SIZE.compact}
                   kind={KIND.secondary}
@@ -99,7 +107,7 @@ function Sidebar({
                 </Button>
               </Tooltip>
 
-              <Tooltip tooltip="Collapse all">
+              <Tooltip tooltip="Collapse all" placement={PLACEMENT.right}>
                 <Button
                   size={SIZE.compact}
                   kind={KIND.secondary}
@@ -109,7 +117,7 @@ function Sidebar({
                 </Button>
               </Tooltip>
 
-              <Tooltip tooltip="List view">
+              <Tooltip tooltip="List view" placement={PLACEMENT.right}>
                 <Button
                   size={SIZE.compact}
                   kind={KIND.secondary}
@@ -122,7 +130,7 @@ function Sidebar({
           )}
 
           {keyMode === "list" && (
-            <Tooltip tooltip="Tree view">
+            <Tooltip tooltip="Tree view" placement={PLACEMENT.right}>
               <Button
                 size={SIZE.compact}
                 kind={KIND.secondary}

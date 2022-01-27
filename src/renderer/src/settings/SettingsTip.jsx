@@ -1,22 +1,12 @@
 import { useStyletron } from "baseui";
-import { StatefulTooltip } from "baseui/tooltip";
+import Tooltip from "src/components/Tooltip";
 
 export default function SettingsTip({ children }) {
-  const [, theme] = useStyletron();
+  const [css, theme] = useStyletron();
   return (
-    <StatefulTooltip
-      content={
-        <div
-          style={{
-            maxWidth: "250px",
-          }}
-        >
-          {children}
-        </div>
-      }
-    >
+    <Tooltip tooltip={<div style={{ maxWidth: "250px" }}>{children}</div>}>
       <div
-        style={{
+        className={css({
           ...theme.typography.font150,
           transition: `color ${theme.animation.timing300}`,
           color: theme.colors.primary400,
@@ -24,10 +14,10 @@ export default function SettingsTip({ children }) {
           ":hover": {
             color: theme.colors.primary,
           },
-        }}
+        })}
       >
         What is this?
       </div>
-    </StatefulTooltip>
+    </Tooltip>
   );
 }

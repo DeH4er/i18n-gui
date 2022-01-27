@@ -8,16 +8,17 @@ import {
   ModalFooter,
   ModalHeader,
   ROLE,
-  SIZE as ModalSize,
+  SIZE as ModalSize
 } from "baseui/modal";
 import { Textarea } from "baseui/textarea";
+import { Label3, Paragraph3 } from "baseui/typography";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import LanguageLabel from "src/components/LanguageLabel";
 import {
   changeProject,
   selectGenerationRules,
-  selectLanguages,
+  selectLanguages
 } from "src/editor/editorSlice";
 import SettingsHeader from "./SettingsHeader";
 import SettingsSection from "./SettingsSection";
@@ -134,18 +135,23 @@ function Settings({
             >
               <span style={{ marginRight: "20px" }}>Generation rules</span>
               <SettingsTip>
-                <h4>Example</h4>
-                !!! TRANSLATE ME !!! {"{en-US}"}
-                <h4>General info</h4>
-                Generation rules let you use translations from one language to
-                generate another. Leave empty to not use generation for that
-                language.
-                <h4>Syntaxis</h4>
-                <b>{"{language-id}"}</b> to use that language in place when
-                editing translations. Example <b>{"{en-US}"}</b>
-                <br />
-                <b>Regular string</b> when used will remain the same in
-                translation.
+                <Label3>Example</Label3>
+                <Paragraph3>!!! TRANSLATE ME !!! {"{en-US}"}</Paragraph3>
+                <Label3>General info</Label3>
+                <Paragraph3>
+                  Generation rules let you use translations from one language to
+                  generate another. Leave empty to not use generation for that
+                  language.
+                </Paragraph3>
+                <Label3>Syntaxis</Label3>
+                <Paragraph3>
+                  <em>{"{language-id}"}</em> to use that language in place when
+                  editing translations. Example <em>{"{en-US}"}</em>
+                </Paragraph3>
+                <Paragraph3>
+                  <em>Regular string</em> when used will remain the same in
+                  translation.
+                </Paragraph3>
               </SettingsTip>
             </div>
           </SettingsHeader>

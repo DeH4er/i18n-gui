@@ -1,7 +1,7 @@
 import { useStyletron } from "baseui";
 import { PLACEMENT, StatefulPopover, TRIGGER_TYPE } from "baseui/popover";
 
-export default function Tooltip({ tooltip, children }) {
+export default function Tooltip({ tooltip, children, ...rest }) {
   const [, theme] = useStyletron();
 
   return (
@@ -13,6 +13,8 @@ export default function Tooltip({ tooltip, children }) {
         </div>
       )}
       triggerType={TRIGGER_TYPE.hover}
+      returnFocus={false}
+      {...rest}
     >
       {children}
     </StatefulPopover>

@@ -1,6 +1,6 @@
-import { KIND } from "baseui/button";
-import { arrayMove, List } from "baseui/dnd-list";
-import { FormControl } from "baseui/form-control";
+import { KIND } from 'baseui/button';
+import { arrayMove, List } from 'baseui/dnd-list';
+import { FormControl } from 'baseui/form-control';
 import {
   Modal,
   ModalBody,
@@ -8,21 +8,21 @@ import {
   ModalFooter,
   ModalHeader,
   ROLE,
-  SIZE as ModalSize
-} from "baseui/modal";
-import { Textarea } from "baseui/textarea";
-import { Label3, Paragraph3 } from "baseui/typography";
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import LanguageLabel from "src/components/LanguageLabel";
+  SIZE as ModalSize,
+} from 'baseui/modal';
+import { Textarea } from 'baseui/textarea';
+import { Label3, Paragraph3 } from 'baseui/typography';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import LanguageLabel from 'src/components/LanguageLabel';
 import {
   changeProject,
   selectGenerationRules,
-  selectLanguages
-} from "src/editor/editorSlice";
-import SettingsHeader from "./SettingsHeader";
-import SettingsSection from "./SettingsSection";
-import SettingsTip from "./SettingsTip";
+  selectLanguages,
+} from 'src/editor/editorSlice';
+import SettingsHeader from './SettingsHeader';
+import SettingsSection from './SettingsSection';
+import SettingsTip from './SettingsTip';
 
 function Settings({
   isOpen,
@@ -67,12 +67,12 @@ function Settings({
       overrides={{
         Dialog: {
           style: {
-            width: "60vw",
-            display: "flex",
-            flexDirection: "column",
-            height: "90vh",
-            overflow: "hidden",
-            maxWidth: "800px",
+            width: '60vw',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '90vh',
+            overflow: 'hidden',
+            maxWidth: '800px',
           },
         },
       }}
@@ -88,11 +88,11 @@ function Settings({
       <ModalHeader>Settings</ModalHeader>
       <ModalBody
         style={{
-          flex: "1 1 0",
-          height: "100%",
-          overflow: "auto",
-          boxSizing: "border-box",
-          paddingRight: "20px",
+          flex: '1 1 0',
+          height: '100%',
+          overflow: 'auto',
+          boxSizing: 'border-box',
+          paddingRight: '20px',
         }}
       >
         <SettingsSection>
@@ -101,20 +101,20 @@ function Settings({
             overrides={{
               List: {
                 style: {
-                  margin: "0",
+                  margin: '0',
                 },
               },
               Item: {
                 style: {
-                  paddingLeft: "5px",
-                  paddingTop: "5px",
-                  paddingRight: "5px",
-                  paddingBottom: "5px",
+                  paddingLeft: '5px',
+                  paddingTop: '5px',
+                  paddingRight: '5px',
+                  paddingBottom: '5px',
                 },
               },
               Label: {
                 component: ({ $value }) => (
-                  <div style={{ width: "100%" }}>
+                  <div style={{ width: '100%' }}>
                     <LanguageLabel language={$value} />
                   </div>
                 ),
@@ -129,14 +129,14 @@ function Settings({
           <SettingsHeader>
             <div
               style={{
-                display: "flex",
-                alignItems: "baseline",
+                display: 'flex',
+                alignItems: 'baseline',
               }}
             >
-              <span style={{ marginRight: "20px" }}>Generation rules</span>
+              <span style={{ marginRight: '20px' }}>Generation rules</span>
               <SettingsTip>
                 <Label3>Example</Label3>
-                <Paragraph3>!!! TRANSLATE ME !!! {"{en-US}"}</Paragraph3>
+                <Paragraph3>!!! TRANSLATE ME !!! {'{en-US}'}</Paragraph3>
                 <Label3>General info</Label3>
                 <Paragraph3>
                   Generation rules let you use translations from one language to
@@ -145,8 +145,8 @@ function Settings({
                 </Paragraph3>
                 <Label3>Syntaxis</Label3>
                 <Paragraph3>
-                  <em>{"{language-id}"}</em> to use that language in place when
-                  editing translations. Example <em>{"{en-US}"}</em>
+                  <em>{'{language-id}'}</em> to use that language in place when
+                  editing translations. Example <em>{'{en-US}'}</em>
                 </Paragraph3>
                 <Paragraph3>
                   <em>Regular string</em> when used will remain the same in
@@ -157,7 +157,7 @@ function Settings({
           </SettingsHeader>
 
           {newLanguages.map((language) => (
-            <div style={{ marginBottom: "20px" }} key={language}>
+            <div style={{ marginBottom: '20px' }} key={language}>
               <FormControl label={() => <LanguageLabel language={language} />}>
                 <Textarea
                   value={newGenerationRules[language]}

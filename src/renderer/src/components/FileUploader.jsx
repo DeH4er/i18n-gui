@@ -1,5 +1,5 @@
-import { useStyletron } from "baseui";
-import { useRef, useState } from "react";
+import { useStyletron } from 'baseui';
+import { useRef, useState } from 'react';
 
 export default function FileUploader({ onDropAccepted, multiple, accept }) {
   const ref = useRef();
@@ -7,7 +7,7 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
 
   function onFilesSelected(e) {
     onDropAccepted(Array.from(e.target.files));
-    ref.current.value = "";
+    ref.current.value = '';
   }
 
   function onFilesDropped(e) {
@@ -36,11 +36,11 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: "10px",
-        padding: "40px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '10px',
+        padding: '40px',
         background: isDraggingOver
           ? theme.colors.backgroundLightAccent
           : theme.colors.fileUploaderBackgroundColor,
@@ -57,13 +57,13 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
       <label
         className={css({
           ...theme.typography.font250,
-          padding: "10px",
-          borderRadius: "2em",
+          padding: '10px',
+          borderRadius: '2em',
           background: theme.colors.backgroundTertiary,
           color: theme.colors.primary,
-          cursor: "pointer",
+          cursor: 'pointer',
           transition: `background ${theme.animation.timing200}`,
-          ":hover": {
+          ':hover': {
             background: theme.colors.buttonSecondaryHover,
           },
         })}
@@ -71,7 +71,7 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
         Browse files
         <input
           type="file"
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           ref={ref}
           onChange={onFilesSelected}
           multiple={multiple}

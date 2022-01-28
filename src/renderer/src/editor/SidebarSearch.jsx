@@ -1,19 +1,19 @@
-import { Button, KIND, SIZE } from "baseui/button";
-import { Input, SIZE as INPUT_SIZE } from "baseui/input";
-import { PLACEMENT } from "baseui/popover";
-import React, { memo } from "react";
-import { BsListNested, BsListUl } from "react-icons/bs";
-import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
-import { connect } from "react-redux";
-import Tooltip from "src/components/Tooltip";
+import { Button, KIND, SIZE } from 'baseui/button';
+import { Input, SIZE as INPUT_SIZE } from 'baseui/input';
+import { PLACEMENT } from 'baseui/popover';
+import React, { memo } from 'react';
+import { BsListNested, BsListUl } from 'react-icons/bs';
+import { VscCollapseAll, VscExpandAll } from 'react-icons/vsc';
+import { connect } from 'react-redux';
+import Tooltip from 'src/components/Tooltip';
 import {
   collapseAll,
   expandAll,
   selectKeyMode,
   selectSearch,
   setKeyMode,
-  setSearch
-} from "./editorSlice";
+  setSearch,
+} from './editorSlice';
 
 function SidebarSearch({
   search,
@@ -26,15 +26,15 @@ function SidebarSearch({
   return (
     <div
       style={{
-        margin: "10px 0",
-        display: "flex",
+        margin: '10px 0',
+        display: 'flex',
       }}
     >
       <Tooltip
         tooltip="Search keys by translations or key name"
         placement={PLACEMENT.right}
       >
-        <div style={{ flex: "1" }}>
+        <div style={{ flex: '1' }}>
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -46,7 +46,7 @@ function SidebarSearch({
         </div>
       </Tooltip>
 
-      {keyMode === "tree" && (
+      {keyMode === 'tree' && (
         <>
           <Tooltip tooltip="Expand all" placement={PLACEMENT.right}>
             <Button
@@ -74,7 +74,7 @@ function SidebarSearch({
             <Button
               size={SIZE.compact}
               kind={KIND.secondary}
-              onClick={() => setKeyMode("list")}
+              onClick={() => setKeyMode('list')}
             >
               <BsListUl />
             </Button>
@@ -82,12 +82,12 @@ function SidebarSearch({
         </>
       )}
 
-      {keyMode === "list" && (
+      {keyMode === 'list' && (
         <Tooltip tooltip="Tree view" placement={PLACEMENT.right}>
           <Button
             size={SIZE.compact}
             kind={KIND.secondary}
-            onClick={() => setKeyMode("tree")}
+            onClick={() => setKeyMode('tree')}
           >
             <BsListNested />
           </Button>

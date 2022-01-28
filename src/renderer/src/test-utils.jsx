@@ -1,16 +1,14 @@
-import {
-  queries, render
-} from "@testing-library/react";
-import { BaseProvider, DarkTheme } from "baseui";
-import React from "react";
-import { Provider } from "react-redux";
-import { HashRouter } from "react-router-dom";
-import createStore from "src/store";
-import { Client as Styletron } from "styletron-engine-atomic";
-import { Provider as StyletronProvider } from "styletron-react";
-import * as customQueries from "./test-queries";
+import { queries, render } from '@testing-library/react';
+import { BaseProvider, DarkTheme } from 'baseui';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
+import createStore from 'src/store';
+import { Client as Styletron } from 'styletron-engine-atomic';
+import { Provider as StyletronProvider } from 'styletron-react';
+import * as customQueries from './test-queries';
 
-const Providers = ({ children, storeOptions }) => {
+function Providers({ children, storeOptions }) {
   const store = createStore(storeOptions);
   const engine = new Styletron();
   return (
@@ -22,7 +20,7 @@ const Providers = ({ children, storeOptions }) => {
       </BaseProvider>
     </StyletronProvider>
   );
-};
+}
 
 const customRender = (ui, options = {}) =>
   render(ui, {
@@ -33,6 +31,5 @@ const customRender = (ui, options = {}) =>
     ...options,
   });
 
-export * from "@testing-library/react";
+export * from '@testing-library/react';
 export { customRender as render };
-

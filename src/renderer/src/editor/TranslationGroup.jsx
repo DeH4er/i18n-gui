@@ -1,11 +1,11 @@
-import { Button, KIND } from "baseui/button";
-import { Paragraph1 } from "baseui/typography";
-import React, { useMemo, useState } from "react";
-import { FiEdit, FiTrash } from "react-icons/fi";
-import Tooltip from "src/components/Tooltip";
-import { countLeafs } from "src/core/tree";
-import TranslationHeader from "./TranslationHeader";
-import TranslationRemoveModal from "./TranslationRemoveModal";
+import { Button, KIND } from 'baseui/button';
+import { Paragraph1 } from 'baseui/typography';
+import React, { useMemo, useState } from 'react';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+import Tooltip from 'src/components/Tooltip';
+import { countLeafs } from 'src/core/tree';
+import TranslationHeader from './TranslationHeader';
+import TranslationRemoveModal from './TranslationRemoveModal';
 
 export default function TranslationGroup({
   translation,
@@ -45,7 +45,7 @@ export default function TranslationGroup({
         </Tooltip>
       </TranslationHeader>
 
-      <section style={{ padding: "20px" }}>
+      <section style={{ padding: '20px' }}>
         <Paragraph1>Has {count} translations.</Paragraph1>
       </section>
 

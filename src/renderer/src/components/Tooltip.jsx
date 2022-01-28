@@ -1,6 +1,6 @@
-import { useStyletron } from "baseui";
-import { PLACEMENT, StatefulPopover, TRIGGER_TYPE } from "baseui/popover";
-import React from "react";
+import { useStyletron } from 'baseui';
+import { PLACEMENT, StatefulPopover, TRIGGER_TYPE } from 'baseui/popover';
+import React from 'react';
 
 function Tooltip({ tooltip, children, ...rest }) {
   const [, theme] = useStyletron();
@@ -9,7 +9,7 @@ function Tooltip({ tooltip, children, ...rest }) {
     <StatefulPopover
       placement={PLACEMENT.bottom}
       content={() => (
-        <div style={{ ...theme.typography.font200, padding: "10px 20px" }}>
+        <div style={{ ...theme.typography.font200, padding: '10px 20px' }}>
           {tooltip}
         </div>
       )}

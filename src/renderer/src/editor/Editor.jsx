@@ -1,22 +1,22 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { connect } from "react-redux";
-import { createNode } from "src/core/tree";
-import Settings from "src/settings/Settings";
+import React, { useCallback, useMemo, useState } from 'react';
+import { connect } from 'react-redux';
+import { createNode } from 'src/core/tree';
+import Settings from 'src/settings/Settings';
 import {
-    addTranslation,
-    clickTranslation,
-    removeTranslation,
-    renameTranslation,
-    selectLanguages,
-    selectSelectedTranslation,
-    selectTranslation,
-    selectTranslations,
-    updateTranslation
-} from "./editorSlice";
-import Sidebar from "./Sidebar";
-import TranslationEdit from "./TranslationEdit";
-import TranslationGroup from "./TranslationGroup";
-import TranslationPathModal from "./TranslationPathModal";
+  addTranslation,
+  clickTranslation,
+  removeTranslation,
+  renameTranslation,
+  selectLanguages,
+  selectSelectedTranslation,
+  selectTranslation,
+  selectTranslations,
+  updateTranslation,
+} from './editorSlice';
+import Sidebar from './Sidebar';
+import TranslationEdit from './TranslationEdit';
+import TranslationGroup from './TranslationGroup';
+import TranslationPathModal from './TranslationPathModal';
 
 function Editor({
   translations,
@@ -36,14 +36,14 @@ function Editor({
 
   const viewMode = useMemo(() => {
     if (newTranslation) {
-      return "add-key";
+      return 'add-key';
     } else if (selectedTranslation && !selectedTranslation.children) {
-      return "select-translation";
+      return 'select-translation';
     } else if (selectedTranslation && selectedTranslation.children) {
-      return "select-group";
+      return 'select-group';
     }
 
-    return "";
+    return '';
   }, [newTranslation, selectedTranslation]);
 
   const startPathAction = useCallback((action) => {
@@ -57,20 +57,20 @@ function Editor({
   }, []);
 
   const addKeyAction = useCallback(() => {
-    startPathAction("add-key");
+    startPathAction('add-key');
   }, []);
 
   const addGroupAction = useCallback(() => {
-    startPathAction("add-group");
+    startPathAction('add-group');
   }, []);
 
   const renameAction = useCallback(() => {
-    startPathAction("rename");
+    startPathAction('rename');
   }, []);
 
   const confirmPathAction = useCallback(
     (path) => {
-      if (pathAction === "add-group") {
+      if (pathAction === 'add-group') {
         addTranslation(
           createNode({
             path,
@@ -79,11 +79,11 @@ function Editor({
         );
       }
 
-      if (pathAction === "add-key") {
+      if (pathAction === 'add-key') {
         setNewTranslation(
           createNode({
             translations: languages.reduce(
-              (acc, language) => ({ ...acc, [language]: "" }),
+              (acc, language) => ({ ...acc, [language]: '' }),
               {}
             ),
             path: path,
@@ -91,7 +91,7 @@ function Editor({
         );
       }
 
-      if (pathAction === "rename") {
+      if (pathAction === 'rename') {
         renameTranslation({
           oldPath: selectedTranslation.path,
           newPath: path,
@@ -125,8 +125,8 @@ function Editor({
   return (
     <main
       style={{
-        height: "100%",
-        display: "flex",
+        height: '100%',
+        display: 'flex',
       }}
     >
       <Sidebar
@@ -138,14 +138,14 @@ function Editor({
 
       <section
         style={{
-          boxSizing: "border-box",
-          overflow: "auto",
-          height: "100%",
-          width: "100%",
-          maxWidth: "1000px",
+          boxSizing: 'border-box',
+          overflow: 'auto',
+          height: '100%',
+          width: '100%',
+          maxWidth: '1000px',
         }}
       >
-        {viewMode === "select-translation" && (
+        {viewMode === 'select-translation' && (
           <TranslationEdit
             isUpdating={true}
             translation={selectedTranslation}
@@ -155,7 +155,7 @@ function Editor({
             rename={renameAction}
           ></TranslationEdit>
         )}
-        {viewMode === "add-key" && (
+        {viewMode === 'add-key' && (
           <TranslationEdit
             isUpdating={false}
             translation={newTranslation}
@@ -163,7 +163,7 @@ function Editor({
             select={onSelectTranslation}
           />
         )}
-        {viewMode === "select-group" && (
+        {viewMode === 'select-group' && (
           <TranslationGroup
             translation={selectedTranslation}
             select={onSelectTranslation}

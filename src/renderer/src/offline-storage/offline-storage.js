@@ -1,7 +1,7 @@
-export const offlineStorage = {
+export default {
   async get(key) {
     const { invoke } = window.ipcRenderer;
-    let value = await invoke("offline-storage", "get", key);
+    let value = await invoke('offline-storage', 'get', key);
     try {
       value = JSON.parse(value);
     } finally {
@@ -12,11 +12,11 @@ export const offlineStorage = {
     const { invoke } = window.ipcRenderer;
     let val = value;
     try {
-      if (value && typeof value === "object") {
+      if (value && typeof value === 'object') {
         val = JSON.stringify(value);
       }
     } finally {
-      await invoke("offline-storage", "set", key, val);
+      await invoke('offline-storage', 'set', key, val);
     }
   },
 };

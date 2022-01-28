@@ -1,13 +1,12 @@
-import { buildQueries, queryHelpers } from "@testing-library/react";
+import { buildQueries, queryHelpers } from '@testing-library/react';
 
-const queryAllByTestAttribute = (container, attribute, value, ...args) => {
-  return queryHelpers.queryAllByAttribute(
+const queryAllByTestAttribute = (container, attribute, value, ...args) =>
+  queryHelpers.queryAllByAttribute(
     `data-test${attribute}`,
     container,
     value,
     ...args
   );
-};
 
 const [
   queryByTestAttribute,
@@ -31,4 +30,3 @@ export {
   findAllByTestAttribute,
   findByTestAttribute,
 };
-

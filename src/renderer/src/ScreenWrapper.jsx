@@ -1,25 +1,25 @@
-import { useStyletron } from "baseui";
-import React from "react";
-import Titlebar from "./components/Titlebar";
+import { useStyletron } from 'baseui';
+import React from 'react';
+import Titlebar from './components/Titlebar';
 
 export default function ScreenWrapper({ children }) {
   const [, theme] = useStyletron();
   return (
     <div
       style={{
-        width: "100vw",
-        height: "100vh",
+        width: '100vw',
+        height: '100vh',
         background: theme.colors.backgroundPrimary,
-        overflow: "auto",
-        display: "flex",
-        flexDirection: "column",
+        overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <Titlebar />
       <div
         style={{
-          flex: "1",
-          overflow: "auto",
+          flex: '1',
+          overflow: 'auto',
         }}
       >
         {children}

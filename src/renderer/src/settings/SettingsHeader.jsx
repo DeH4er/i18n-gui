@@ -1,4 +1,4 @@
-import { useStyletron } from "baseui";
+import { useStyletron } from 'baseui';
 
 export default function SettingsHeader({ children }) {
   const [, theme] = useStyletron();
@@ -8,7 +8,7 @@ export default function SettingsHeader({ children }) {
       style={{
         ...theme.typography.font550,
         color: theme.colors.primary,
-        marginBottom: "20px",
+        marginBottom: '20px',
       }}
     >
       {children}

@@ -1,5 +1,5 @@
-import React from "react";
-import TreeViewLabel from "./TreeViewLabel";
+import React from 'react';
+import TreeViewLabel from './TreeViewLabel';
 
 const MemoizedTreeView = React.memo(TreeView);
 
@@ -8,13 +8,9 @@ function TreeView({ data, onClick, keyMode }) {
     <div>
       {data.map((node) => (
         <div key={node.id}>
-          <TreeViewLabel
-            node={node}
-            onClick={onClick}
-            keyMode={keyMode}
-          />
+          <TreeViewLabel node={node} onClick={onClick} keyMode={keyMode} />
           {node.children && node.isExpanded && (
-            <div style={{ marginLeft: "20px" }}>
+            <div style={{ marginLeft: '20px' }}>
               <MemoizedTreeView
                 data={node.children}
                 onClick={onClick}

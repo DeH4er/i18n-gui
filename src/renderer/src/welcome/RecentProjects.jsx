@@ -1,14 +1,14 @@
-import { useStyletron } from "baseui";
-import { Button, KIND, SIZE } from "baseui/button";
-import { H4, H6 } from "baseui/typography";
-import React from "react";
-import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useStyletron } from 'baseui';
+import { Button, KIND, SIZE } from 'baseui/button';
+import { H4, H6 } from 'baseui/typography';
+import React from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
-    openRecentProject,
-    removeProject,
-    selectOrderedRecentProjects
-} from "src/editor/editorSlice";
+  openRecentProject,
+  removeProject,
+  selectOrderedRecentProjects,
+} from 'src/editor/editorSlice';
 
 function formatDate(date) {
   const d = new Date(date);
@@ -25,20 +25,20 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
 
   async function onOpenRecentProject(id) {
     await openRecentProject(id);
-    navigate("/editor");
+    navigate('/editor');
   }
 
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: "350px",
-        width: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '350px',
+        width: '100%',
         background: theme.colors.backgroundSecondary,
-        boxSizing: "border-box",
-        height: "100%",
-        overflow: "hidden",
+        boxSizing: 'border-box',
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
       <H4 margin="20px 0 0 0" padding="20px">
@@ -47,19 +47,19 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
 
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          overflow: "auto",
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          overflow: 'auto',
         }}
       >
         {recentProjects.map((project) => (
           <div
             key={project.id}
             className={css({
-              padding: "20px",
-              cursor: "pointer",
-              ":hover": {
+              padding: '20px',
+              cursor: 'pointer',
+              ':hover': {
                 background: theme.colors.backgroundPrimary,
               },
             })}
@@ -67,16 +67,16 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
           >
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
               }}
             >
               <div
                 className={css({
-                  display: "flex",
-                  alignItems: "baseline",
-                  justifyContent: "space-between",
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
                 })}
               >
                 <H6 margin={0}>{project.name}</H6>
@@ -92,9 +92,9 @@ function RecentProjects({ recentProjects, openRecentProject, removeProject }) {
 
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
               >
                 <div

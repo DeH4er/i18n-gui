@@ -1,26 +1,26 @@
-import { getByRole } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
-import { createNode } from "src/core/tree";
-import { getByTestAttribute, queryByTestAttribute } from "src/test-queries";
-import { render, screen } from "src/test-utils";
-import Editor from "./Editor";
+import { getByRole } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { createNode } from 'src/core/tree';
+import { getByTestAttribute, queryByTestAttribute } from 'src/test-queries';
+import { render, screen } from 'src/test-utils';
+import Editor from './Editor';
 
-describe("Editor", () => {
+describe('Editor', () => {
   const create = (state = {}) => {
     return render(<Editor />, {
       storeOptions: {
         preloadedState: {
           editor: {
             translations: [],
-            projectId: "a",
-            keyMode: "tree",
-            search: "",
+            projectId: 'a',
+            keyMode: 'tree',
+            search: '',
             selectedTranslation: null,
             recentProjects: {
               a: {
-                languages: ["en", "fr", "de"],
-                generationRules: { en: "", fr: "", de: "" },
+                languages: ['en', 'fr', 'de'],
+                generationRules: { en: '', fr: '', de: '' },
               },
             },
             ...state,
@@ -32,12 +32,12 @@ describe("Editor", () => {
 
   const isSelectedNode = (path) => {
     const node = getNode(path);
-    return node.getAttribute("data-testselected") === "true";
+    return node.getAttribute('data-testselected') === 'true';
   };
 
   const isExpandedNode = (path) => {
     const node = getNode(path);
-    return node.getAttribute("data-testexpanded") === "true";
+    return node.getAttribute('data-testexpanded') === 'true';
   };
 
   const expandNode = (path) => {
@@ -47,17 +47,17 @@ describe("Editor", () => {
   };
 
   const getNode = (path) => {
-    return getByTestAttribute(document.body, "path", path);
+    return getByTestAttribute(document.body, 'path', path);
   };
 
   const getAllNodes = () => {
-    return screen.getAllByTestId("tree-node");
+    return screen.getAllByTestId('tree-node');
   };
 
   const hasOnlyNodes = (paths) => {
     const nodes = getAllNodes();
     nodes.forEach((n) => {
-      expect(paths).toContain(n.getAttribute("data-testpath"));
+      expect(paths).toContain(n.getAttribute('data-testpath'));
     });
   };
 
@@ -66,7 +66,7 @@ describe("Editor", () => {
   };
 
   const hasNoNode = (path) => {
-    expect(queryByTestAttribute(document.body, "path", path)).toBeFalsy();
+    expect(queryByTestAttribute(document.body, 'path', path)).toBeFalsy();
   };
 
   const clickNode = (path) => {
@@ -75,18 +75,18 @@ describe("Editor", () => {
     return node;
   };
 
-  const getDialog = () => screen.getByRole("dialog");
+  const getDialog = () => screen.getByRole('dialog');
 
   const confirmDialog = () => {
     const dialog = getDialog();
-    userEvent.click(getByRole(dialog, "button", { name: /confirm/i }));
+    userEvent.click(getByRole(dialog, 'button', { name: /confirm/i }));
   };
 
   const renameNode = (oldPath, newPath) => {
     clickNode(oldPath);
-    userEvent.click(screen.getByTestId("rename-node"));
+    userEvent.click(screen.getByTestId('rename-node'));
     const dialog = getDialog();
-    const pathInput = getByRole(dialog, "textbox");
+    const pathInput = getByRole(dialog, 'textbox');
     userEvent.clear(pathInput);
     userEvent.type(pathInput, newPath);
     confirmDialog();
@@ -94,20 +94,20 @@ describe("Editor", () => {
 
   const deleteNode = (path) => {
     clickNode(path);
-    userEvent.click(screen.getByTestId("remove-node"));
+    userEvent.click(screen.getByTestId('remove-node'));
     confirmDialog();
   };
 
   const expandAll = () => {
-    userEvent.click(screen.getByTestId("expand-all"));
+    userEvent.click(screen.getByTestId('expand-all'));
   };
 
   const collapseAll = () => {
-    userEvent.click(screen.getByTestId("collapse-all"));
+    userEvent.click(screen.getByTestId('collapse-all'));
   };
 
   const clearSearch = () => {
-    const input = screen.getByRole("searchbox");
+    const input = screen.getByRole('searchbox');
     userEvent.clear(input);
     return input;
   };
@@ -118,152 +118,152 @@ describe("Editor", () => {
     return input;
   };
 
-  test("render", () => {
+  test('render', () => {
     expect(create()).toBeTruthy();
   });
 
-  test("select root key", () => {
+  test('select root key', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
-          translations: { en: "", fr: "", de: "" },
+          path: ['A'],
+          translations: { en: '', fr: '', de: '' },
         }),
       ],
     });
 
-    expect(isSelectedNode("A")).toBeFalsy();
-    clickNode("A");
-    expect(isSelectedNode("A")).toBeTruthy();
+    expect(isSelectedNode('A')).toBeFalsy();
+    clickNode('A');
+    expect(isSelectedNode('A')).toBeTruthy();
   });
 
-  test("select and expand/collapse root group", () => {
+  test('select and expand/collapse root group', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "B"],
-              translations: { en: "", de: "", fr: "" },
+              path: ['A', 'B'],
+              translations: { en: '', de: '', fr: '' },
             }),
           ],
         }),
       ],
     });
 
-    hasNoNode("A.B");
-    expandNode("A");
-    hasNode("A");
-    hasNode("A.B");
-    clickNode("A");
-    hasNoNode("A.B");
+    hasNoNode('A.B');
+    expandNode('A');
+    hasNode('A');
+    hasNode('A.B');
+    clickNode('A');
+    hasNoNode('A.B');
   });
 
-  test("expand/collapse all", () => {
+  test('expand/collapse all', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "A1"],
+              path: ['A', 'A1'],
               children: [
                 createNode({
-                  path: ["A", "A1", "A2"],
-                  translations: { en: "", fr: "", de: "" },
+                  path: ['A', 'A1', 'A2'],
+                  translations: { en: '', fr: '', de: '' },
                 }),
                 createNode({
-                  path: ["A", "A1", "A3"],
-                  translations: { en: "", fr: "", de: "" },
+                  path: ['A', 'A1', 'A3'],
+                  translations: { en: '', fr: '', de: '' },
                 }),
               ],
             }),
           ],
         }),
         createNode({
-          path: ["B"],
+          path: ['B'],
           children: [
             createNode({
-              path: ["B", "B1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["B", "B2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
       ],
     });
 
-    hasOnlyNodes(["A", "B"]);
+    hasOnlyNodes(['A', 'B']);
     expandAll();
-    hasOnlyNodes(["A", "A.A1", "A.A1.A2", "A.A1.A3", "B", "B.B1", "B.B2"]);
+    hasOnlyNodes(['A', 'A.A1', 'A.A1.A2', 'A.A1.A3', 'B', 'B.B1', 'B.B2']);
 
     collapseAll();
-    hasOnlyNodes(["A", "B"]);
+    hasOnlyNodes(['A', 'B']);
 
-    expandNode("A");
-    hasOnlyNodes(["A", "B", "A.A1"]);
+    expandNode('A');
+    hasOnlyNodes(['A', 'B', 'A.A1']);
   });
 
-  test("rename root key to root key", () => {
+  test('rename root key to root key', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
-          translations: { en: "", fr: "", de: "" },
+          path: ['A'],
+          translations: { en: '', fr: '', de: '' },
         }),
       ],
     });
 
-    renameNode("A", "B");
-    expect(isSelectedNode("B")).toBeTruthy();
-    hasNoNode("A");
+    renameNode('A', 'B');
+    expect(isSelectedNode('B')).toBeTruthy();
+    hasNoNode('A');
   });
 
-  test("rename root key with nested key", () => {
+  test('rename root key with nested key', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
-          translations: { en: "", fr: "", de: "" },
+          path: ['A'],
+          translations: { en: '', fr: '', de: '' },
         }),
       ],
     });
 
-    renameNode("A", "B.C.D");
-    expect(isSelectedNode("B.C.D")).toBeTruthy();
-    hasOnlyNodes(["B", "B.C", "B.C.D"])
+    renameNode('A', 'B.C.D');
+    expect(isSelectedNode('B.C.D')).toBeTruthy();
+    hasOnlyNodes(['B', 'B.C', 'B.C.D']);
   });
 
-  test("move child key to different parent", async () => {
+  test('move child key to different parent', async () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "A1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['A', 'A1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["A", "A2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['A', 'A2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
         createNode({
-          path: ["B"],
+          path: ['B'],
           children: [
             createNode({
-              path: ["B", "B1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["B", "B2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
@@ -271,164 +271,164 @@ describe("Editor", () => {
     });
 
     expandAll();
-    renameNode("A.A1", "B.B3");
-    expect(isSelectedNode("B.B3")).toBeTruthy();
+    renameNode('A.A1', 'B.B3');
+    expect(isSelectedNode('B.B3')).toBeTruthy();
 
-    hasOnlyNodes(["A", "A.A2", "B", "B.B1", "B.B2", "B.B3"]);
+    hasOnlyNodes(['A', 'A.A2', 'B', 'B.B1', 'B.B2', 'B.B3']);
   });
 
-  test("rename child key to root", () => {
+  test('rename child key to root', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "A1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['A', 'A1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["A", "A2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['A', 'A2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
         createNode({
-          path: ["B"],
+          path: ['B'],
           children: [
             createNode({
-              path: ["B", "B1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["B", "B2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
       ],
     });
 
-    expandNode("A");
-    renameNode("A.A1", "C");
-    expect(isSelectedNode("C")).toBeTruthy();
-    expandNode("B");
-    hasOnlyNodes(["A", "A.A2", "B", "B.B1", "B.B2", "C"]);
+    expandNode('A');
+    renameNode('A.A1', 'C');
+    expect(isSelectedNode('C')).toBeTruthy();
+    expandNode('B');
+    hasOnlyNodes(['A', 'A.A2', 'B', 'B.B1', 'B.B2', 'C']);
   });
 
-  test("delete root group", () => {
+  test('delete root group', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "A1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['A', 'A1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["A", "A2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['A', 'A2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
         createNode({
-          path: ["B"],
+          path: ['B'],
           children: [
             createNode({
-              path: ["B", "B1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["B", "B2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
       ],
     });
 
-    deleteNode("A");
-    hasNoNode("A");
-    expandNode("B");
-    hasOnlyNodes(["B", "B.B1", "B.B2"]);
+    deleteNode('A');
+    hasNoNode('A');
+    expandNode('B');
+    hasOnlyNodes(['B', 'B.B1', 'B.B2']);
   });
 
-  test("delete child group", () => {
+  test('delete child group', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "A1"],
+              path: ['A', 'A1'],
               children: [
                 createNode({
-                  path: ["A", "A1", "A2"],
-                  translations: { en: "", fr: "", de: "" },
+                  path: ['A', 'A1', 'A2'],
+                  translations: { en: '', fr: '', de: '' },
                 }),
 
                 createNode({
-                  path: ["A", "A1", "A2"],
-                  translations: { en: "", fr: "", de: "" },
+                  path: ['A', 'A1', 'A2'],
+                  translations: { en: '', fr: '', de: '' },
                 }),
               ],
             }),
           ],
         }),
         createNode({
-          path: ["B"],
+          path: ['B'],
           children: [
             createNode({
-              path: ["B", "B1"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B1'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["B", "B2"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'B2'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
       ],
     });
 
-    expandNode("A");
-    deleteNode("A.A1");
-    expandNode("B");
-    hasOnlyNodes(["A", "B", "B.B1", "B.B2"]);
+    expandNode('A');
+    deleteNode('A.A1');
+    expandNode('B');
+    hasOnlyNodes(['A', 'B', 'B.B1', 'B.B2']);
   });
 
-  test("search by key name", () => {
+  test('search by key name', () => {
     create({
       translations: [
         createNode({
-          path: ["A"],
+          path: ['A'],
           children: [
             createNode({
-              path: ["A", "A1"],
+              path: ['A', 'A1'],
               children: [
                 createNode({
-                  path: ["A", "A1", "FIRST_ONE"],
-                  translations: { en: "", fr: "", de: "" },
+                  path: ['A', 'A1', 'FIRST_ONE'],
+                  translations: { en: '', fr: '', de: '' },
                 }),
                 createNode({
-                  path: ["A", "A1", "SECOND_ONE"],
-                  translations: { en: "", fr: "", de: "" },
+                  path: ['A', 'A1', 'SECOND_ONE'],
+                  translations: { en: '', fr: '', de: '' },
                 }),
               ],
             }),
           ],
         }),
         createNode({
-          path: ["B"],
+          path: ['B'],
           children: [
             createNode({
-              path: ["B", "FIRST_TWO"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
             }),
             createNode({
-              path: ["B", "SECOND_TWO"],
-              translations: { en: "", fr: "", de: "" },
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
             }),
           ],
         }),
@@ -437,36 +437,36 @@ describe("Editor", () => {
 
     expandAll();
     hasOnlyNodes([
-      "A",
-      "A.A1",
-      "A.A1.FIRST_ONE",
-      "A.A1.SECOND_ONE",
-      "B",
-      "B.FIRST_TWO",
-      "B.SECOND_TWO",
+      'A',
+      'A.A1',
+      'A.A1.FIRST_ONE',
+      'A.A1.SECOND_ONE',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
     ]);
 
-    search("one");
-    hasOnlyNodes(["A", "A.A1", "A.A1.FIRST_ONE", "A.A1.SECOND_ONE"]);
+    search('one');
+    hasOnlyNodes(['A', 'A.A1', 'A.A1.FIRST_ONE', 'A.A1.SECOND_ONE']);
 
     clearSearch();
     hasOnlyNodes([
-      "A",
-      "A.A1",
-      "A.A1.FIRST_ONE",
-      "A.A1.SECOND_ONE",
-      "B",
-      "B.FIRST_TWO",
-      "B.SECOND_TWO",
+      'A',
+      'A.A1',
+      'A.A1.FIRST_ONE',
+      'A.A1.SECOND_ONE',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
     ]);
 
-    search("two");
-    hasOnlyNodes(["B", "B.FIRST_TWO", "B.SECOND_TWO"]);
+    search('two');
+    hasOnlyNodes(['B', 'B.FIRST_TWO', 'B.SECOND_TWO']);
 
-    search("first");
-    hasOnlyNodes(["A", "A.A1", "A.A1.FIRST_ONE", "B", "B.FIRST_TWO"]);
+    search('first');
+    hasOnlyNodes(['A', 'A.A1', 'A.A1.FIRST_ONE', 'B', 'B.FIRST_TWO']);
 
-    search("second");
-    hasOnlyNodes(["A", "A.A1", "A.A1.SECOND_ONE", "B", "B.SECOND_TWO"]);
+    search('second');
+    hasOnlyNodes(['A', 'A.A1', 'A.A1.SECOND_ONE', 'B', 'B.SECOND_TWO']);
   });
 });

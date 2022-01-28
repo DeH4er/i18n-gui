@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   createNestedPath,
   expandPath,
@@ -12,17 +12,16 @@ import {
   rebuildChildrenPath,
   removeNode,
   replaceNodeOrPush,
-  sortTreeArray
-} from "src/core/tree";
+  sortTreeArray,
+} from 'src/core/tree';
 import {
   changeProject,
   createProject,
   loadRecentProjects,
   openRecentProject,
   pull,
-  removeProject
-} from "./editorThunks";
-
+  removeProject,
+} from './editorThunks';
 
 function unselectTranslation(state) {
   if (state.selectedTranslation) {
@@ -50,14 +49,14 @@ function selectTranslationByPath(state, path) {
 }
 
 export const editorSlice = createSlice({
-  name: "editor",
+  name: 'editor',
   initialState: {
     projectId: null,
     recentProjects: {},
     translations: null,
     selectedTranslation: null,
-    search: "",
-    keyMode: "tree",
+    search: '',
+    keyMode: 'tree',
   },
   reducers: {
     clickTranslation: (state, action) => {
@@ -164,8 +163,8 @@ export const editorSlice = createSlice({
       state.recentProjects = recentProjects;
       state.translations = translations;
       state.selectedTranslation = null;
-      state.keyMode = "tree";
-      state.search = "";
+      state.keyMode = 'tree';
+      state.search = '';
     },
     [openRecentProject.fulfilled]: (state, action) => {
       const { id, recentProjects, translations } = action.payload;
@@ -173,8 +172,8 @@ export const editorSlice = createSlice({
       state.recentProjects = recentProjects;
       state.translations = translations;
       state.selectedTranslation = null;
-      state.keyMode = "tree";
-      state.search = "";
+      state.keyMode = 'tree';
+      state.search = '';
     },
     [removeProject.fulfilled]: (state, action) => {
       state.recentProjects = action.payload;

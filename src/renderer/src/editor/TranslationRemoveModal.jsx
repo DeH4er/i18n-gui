@@ -1,4 +1,4 @@
-import { KIND } from "baseui/button";
+import { KIND } from 'baseui/button';
 import {
   Modal,
   ModalBody,
@@ -7,8 +7,8 @@ import {
   ModalHeader,
   ROLE,
   SIZE as ModalSize,
-} from "baseui/modal";
-import React from "react";
+} from 'baseui/modal';
+import React from 'react';
 
 export default function TranslationRemoveModal({
   translation,
@@ -29,11 +29,11 @@ export default function TranslationRemoveModal({
       unstable_ModalBackdropScroll={true}
     >
       <ModalHeader>
-        Confirm deletion{count > 0 ? ` of ${count} translations` : ""}
+        Confirm deletion{count > 0 ? ` of ${count} translations` : ''}
       </ModalHeader>
       <ModalBody>
-        Are you sure you want to delete {translation.path.join(".")}?
-        {count > 0 ? ` It contains ${count} translations.` : ""}
+        Are you sure you want to delete {translation.path.join('.')}?
+        {count > 0 ? ` It contains ${count} translations.` : ''}
       </ModalBody>
       <ModalFooter>
         <ModalButton kind={KIND.tertiary} onClick={onCancel}>

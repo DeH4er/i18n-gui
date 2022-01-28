@@ -1,6 +1,6 @@
-import { useStyletron } from "baseui";
-import React from "react";
-import { translateLanguage } from "src/core/utils";
+import { useStyletron } from 'baseui';
+import React from 'react';
+import { translateLanguage } from 'src/core/utils';
 
 export default function LanguageLabel({ language }) {
   const translated = translateLanguage(language);
@@ -11,9 +11,9 @@ export default function LanguageLabel({ language }) {
       <div
         style={{
           ...theme.typography.font300,
-          display: "flex",
-          gap: "10px",
-          alignItems: "baseline",
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'baseline',
         }}
       >
         <div>{translated}</div>
@@ -21,7 +21,7 @@ export default function LanguageLabel({ language }) {
           style={{
             ...theme.typography.font150,
             color: theme.colors.primary400,
-            marignLeft: "20px",
+            marignLeft: '20px',
           }}
         >
           {language}

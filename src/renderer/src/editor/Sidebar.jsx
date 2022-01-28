@@ -1,7 +1,7 @@
-import { useStyletron } from "baseui";
-import React, { useCallback, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import TreeView from "src/components/TreeView";
+import { useStyletron } from 'baseui';
+import React, { useCallback, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import TreeView from 'src/components/TreeView';
 import {
   collapseAll,
   expandAll,
@@ -11,10 +11,10 @@ import {
   selectKeyMode,
   selectSearch,
   setKeyMode,
-  setSearch
-} from "./editorSlice";
-import SidebarSearch from "./SidebarSearch";
-import Toolbar from "./Toolbar";
+  setSearch,
+} from './editorSlice';
+import SidebarSearch from './SidebarSearch';
+import Toolbar from './Toolbar';
 
 function Sidebar({
   setSearch,
@@ -32,13 +32,13 @@ function Sidebar({
   const [css, theme] = useStyletron();
 
   function handleMouseDown() {
-    document.addEventListener("mouseup", handleMouseUp, true);
-    document.addEventListener("mousemove", handleMouseMove, true);
+    document.addEventListener('mouseup', handleMouseUp, true);
+    document.addEventListener('mousemove', handleMouseMove, true);
   }
 
   function handleMouseUp() {
-    document.removeEventListener("mouseup", handleMouseUp, true);
-    document.removeEventListener("mousemove", handleMouseMove, true);
+    document.removeEventListener('mouseup', handleMouseUp, true);
+    document.removeEventListener('mousemove', handleMouseMove, true);
   }
 
   useEffect(() => {
@@ -55,15 +55,15 @@ function Sidebar({
   return (
     <div
       style={{
-        display: "flex",
-        height: "100%",
+        display: 'flex',
+        height: '100%',
       }}
     >
       <section
         style={{
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
           minWidth: `${barWidth}px`,
           maxWidth: `${barWidth}px`,
         }}
@@ -72,8 +72,8 @@ function Sidebar({
         <SidebarSearch />
         <div
           style={{
-            height: "100%",
-            overflow: "auto",
+            height: '100%',
+            overflow: 'auto',
           }}
         >
           <TreeView
@@ -86,11 +86,11 @@ function Sidebar({
       <div
         onMouseDown={(e) => handleMouseDown(e)}
         className={css({
-          height: "100%",
-          width: "20px",
-          cursor: "col-resize",
+          height: '100%',
+          width: '20px',
+          cursor: 'col-resize',
           transition: `background ${theme.animation.timing200}`,
-          ":hover": {
+          ':hover': {
             background: theme.colors.backgroundSecondary,
           },
         })}

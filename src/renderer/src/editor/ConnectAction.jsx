@@ -1,7 +1,7 @@
-import { Button, KIND } from "baseui/button";
-import React from "react";
-import { FiLock, FiUnlock } from "react-icons/fi";
-import Tooltip from "src/components/Tooltip";
+import { Button, KIND } from 'baseui/button';
+import React from 'react';
+import { FiLock, FiUnlock } from 'react-icons/fi';
+import Tooltip from 'src/components/Tooltip';
 
 export default React.forwardRef(
   ({ connectedLanguages, setConnectedLanguages }, ref) => {
@@ -24,7 +24,7 @@ export default React.forwardRef(
     }
 
     return (
-      <Tooltip tooltip={`${connectAllMode ? "Lock" : "Unlock"} all`}>
+      <Tooltip tooltip={`${connectAllMode ? 'Lock' : 'Unlock'} all`}>
         <Button ref={ref} kind={KIND.secondary} onClick={toggle}>
           {connectAllMode ? <FiUnlock /> : <FiLock />}
         </Button>

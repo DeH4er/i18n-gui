@@ -1,6 +1,6 @@
-import { useStyletron } from "baseui";
-import { Button, KIND, SIZE } from "baseui/button";
-import { FiMinus, FiX } from "react-icons/fi";
+import { useStyletron } from 'baseui';
+import { Button, KIND, SIZE } from 'baseui/button';
+import { FiMinus, FiX } from 'react-icons/fi';
 
 function TitlebarButton({ children, ...props }) {
   return (
@@ -8,10 +8,10 @@ function TitlebarButton({ children, ...props }) {
       overrides={{
         BaseButton: {
           style: {
-            paddingTop: "10px",
-            paddingBottom: "10px",
-            paddingLeft: "20px",
-            paddingRight: "20px",
+            paddingTop: '10px',
+            paddingBottom: '10px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
           },
         },
       }}
@@ -28,38 +28,38 @@ export default function Titlebar() {
   const [, theme] = useStyletron();
 
   function minimize() {
-    window.ipcRenderer.send("minimize");
+    window.ipcRenderer.send('minimize');
   }
 
   function close() {
-    window.ipcRenderer.send("close");
+    window.ipcRenderer.send('close');
   }
 
   return (
     <div
       style={{
-        height: "35px",
+        height: '35px',
         ...theme.typography.font200,
         color: theme.colors.primary,
-        display: "flex",
+        display: 'flex',
       }}
     >
       <div
         style={{
-          WebkitUserSelect: "none",
-          WebkitAppRegion: "drag",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          paddingLeft: "10px",
+          WebkitUserSelect: 'none',
+          WebkitAppRegion: 'drag',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          paddingLeft: '10px',
         }}
       >
         i18n Editor
       </div>
       <div
         style={{
-          WebkitAppRegion: "no-drag",
-          display: "flex",
+          WebkitAppRegion: 'no-drag',
+          display: 'flex',
         }}
       >
         <TitlebarButton onClick={minimize}>

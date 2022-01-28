@@ -1,10 +1,11 @@
-import { v4 as uuidv4 } from "uuid";
-const fs = window.fs;
-const path = window.path;
+import { v4 as uuidv4 } from 'uuid';
+
+const { fs } = window;
+const { path } = window;
 
 export function readJson(filepath) {
   return new Promise((res, rej) => {
-    fs.readFile(filepath, "UTF-8", (err, f) => {
+    fs.readFile(filepath, 'UTF-8', (err, f) => {
       if (!err) {
         try {
           const parsed = JSON.parse(f);

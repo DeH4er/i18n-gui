@@ -4,7 +4,7 @@
  * https://projects.lukehaas.me/css-loaders
  * https://matejkustec.github.io/SpinThatShit
  */
-export function useLoading() {
+export default function useLoading() {
   const className = `loaders-css__square-spin`;
   const styleContent = `
 @keyframes square-spin {
@@ -33,12 +33,12 @@ export function useLoading() {
   z-index: 9;
 }
     `;
-  const oStyle = document.createElement("style");
-  const oDiv = document.createElement("div");
+  const oStyle = document.createElement('style');
+  const oDiv = document.createElement('div');
 
-  oStyle.id = "app-loading-style";
+  oStyle.id = 'app-loading-style';
   oStyle.innerHTML = styleContent;
-  oDiv.className = "app-loading-wrap";
+  oDiv.className = 'app-loading-wrap';
   oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
 
   return {

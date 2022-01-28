@@ -10,10 +10,10 @@ export function replaceTags(translation, languages) {
   return (
     translation?.replace(/{(\S+)}/g, (match, language) => {
       if (!languages.hasOwnProperty(language)) {
-        return "";
+        return '';
       }
 
       return languages[language];
-    }) ?? ""
+    }) ?? ''
   );
 }

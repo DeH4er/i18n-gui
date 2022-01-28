@@ -1,39 +1,36 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { readTranslationFile, writeJson } from "src/core/file";
-import { jsonsToTree } from "src/core/tree";
-import { v4 as uuidv4 } from "uuid";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { readTranslationFile, writeJson } from 'src/core/file';
+import { jsonsToTree, treeToJsons } from 'src/core/tree';
+import { v4 as uuidv4 } from 'uuid';
+import offlineStorage from '../../offline-storage/offline-storage';
 import {
   selectLanguages,
   selectProject,
   selectProjectId,
   selectRecentProjects,
-  selectTranslations
-} from ".";
-import { treeToJsons } from "../../core/tree";
-import { offlineStorage } from "../../offline-storage/offline-storage";
+  selectTranslations,
+} from './editorSelectors';
 
 export const loadRecentProjects = createAsyncThunk(
-  "editor/loadRecentProjects",
-  async () => {
-    return await offlineStorage.get("recent-projects");
-  }
+  'editor/loadRecentProjects',
+  () => offlineStorage.get('recent-projects')
 );
 
 export const changeProject = createAsyncThunk(
-  "editor/changeProject",
+  'editor/changeProject',
   async (projectChanges, thunk) => {
     const state = thunk.getState();
     const recentProjects = selectRecentProjects(state);
     const projectId = selectProjectId(state);
     const newProject = { ...recentProjects[projectId], ...projectChanges };
     const newRecentProjects = { ...recentProjects, [projectId]: newProject };
-    await offlineStorage.set("recent-projects", newRecentProjects);
+    await offlineStorage.set('recent-projects', newRecentProjects);
     return newRecentProjects;
   }
 );
 
 export const createProject = createAsyncThunk(
-  "editor/createProject",
+  'editor/createProject',
   async ({ paths, projectName }, thunk) => {
     const state = thunk.getState();
     const files = await Promise.all(paths.map(readTranslationFile));
@@ -41,7 +38,7 @@ export const createProject = createAsyncThunk(
     const generationRules = languages.reduce(
       (acc, language) => ({
         ...acc,
-        [language]: "",
+        [language]: '',
       }),
       {}
     );
@@ -62,13 +59,13 @@ export const createProject = createAsyncThunk(
       files.map((f) => f.name)
     );
 
-    await offlineStorage.set("recent-projects", newRecentProjects);
+    await offlineStorage.set('recent-projects', newRecentProjects);
     return { id: project.id, recentProjects: newRecentProjects, translations };
   }
 );
 
 export const openRecentProject = createAsyncThunk(
-  "editor/openRecentProject",
+  'editor/openRecentProject',
   async (id, thunk) => {
     const state = thunk.getState();
     const recentProjects = selectRecentProjects(state);
@@ -86,23 +83,23 @@ export const openRecentProject = createAsyncThunk(
       files.map((f) => f.name)
     );
 
-    await offlineStorage.set("recent-projects", newRecentProjects);
+    await offlineStorage.set('recent-projects', newRecentProjects);
     return { id, recentProjects: newRecentProjects, translations };
   }
 );
 
 export const removeProject = createAsyncThunk(
-  "editor/removeProject",
+  'editor/removeProject',
   async (id, thunk) => {
     const state = thunk.getState();
     const recentProjects = selectRecentProjects(state);
     const { [id]: removedProject, ...newRecentProjects } = recentProjects;
-    await offlineStorage.set("recent-project", newRecentProjects);
+    await offlineStorage.set('recent-project', newRecentProjects);
     return newRecentProjects;
   }
 );
 
-export const pull = createAsyncThunk("editor/pull", async (_, thunk) => {
+export const pull = createAsyncThunk('editor/pull', async (_, thunk) => {
   const state = thunk.getState();
   const project = selectProject(state);
   const files = await Promise.all(
@@ -115,7 +112,7 @@ export const pull = createAsyncThunk("editor/pull", async (_, thunk) => {
   return translations;
 });
 
-export const push = createAsyncThunk("editor/push", async (_, thunk) => {
+export const push = createAsyncThunk('editor/push', async (_, thunk) => {
   const state = thunk.getState();
   const translations = selectTranslations(state);
   const project = selectProject(state);

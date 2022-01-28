@@ -1,6 +1,6 @@
-import { Breadcrumbs } from "baseui/breadcrumbs";
-import { StyledLink } from "baseui/link";
-import React, { memo } from "react";
+import { Breadcrumbs } from 'baseui/breadcrumbs';
+import { StyledLink } from 'baseui/link';
+import React, { memo } from 'react';
 
 function TranslationPath({ path, select }) {
   const withoutLastPath = path.slice(0, path.length - 1);

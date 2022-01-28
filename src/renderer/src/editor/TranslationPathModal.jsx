@@ -1,6 +1,6 @@
-import { KIND } from "baseui/button";
-import { FormControl } from "baseui/form-control";
-import { Input } from "baseui/input";
+import { KIND } from 'baseui/button';
+import { FormControl } from 'baseui/form-control';
+import { Input } from 'baseui/input';
 import {
   Modal,
   ModalBody,
@@ -9,9 +9,9 @@ import {
   ModalHeader,
   ROLE,
   SIZE as ModalSize,
-} from "baseui/modal";
-import React, { useEffect, useState } from "react";
-import { isPathExist } from "src/core/tree";
+} from 'baseui/modal';
+import React, { useEffect, useState } from 'react';
+import { isPathExist } from 'src/core/tree';
 
 export default function TranslationPathModal({
   tree,
@@ -21,18 +21,18 @@ export default function TranslationPathModal({
   path,
   pathExistError,
 }) {
-  const [pathStr, setPathStr] = useState("");
+  const [pathStr, setPathStr] = useState('');
   const [pathExists, setPathExists] = useState(false);
 
   useEffect(() => {
     if (pathExistError) {
-      const path = pathStr.split(".");
+      const path = pathStr.split('.');
       setPathExists(isPathExist(tree, path));
     }
   }, [tree, pathStr, pathExistError]);
 
   useEffect(() => {
-    setPathStr(path.join("."));
+    setPathStr(path.join('.'));
   }, [isOpen]);
 
   return (
@@ -48,7 +48,7 @@ export default function TranslationPathModal({
     >
       <ModalHeader>Enter the translation key </ModalHeader>
       <ModalBody>
-        <FormControl error={pathExists ? "Path already exists" : ""}>
+        <FormControl error={pathExists ? 'Path already exists' : ''}>
           <Input
             error={pathExists}
             value={pathStr}
@@ -61,7 +61,7 @@ export default function TranslationPathModal({
           Cancel
         </ModalButton>
         <ModalButton
-          onClick={() => onConfirm(pathStr.split("."))}
+          onClick={() => onConfirm(pathStr.split('.'))}
           disabled={pathExists}
         >
           Confirm

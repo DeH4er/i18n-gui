@@ -1,6 +1,6 @@
-import { useStyletron } from "baseui";
-import { ChevronDown, ChevronRight } from "baseui/icon";
-import React, { useCallback } from "react";
+import { useStyletron } from 'baseui';
+import { ChevronDown, ChevronRight } from 'baseui/icon';
+import React, { useCallback } from 'react';
 
 function TreeViewLabel({ node, onClick, keyMode }) {
   const [, theme] = useStyletron();
@@ -14,34 +14,34 @@ function TreeViewLabel({ node, onClick, keyMode }) {
       style={{
         ...theme.typography.font300,
         color: theme.colors.primary,
-        userSelect: "none",
-        padding: node.children ? "3px 5px" : "3px 5px 3px 30px",
-        cursor: "pointer",
-        background: node.isSelected ? theme.colors.mono300 : "",
+        userSelect: 'none',
+        padding: node.children ? '3px 5px' : '3px 5px 3px 30px',
+        cursor: 'pointer',
+        background: node.isSelected ? theme.colors.mono300 : '',
       }}
       onClick={onNodeClick}
       data-testid="tree-node"
-      data-testpath={node.path.join(".")}
+      data-testpath={node.path.join('.')}
       data-testexpanded={node.isExpanded}
       data-testselected={node.isSelected}
     >
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         {node.children && (
           <span
             style={{
-              marginRight: "10px",
+              marginRight: '10px',
             }}
           >
             {node.isExpanded ? <ChevronDown /> : <ChevronRight />}
           </span>
         )}
 
-        {keyMode === "tree" ? node.label : node.path.join(".")}
+        {keyMode === 'tree' ? node.label : node.path.join('.')}
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { selectGenerationRules, selectLanguages } from "./editorSlice";
-import TranslationControl from "./TranslationControl";
-import TranslationEditHeader from "./TranslationEditHeader";
-import TranslationRemoveModal from "./TranslationRemoveModal";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { selectGenerationRules, selectLanguages } from './editorSlice';
+import TranslationControl from './TranslationControl';
+import TranslationEditHeader from './TranslationEditHeader';
+import TranslationRemoveModal from './TranslationRemoveModal';
 
 function useEdited(translation) {
   const [edited, setEdited] = useState(translation);
@@ -52,10 +52,10 @@ function TranslationEdit({
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        overflow: "hidden",
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
       <TranslationEditHeader
@@ -71,12 +71,12 @@ function TranslationEdit({
       />
       <section
         style={{
-          height: "100%",
-          overflow: "auto",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
+          height: '100%',
+          overflow: 'auto',
+          padding: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
         }}
       >
         {languages.map((language) => (

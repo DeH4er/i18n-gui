@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 export function getChildArray(node) {
   if (node.children) {
@@ -13,9 +13,7 @@ export function getChildArray(node) {
 export function filterChildrenTree(node, fn) {
   if (node.children) {
     const newChildren = node.children
-      .map((child) => {
-        return filterChildrenTree(child, fn);
-      })
+      .map((child) => filterChildrenTree(child, fn))
       .filter(Boolean);
 
     if (newChildren.length === 0) {
@@ -39,7 +37,7 @@ function nodeToJson(node, language, json = {}) {
   if (!node.children) {
     const translation = node.translations[language];
     json[node.label] = translation;
-    return json;
+    return;
   }
 
   json[node.label] = {};
@@ -64,7 +62,7 @@ export function jsonsToTree(jsons, languages, path = []) {
   const keys = Object.keys(firstJson);
 
   return keys.map((key) => {
-    const isString = typeof firstJson[key] === "string";
+    const isString = typeof firstJson[key] === 'string';
     const newPath = [...path, key];
     const values = jsons.map((json) => json[key]);
 
@@ -248,11 +246,10 @@ export function countLeafs(node) {
     return node.children
       .map((child) => countLeafs(child))
       .reduce((acc, v) => acc + v, 0);
-  } else {
-    return 1;
   }
+  return 1;
 }
 
 export function sortTreeArray(tree) {
-  tree.sort((a, b) => a.label.localeCompare(b.label, "en-US-u-kn-true"));
+  tree.sort((a, b) => a.label.localeCompare(b.label, 'en-US-u-kn-true'));
 }

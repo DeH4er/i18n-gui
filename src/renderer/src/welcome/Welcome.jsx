@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { loadRecentProjects } from "src/editor/editorSlice";
-import CreateProject from "./CreateProject";
-import RecentProjects from "./RecentProjects";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { loadRecentProjects } from 'src/editor/editorSlice';
+import CreateProject from './CreateProject';
+import RecentProjects from './RecentProjects';
 
 function Welcome({ loadRecentProjects }) {
   useEffect(() => {
@@ -11,9 +11,9 @@ function Welcome({ loadRecentProjects }) {
   return (
     <div
       style={{
-        display: "flex",
-        height: "100%",
-        overflow: "hidden",
+        display: 'flex',
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
       <CreateProject />

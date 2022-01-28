@@ -1,23 +1,23 @@
-import { useStyletron } from "baseui";
-import { Button, KIND, SIZE } from "baseui/button";
-import React, { memo, useCallback } from "react";
+import { useStyletron } from 'baseui';
+import { Button, KIND, SIZE } from 'baseui/button';
+import React, { memo, useCallback } from 'react';
 import {
-    FiBox,
-    FiChevronLeft,
-    FiDownload,
-    FiKey,
-    FiSettings,
-    FiUpload
-} from "react-icons/fi";
-import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Tooltip from "src/components/Tooltip";
-import { pull, push } from "./editorSlice";
+  FiBox,
+  FiChevronLeft,
+  FiDownload,
+  FiKey,
+  FiSettings,
+  FiUpload,
+} from 'react-icons/fi';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Tooltip from 'src/components/Tooltip';
+import { pull, push } from './editorSlice';
 
 function NavigateWelcome() {
   const navigate = useNavigate();
   const navigateWelcome = useCallback(() => {
-    navigate("/");
+    navigate('/');
   }, [navigate]);
 
   return (
@@ -40,13 +40,13 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
     <div
       style={{
         ...theme.typography.font300,
-        display: "flex",
-        alignItems: "center",
-        padding: "10px",
+        display: 'flex',
+        alignItems: 'center',
+        padding: '10px',
         color: theme.colors.primary,
         boxShadow: `0px 0px 10px ${theme.colors.backgroundOverlayDark}`,
-        gap: "10px",
-        flexWrap: "wrap",
+        gap: '10px',
+        flexWrap: 'wrap',
       }}
     >
       <NavigateWelcome />

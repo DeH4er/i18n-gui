@@ -1,34 +1,34 @@
-import { useStyletron } from "baseui";
-import { Button, SHAPE } from "baseui/button";
-import { Input } from "baseui/input";
-import { Tag } from "baseui/tag";
-import { H1 } from "baseui/typography";
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { translateLanguage } from "src/core/utils";
-import { v4 as uuidv4 } from "uuid";
-import FileUploader from "../components/FileUploader";
-import { createProject } from "../editor/editorSlice";
+import { useStyletron } from 'baseui';
+import { Button, SHAPE } from 'baseui/button';
+import { Input } from 'baseui/input';
+import { Tag } from 'baseui/tag';
+import { H1 } from 'baseui/typography';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { translateLanguage } from 'src/core/utils';
+import { v4 as uuidv4 } from 'uuid';
+import FileUploader from '../components/FileUploader';
+import { createProject } from '../editor/editorSlice';
 
 function BlinkingCursor() {
   const [css, theme] = useStyletron();
   return (
     <div
       className={css({
-        height: "30px",
-        width: "4px",
-        display: "inline-block",
-        animationIterationCount: "infinite",
-        animationDuration: "1s",
-        animationTimingFunction: "steps(3, start)",
+        height: '30px',
+        width: '4px',
+        display: 'inline-block',
+        animationIterationCount: 'infinite',
+        animationDuration: '1s',
+        animationTimingFunction: 'steps(3, start)',
         animationName: {
-          "100%": {
-            visibility: "hidden",
+          '100%': {
+            visibility: 'hidden',
           },
         },
         background: theme.colors.primary100,
-        marginRight: "10px",
+        marginRight: '10px',
       })}
     ></div>
   );
@@ -40,7 +40,7 @@ function ProjectNameInput({ projectName, setProjectName }) {
 
   if (isEditing) {
     return (
-      <div style={{ flex: "1", height: "52px" }}>
+      <div style={{ flex: '1', height: '52px' }}>
         <Input
           margin={0}
           onBlur={() => setIsEditing(false)}
@@ -56,16 +56,16 @@ function ProjectNameInput({ projectName, setProjectName }) {
     <H1
       margin={0}
       className={css({
-        cursor: "pointer",
-        ":hover": { background: theme.colors.backgroundSecondary },
-        flex: "1",
-        paddingLeft: "10px",
+        cursor: 'pointer',
+        ':hover': { background: theme.colors.backgroundSecondary },
+        flex: '1',
+        paddingLeft: '10px',
         color: projectName ? theme.colors.primary : theme.colors.primary400,
       })}
       onClick={() => setIsEditing(true)}
     >
       <BlinkingCursor />
-      {!projectName ? "New project name" : projectName}
+      {!projectName ? 'New project name' : projectName}
     </H1>
   );
 }
@@ -73,7 +73,7 @@ function ProjectNameInput({ projectName, setProjectName }) {
 function CreateProject({ createProject }) {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
-  const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState('');
 
   function onFilesLoaded(filesToRead) {
     filesToRead.forEach((f) => {
@@ -89,32 +89,32 @@ function CreateProject({ createProject }) {
 
   async function startNewProject() {
     await createProject({ paths: files.map((f) => f.path), projectName });
-    navigate("/editor");
+    navigate('/editor');
   }
 
   return (
     <div
       style={{
-        flex: "1",
-        padding: "20px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        flex: '1',
+        padding: '20px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <div
         style={{
-          maxWidth: "700px",
-          width: "100%",
+          maxWidth: '700px',
+          width: '100%',
         }}
       >
         <section
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "20px",
-            gap: "20px",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '20px',
+            gap: '20px',
           }}
         >
           <ProjectNameInput
@@ -134,7 +134,7 @@ function CreateProject({ createProject }) {
 
         <section
           style={{
-            marginBottom: "20px",
+            marginBottom: '20px',
           }}
         >
           {files.map((file) => (
@@ -144,7 +144,7 @@ function CreateProject({ createProject }) {
               overrides={{
                 Text: {
                   style: {
-                    maxWidth: "unset",
+                    maxWidth: 'unset',
                   },
                 },
               }}

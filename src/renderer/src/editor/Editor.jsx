@@ -39,9 +39,11 @@ function Editor({
   const viewMode = useMemo(() => {
     if (newTranslation) {
       return 'add-key';
-    } if (selectedTranslation && !selectedTranslation.children) {
+    }
+    if (selectedTranslation && !selectedTranslation.children) {
       return 'select-translation';
-    } if (selectedTranslation && selectedTranslation.children) {
+    }
+    if (selectedTranslation && selectedTranslation.children) {
       return 'select-group';
     }
 
@@ -155,7 +157,7 @@ function Editor({
             remove={removeTranslation}
             select={onSelectTranslation}
             rename={renameAction}
-           />
+          />
         )}
         {viewMode === 'add-key' && (
           <TranslationEdit

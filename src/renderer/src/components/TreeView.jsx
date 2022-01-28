@@ -16,7 +16,7 @@ function TreeView({ data, onClick, keyMode }) {
                 data={node.children}
                 onClick={onClick}
                 keyMode={keyMode}
-               />
+              />
             </div>
           )}
         </div>

@@ -97,7 +97,7 @@ function Sidebar({
             background: theme.colors.backgroundSecondary,
           },
         })}
-       />
+      />
     </div>
   );
 }

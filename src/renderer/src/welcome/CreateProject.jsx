@@ -33,7 +33,7 @@ function BlinkingCursor() {
         background: theme.colors.primary100,
         marginRight: '10px',
       })}
-     />
+    />
   );
 }
 
@@ -161,7 +161,7 @@ function CreateProject({ createProject }) {
           onDropAccepted={onFilesLoaded}
           multiple
           accept="application/json"
-         />
+        />
       </div>
     </div>
   );

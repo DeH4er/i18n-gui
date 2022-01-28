@@ -9,7 +9,8 @@
     "dev": "node scripts/watch.mjs",
     "build": "node scripts/build.mjs && electron-builder",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=14.17.0"
@@ -40,8 +41,10 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
+    "lint-staged": "^12.3.2",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -57,5 +60,9 @@
     "//": "Used in build scripts",
     "HOST": "127.0.0.1",
     "PORT": 3344
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

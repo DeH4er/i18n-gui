@@ -1,6 +1,6 @@
 import { useStyletron } from "baseui";
 import { Textarea } from "baseui/textarea";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import LanguageLabel from "src/components/LanguageLabel";
 import { replaceTags } from "src/core/generation";
 import ConnectButton from "./ConnectButton";
@@ -25,7 +25,7 @@ export default function TranslationControl({
   }, [rule, translations, connected]);
 
   return (
-    <div>
+    <div data-testid="translation-control" data-testlanguage={language}>
       <div
         style={{
           ...theme.typography.font350,
@@ -42,10 +42,12 @@ export default function TranslationControl({
         )}
       </div>
 
-      <Textarea
-        value={translation}
-        onChange={(e) => setTranslation(e.target.value)}
-      />
+      <span data-testid="translation-input">
+        <Textarea
+          value={translation}
+          onChange={(e) => setTranslation(e.target.value)}
+        />
+      </span>
     </div>
   );
 }

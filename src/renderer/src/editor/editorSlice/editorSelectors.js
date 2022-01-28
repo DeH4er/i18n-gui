@@ -20,7 +20,7 @@ export const selectProjectId = (state) => state.editor.projectId;
 export const selectProject = createSelector(
   selectRecentProjects,
   selectProjectId,
-  (recentProjects, projectId) => recentProjects[projectId]
+  (recentProjects, projectId) => recentProjects?.[projectId]
 );
 
 export const selectSelectedTranslation = (state) =>
@@ -28,12 +28,12 @@ export const selectSelectedTranslation = (state) =>
 
 export const selectLanguages = createSelector(
   selectProject,
-  (project) => project.languages
+  (project) => project?.languages
 );
 
 export const selectGenerationRules = createSelector(
   selectProject,
-  (project) => project.generationRules
+  (project) => project?.generationRules
 );
 
 export const selectSearch = (state) => state.editor.search;

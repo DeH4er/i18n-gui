@@ -1,4 +1,5 @@
 import { useStyletron } from "baseui";
+import React from "react";
 import { translateLanguage } from "src/core/utils";
 
 export default function LanguageLabel({ language }) {

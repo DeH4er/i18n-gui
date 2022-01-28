@@ -5,8 +5,9 @@ import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
 import RootRouter from "./RootRouter";
 import ScreenWrapper from "./ScreenWrapper";
-import store from "./store";
+import createStore from "./store";
 
+const store = createStore();
 const engine = new Styletron();
 
 export default function App() {

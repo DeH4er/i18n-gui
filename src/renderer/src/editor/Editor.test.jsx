@@ -65,10 +65,6 @@ describe("Editor", () => {
     getNode(path);
   };
 
-  const hasNodes = (paths) => {
-    paths.forEach(hasNode);
-  };
-
   const hasNoNode = (path) => {
     expect(queryByTestAttribute(document.body, "path", path)).toBeFalsy();
   };

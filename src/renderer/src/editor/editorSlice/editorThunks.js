@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+
 import { readTranslationFile, writeJson } from 'src/core/file';
 import { jsonsToTree, treeToJsons } from 'src/core/tree';
-import { v4 as uuidv4 } from 'uuid';
-import offlineStorage from '../../offline-storage/offline-storage';
+import offlineStorage from 'src/offline-storage/offline-storage';
+
 import {
   selectLanguages,
   selectProject,

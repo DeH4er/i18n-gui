@@ -1,6 +1,8 @@
-import { contextBridge, ipcRenderer } from 'electron';
 import fs from 'fs';
 import path from 'path';
+
+import { contextBridge, ipcRenderer } from 'electron';
+
 import domReady from './domReady';
 import useLoading from './loading';
 

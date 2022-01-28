@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import {
   createNestedPath,
   expandPath,
@@ -14,6 +15,7 @@ import {
   replaceNodeOrPush,
   sortTreeArray,
 } from 'src/core/tree';
+
 import {
   changeProject,
   createProject,

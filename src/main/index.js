@@ -1,6 +1,7 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
 import os from 'os';
 import { join } from 'path';
+
+import { app, BrowserWindow, ipcMain } from 'electron';
 import './offline-storage';
 
 const isWin7 = os.release().startsWith('6.1');

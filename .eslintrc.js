@@ -25,6 +25,32 @@ module.exports = {
     'arrow-body-style': 'off',
     'consistent-return': 'off',
     'no-prototype-builtins': 'off',
+    'no-multiple-empty-lines': 'error',
+    'import/order': [
+      'error',
+      {
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        'newlines-between': 'always',
+        pathGroups: [
+          {
+            pattern: 'src/**',
+            group: 'external',
+            position: 'after',
+          },
+        ],
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+        ],
+      },
+    ],
   },
   settings: {
     'import/resolver': {

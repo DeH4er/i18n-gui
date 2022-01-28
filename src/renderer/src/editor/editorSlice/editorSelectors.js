@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+
 import { filterChildrenTree, getChildArray } from 'src/core/tree';
 
 export const selectTranslations = (state) => state.editor.translations;

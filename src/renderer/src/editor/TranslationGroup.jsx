@@ -26,6 +26,7 @@ export default function TranslationGroup({
       <TranslationHeader path={translation.path} select={select}>
         <Tooltip tooltip="Delete">
           <Button
+            data-testid="remove-node"
             kind={KIND.secondary}
             onClick={() => setRemoveModalOpen(true)}
           >
@@ -34,7 +35,11 @@ export default function TranslationGroup({
         </Tooltip>
 
         <Tooltip tooltip="Rename">
-          <Button kind={KIND.secondary} onClick={rename}>
+          <Button
+            data-testid="rename-node"
+            kind={KIND.secondary}
+            onClick={rename}
+          >
             <FiEdit />
           </Button>
         </Tooltip>

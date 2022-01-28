@@ -20,8 +20,9 @@ export default function TranslationEditHeader({
     <TranslationHeader path={translation.path} select={select}>
       {isUpdating && (
         <>
-          <Tooltip tooltip="Remove">
+          <Tooltip tooltip="Delete">
             <Button
+              data-testid="remove-node"
               kind={KIND.secondary}
               onClick={() => setRemoveModalOpen(true)}
             >
@@ -29,7 +30,11 @@ export default function TranslationEditHeader({
             </Button>
           </Tooltip>
           <Tooltip tooltip="Rename">
-            <Button kind={KIND.secondary} onClick={rename}>
+            <Button
+              data-testid="rename-node"
+              kind={KIND.secondary}
+              onClick={rename}
+            >
               <FiEdit />
             </Button>
           </Tooltip>
@@ -43,6 +48,7 @@ export default function TranslationEditHeader({
       )}
       <Tooltip tooltip="Confirm changes">
         <Button
+          data-testid="save-node"
           onClick={() => {
             save(edited);
           }}

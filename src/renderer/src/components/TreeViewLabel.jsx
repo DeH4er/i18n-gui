@@ -20,6 +20,10 @@ function TreeViewLabel({ node, onClick, keyMode }) {
         background: node.isSelected ? theme.colors.mono300 : "",
       }}
       onClick={onNodeClick}
+      data-testid="tree-node"
+      data-testpath={node.path.join(".")}
+      data-testexpanded={node.isExpanded}
+      data-testselected={node.isSelected}
     >
       <div
         style={{

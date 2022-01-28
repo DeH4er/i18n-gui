@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TranslationPath from './TranslationPath';
 
 export default function TranslationHeader({ path, children, select }) {

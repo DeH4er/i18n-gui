@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TreeViewLabel from './TreeViewLabel';
 
 const MemoizedTreeView = React.memo(TreeView);
@@ -15,7 +16,7 @@ function TreeView({ data, onClick, keyMode }) {
                 data={node.children}
                 onClick={onClick}
                 keyMode={keyMode}
-              ></MemoizedTreeView>
+               />
             </div>
           )}
         </div>

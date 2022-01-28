@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+
 import { loadRecentProjects } from 'src/editor/editorSlice';
+
 import CreateProject from './CreateProject';
 import RecentProjects from './RecentProjects';
 

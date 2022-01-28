@@ -1,7 +1,10 @@
-import { Button, KIND } from 'baseui/button';
 import React from 'react';
+
+import { Button, KIND } from 'baseui/button';
 import { FiEdit, FiSave, FiTrash } from 'react-icons/fi';
+
 import Tooltip from 'src/components/Tooltip';
+
 import ConnectAction from './ConnectAction';
 import TranslationHeader from './TranslationHeader';
 

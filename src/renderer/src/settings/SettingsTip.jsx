@@ -1,4 +1,7 @@
+import React from 'react';
+
 import { useStyletron } from 'baseui';
+
 import Tooltip from 'src/components/Tooltip';
 
 export default function SettingsTip({ children }) {

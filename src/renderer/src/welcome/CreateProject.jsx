@@ -1,13 +1,16 @@
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import { useStyletron } from 'baseui';
 import { Button, SHAPE } from 'baseui/button';
 import { Input } from 'baseui/input';
 import { Tag } from 'baseui/tag';
 import { H1 } from 'baseui/typography';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { translateLanguage } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
+
+import { translateLanguage } from 'src/core/utils';
+
 import FileUploader from '../components/FileUploader';
 import { createProject } from '../editor/editorSlice';
 
@@ -30,7 +33,7 @@ function BlinkingCursor() {
         background: theme.colors.primary100,
         marginRight: '10px',
       })}
-    ></div>
+     />
   );
 }
 
@@ -158,7 +161,7 @@ function CreateProject({ createProject }) {
           onDropAccepted={onFilesLoaded}
           multiple
           accept="application/json"
-        ></FileUploader>
+         />
       </div>
     </div>
   );

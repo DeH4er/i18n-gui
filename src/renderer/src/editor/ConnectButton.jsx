@@ -1,6 +1,8 @@
-import { Button, KIND } from 'baseui/button';
 import React from 'react';
+
+import { Button, KIND } from 'baseui/button';
 import { FiLock, FiUnlock } from 'react-icons/fi';
+
 import Tooltip from 'src/components/Tooltip';
 
 export default function ConnectButton({ connected, setConnected }) {

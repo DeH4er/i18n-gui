@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { KIND } from 'baseui/button';
 import {
   Modal,
@@ -8,7 +10,6 @@ import {
   ROLE,
   SIZE as ModalSize,
 } from 'baseui/modal';
-import React from 'react';
 
 export default function TranslationRemoveModal({
   translation,
@@ -26,7 +27,7 @@ export default function TranslationRemoveModal({
       autoFocus
       size={ModalSize.default}
       role={ROLE.dialog}
-      unstable_ModalBackdropScroll={true}
+      unstable_ModalBackdropScroll
     >
       <ModalHeader>
         Confirm deletion{count > 0 ? ` of ${count} translations` : ''}

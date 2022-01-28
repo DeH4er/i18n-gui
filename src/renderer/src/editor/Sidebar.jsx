@@ -1,7 +1,10 @@
-import { useStyletron } from 'baseui';
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+
+import { useStyletron } from 'baseui';
+
 import TreeView from 'src/components/TreeView';
+
 import {
   collapseAll,
   expandAll,
@@ -94,7 +97,7 @@ function Sidebar({
             background: theme.colors.backgroundSecondary,
           },
         })}
-      ></div>
+       />
     </div>
   );
 }

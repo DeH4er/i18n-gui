@@ -1,9 +1,11 @@
-import { useStyletron } from 'baseui';
-import { Button, KIND, SIZE } from 'baseui/button';
-import { H4, H6 } from 'baseui/typography';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import { useStyletron } from 'baseui';
+import { Button, KIND, SIZE } from 'baseui/button';
+import { H4, H6 } from 'baseui/typography';
+
 import {
   openRecentProject,
   removeProject,

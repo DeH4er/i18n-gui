@@ -1,7 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
+
 import { createNode } from 'src/core/tree';
 import Settings from 'src/settings/Settings';
+
 import {
   addTranslation,
   clickTranslation,
@@ -37,9 +39,9 @@ function Editor({
   const viewMode = useMemo(() => {
     if (newTranslation) {
       return 'add-key';
-    } else if (selectedTranslation && !selectedTranslation.children) {
+    } if (selectedTranslation && !selectedTranslation.children) {
       return 'select-translation';
-    } else if (selectedTranslation && selectedTranslation.children) {
+    } if (selectedTranslation && selectedTranslation.children) {
       return 'select-group';
     }
 
@@ -86,7 +88,7 @@ function Editor({
               (acc, language) => ({ ...acc, [language]: '' }),
               {}
             ),
-            path: path,
+            path,
           })
         );
       }
@@ -147,13 +149,13 @@ function Editor({
       >
         {viewMode === 'select-translation' && (
           <TranslationEdit
-            isUpdating={true}
+            isUpdating
             translation={selectedTranslation}
             save={updateTranslation}
             remove={removeTranslation}
             select={onSelectTranslation}
             rename={renameAction}
-          ></TranslationEdit>
+           />
         )}
         {viewMode === 'add-key' && (
           <TranslationEdit
@@ -173,7 +175,7 @@ function Editor({
         )}
       </section>
       <TranslationPathModal
-        pathExistError={true}
+        pathExistError
         path={selectedTranslation?.path ?? []}
         tree={translations}
         isOpen={isPathModalOpen}

@@ -1,9 +1,12 @@
+import React, { useMemo, useState } from 'react';
+
 import { Button, KIND } from 'baseui/button';
 import { Paragraph1 } from 'baseui/typography';
-import React, { useMemo, useState } from 'react';
 import { FiEdit, FiTrash } from 'react-icons/fi';
+
 import Tooltip from 'src/components/Tooltip';
 import { countLeafs } from 'src/core/tree';
+
 import TranslationHeader from './TranslationHeader';
 import TranslationRemoveModal from './TranslationRemoveModal';
 

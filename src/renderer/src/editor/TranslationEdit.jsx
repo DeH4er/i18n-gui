@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+
 import { selectGenerationRules, selectLanguages } from './editorSlice';
 import TranslationControl from './TranslationControl';
 import TranslationEditHeader from './TranslationEditHeader';

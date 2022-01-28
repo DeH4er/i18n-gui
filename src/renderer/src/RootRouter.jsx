@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router';
 import { HashRouter, Route, Routes } from 'react-router-dom';
+
 import Editor from 'src/editor/Editor';
 import Welcome from 'src/welcome/Welcome';
+
 import { selectTranslations } from './editor/editorSlice';
 
 function RootRouter({ translations }) {

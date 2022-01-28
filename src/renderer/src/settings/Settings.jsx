@@ -1,3 +1,6 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+
 import { KIND } from 'baseui/button';
 import { arrayMove, List } from 'baseui/dnd-list';
 import { FormControl } from 'baseui/form-control';
@@ -12,14 +15,14 @@ import {
 } from 'baseui/modal';
 import { Textarea } from 'baseui/textarea';
 import { Label3, Paragraph3 } from 'baseui/typography';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+
 import LanguageLabel from 'src/components/LanguageLabel';
 import {
   changeProject,
   selectGenerationRules,
   selectLanguages,
 } from 'src/editor/editorSlice';
+
 import SettingsHeader from './SettingsHeader';
 import SettingsSection from './SettingsSection';
 import SettingsTip from './SettingsTip';
@@ -62,6 +65,15 @@ function Settings({
     onClose();
   }
 
+  const listLabel = useCallback(
+    ({ $value }) => (
+      <div style={{ width: '100%' }}>
+        <LanguageLabel language={$value} />
+      </div>
+    ),
+    []
+  );
+
   return (
     <Modal
       overrides={{
@@ -83,7 +95,7 @@ function Settings({
       autoFocus
       size={ModalSize.default}
       role={ROLE.dialog}
-      unstable_ModalBackdropScroll={true}
+      unstable_ModalBackdropScroll
     >
       <ModalHeader>Settings</ModalHeader>
       <ModalBody
@@ -113,11 +125,7 @@ function Settings({
                 },
               },
               Label: {
-                component: ({ $value }) => (
-                  <div style={{ width: '100%' }}>
-                    <LanguageLabel language={$value} />
-                  </div>
-                ),
+                component: listLabel,
               },
             }}
             items={newLanguages}
@@ -158,7 +166,7 @@ function Settings({
 
           {newLanguages.map((language) => (
             <div style={{ marginBottom: '20px' }} key={language}>
-              <FormControl label={() => <LanguageLabel language={language} />}>
+              <FormControl label={<LanguageLabel language={language} />}>
                 <Textarea
                   value={newGenerationRules[language]}
                   onChange={(e) =>

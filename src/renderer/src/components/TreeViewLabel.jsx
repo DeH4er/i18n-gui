@@ -1,6 +1,7 @@
+import React, { useCallback } from 'react';
+
 import { useStyletron } from 'baseui';
 import { ChevronDown, ChevronRight } from 'baseui/icon';
-import React, { useCallback } from 'react';
 
 function TreeViewLabel({ node, onClick, keyMode }) {
   const [, theme] = useStyletron();

@@ -1,6 +1,7 @@
+import React, { memo } from 'react';
+
 import { Breadcrumbs } from 'baseui/breadcrumbs';
 import { StyledLink } from 'baseui/link';
-import React, { memo } from 'react';
 
 function TranslationPath({ path, select }) {
   const withoutLastPath = path.slice(0, path.length - 1);
@@ -10,10 +11,14 @@ function TranslationPath({ path, select }) {
     select(path.slice(0, i + 1));
   }
 
+  function key(i) {
+    return path.slice(0, i).join('.');
+  }
+
   return (
     <Breadcrumbs>
       {withoutLastPath.map((p, i) => (
-        <StyledLink key={p + i} onClick={() => onClick(i)}>
+        <StyledLink key={key(i)} onClick={() => onClick(i)}>
           {p}
         </StyledLink>
       ))}

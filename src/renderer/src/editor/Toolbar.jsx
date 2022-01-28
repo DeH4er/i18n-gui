@@ -1,6 +1,9 @@
+import React, { memo, useCallback } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import { useStyletron } from 'baseui';
 import { Button, KIND, SIZE } from 'baseui/button';
-import React, { memo, useCallback } from 'react';
 import {
   FiBox,
   FiChevronLeft,
@@ -9,9 +12,9 @@ import {
   FiSettings,
   FiUpload,
 } from 'react-icons/fi';
-import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 import Tooltip from 'src/components/Tooltip';
+
 import { pull, push } from './editorSlice';
 
 function NavigateWelcome() {

@@ -1,5 +1,6 @@
+import React, { useRef, useState } from 'react';
+
 import { useStyletron } from 'baseui';
-import { useRef, useState } from 'react';
 
 export default function FileUploader({ onDropAccepted, multiple, accept }) {
   const ref = useRef();

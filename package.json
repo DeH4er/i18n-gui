@@ -10,6 +10,7 @@
     "build": "node scripts/build.mjs && electron-builder",
     "test": "jest",
     "test:watch": "jest --watch",
+    "lint": "eslint --ext .jsx --ext .js --fix ./src",
     "prepare": "husky install"
   },
   "engines": {

@@ -1,6 +1,9 @@
-import userEvent from '@testing-library/user-event';
 import React from 'react';
+
+import userEvent from '@testing-library/user-event';
+
 import { getByRole, render, screen } from 'src/test-utils';
+
 import TranslationEdit from './TranslationEdit';
 
 describe('TranslationEdit', () => {

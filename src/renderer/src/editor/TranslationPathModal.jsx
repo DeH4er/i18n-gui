@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+
 import { KIND } from 'baseui/button';
 import { FormControl } from 'baseui/form-control';
 import { Input } from 'baseui/input';
@@ -10,7 +12,7 @@ import {
   ROLE,
   SIZE as ModalSize,
 } from 'baseui/modal';
-import React, { useEffect, useState } from 'react';
+
 import { isPathExist } from 'src/core/tree';
 
 export default function TranslationPathModal({
@@ -44,7 +46,7 @@ export default function TranslationPathModal({
       autoFocus
       size={ModalSize.default}
       role={ROLE.dialog}
-      unstable_ModalBackdropScroll={true}
+      unstable_ModalBackdropScroll
     >
       <ModalHeader>Enter the translation key </ModalHeader>
       <ModalBody>

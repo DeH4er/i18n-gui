@@ -1,9 +1,12 @@
+import React from 'react';
+
 import { getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+
 import { createNode } from 'src/core/tree';
 import { getByTestAttribute, queryByTestAttribute } from 'src/test-queries';
 import { render, screen } from 'src/test-utils';
+
 import Editor from './Editor';
 
 describe('Editor', () => {
@@ -70,7 +73,7 @@ describe('Editor', () => {
   };
 
   const clickNode = (path) => {
-    let node = getNode(path);
+    const node = getNode(path);
     userEvent.click(node);
     return node;
   };

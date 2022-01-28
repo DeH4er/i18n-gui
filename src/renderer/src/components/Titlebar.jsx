@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useStyletron } from 'baseui';
 import { Button, KIND, SIZE } from 'baseui/button';
 import { FiMinus, FiX } from 'react-icons/fi';

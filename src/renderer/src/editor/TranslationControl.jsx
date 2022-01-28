@@ -1,8 +1,11 @@
+import React, { useEffect } from 'react';
+
 import { useStyletron } from 'baseui';
 import { Textarea } from 'baseui/textarea';
-import React, { useEffect } from 'react';
+
 import LanguageLabel from 'src/components/LanguageLabel';
 import { replaceTags } from 'src/core/generation';
+
 import ConnectButton from './ConnectButton';
 
 export default function TranslationControl({

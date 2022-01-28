@@ -1,8 +1,10 @@
+import React, { memo } from 'react';
+
 import { useStyletron } from 'baseui';
-import React from 'react';
+
 import { translateLanguage } from 'src/core/utils';
 
-export default function LanguageLabel({ language }) {
+function LanguageLabel({ language }) {
   const translated = translateLanguage(language);
   const [, theme] = useStyletron();
 
@@ -32,3 +34,5 @@ export default function LanguageLabel({ language }) {
 
   return translated;
 }
+
+export default memo(LanguageLabel);

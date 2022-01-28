@@ -1,11 +1,14 @@
+import React, { memo } from 'react';
+import { connect } from 'react-redux';
+
 import { Button, KIND, SIZE } from 'baseui/button';
 import { Input, SIZE as INPUT_SIZE } from 'baseui/input';
 import { PLACEMENT } from 'baseui/popover';
-import React, { memo } from 'react';
 import { BsListNested, BsListUl } from 'react-icons/bs';
 import { VscCollapseAll, VscExpandAll } from 'react-icons/vsc';
-import { connect } from 'react-redux';
+
 import Tooltip from 'src/components/Tooltip';
+
 import {
   collapseAll,
   expandAll,

@@ -239,8 +239,7 @@ describe("Editor", () => {
 
     renameNode("A", "B.C.D");
     expect(isSelectedNode("B.C.D")).toBeTruthy();
-    hasNoNode("A");
-    hasNodes(["B", "B.C", "B.C.D"]);
+    hasOnlyNodes(["B", "B.C", "B.C.D"])
   });
 
   test("move child key to different parent", async () => {

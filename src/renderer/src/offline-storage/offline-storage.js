@@ -1,4 +1,3 @@
-// Use 'electron-store'
 export const offlineStorage = {
   async get(key) {
     const { invoke } = window.ipcRenderer;
@@ -21,5 +20,3 @@ export const offlineStorage = {
     }
   },
 };
-
-export {};

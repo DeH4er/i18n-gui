@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
 
+import { useStyletron } from 'baseui';
 import { Button, KIND, SIZE } from 'baseui/button';
 import { Input, SIZE as INPUT_SIZE } from 'baseui/input';
 import { PLACEMENT } from 'baseui/popover';
@@ -26,6 +27,8 @@ function SidebarSearch({
   setKeyMode,
   expandAll,
 }) {
+  const [css] = useStyletron();
+
   return (
     <div
       style={{
@@ -39,6 +42,10 @@ function SidebarSearch({
       >
         <div style={{ flex: '1' }}>
           <Input
+            className={css({
+              '::-webkit-search-decoration, ::-webkit-search-cancel-button, ::-webkit-search-results-button, ::-webkit-search-results-decoration':
+                { display: 'none' },
+            })}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             size={INPUT_SIZE.compact}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,12 +41,20 @@ function ProjectNameInput({ projectName, setProjectName }) {
   const [css, theme] = useStyletron();
   const [isEditing, setIsEditing] = useState(false);
 
+  const edit = useCallback(() => {
+    setIsEditing(true);
+  }, []);
+
+  const stopEditing = useCallback(() => {
+    setIsEditing(false);
+  }, []);
+
   if (isEditing) {
     return (
       <div style={{ flex: '1', height: '52px' }}>
         <Input
           margin={0}
-          onBlur={() => setIsEditing(false)}
+          onBlur={stopEditing}
           autoFocus
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
@@ -65,7 +73,9 @@ function ProjectNameInput({ projectName, setProjectName }) {
         paddingLeft: '10px',
         color: projectName ? theme.colors.primary : theme.colors.primary400,
       })}
-      onClick={() => setIsEditing(true)}
+      tabIndex="0"
+      onFocus={edit}
+      onClick={edit}
     >
       <BlinkingCursor />
       {!projectName ? 'New project name' : projectName}

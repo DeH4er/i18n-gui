@@ -7,6 +7,7 @@ import { FiMinus, FiX } from 'react-icons/fi';
 function TitlebarButton({ children, ...props }) {
   return (
     <Button
+      tabIndex="-1"
       overrides={{
         BaseButton: {
           style: {

@@ -33,6 +33,12 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
     setIsDraggingOver(false);
   }
 
+  function onKeyPress(e) {
+    if (e.key === 'Enter') {
+      ref.current.click();
+    }
+  }
+
   const [css, theme] = useStyletron();
   return (
     <div
@@ -56,6 +62,7 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
       onDragLeave={onDragLeave}
     >
       <label
+        tabIndex="0"
         className={css({
           ...theme.typography.font250,
           padding: '10px',
@@ -67,7 +74,11 @@ export default function FileUploader({ onDropAccepted, multiple, accept }) {
           ':hover': {
             background: theme.colors.buttonSecondaryHover,
           },
+          ':focus': {
+            outline: `3px solid ${theme.colors.accent}`,
+          },
         })}
+        onKeyPress={onKeyPress}
       >
         Browse files
         <input

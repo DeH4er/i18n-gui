@@ -4,7 +4,7 @@ export function getChildArray(node) {
   if (node.children) {
     return node.children
       .map((child) => getChildArray(child))
-      .reduce((total, arr) => [...total, ...arr]);
+      .reduce((total, arr) => [...total, ...arr], []);
   }
 
   return [node];

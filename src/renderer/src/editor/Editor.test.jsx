@@ -10,6 +10,8 @@ import { render, screen } from 'src/test-utils';
 import Editor from './Editor';
 
 describe('Editor', () => {
+  const languages = ['en', 'fr', 'de'];
+
   const create = (state = {}) => {
     return render(<Editor />, {
       storeOptions: {
@@ -22,8 +24,11 @@ describe('Editor', () => {
             selectedTranslation: null,
             recentProjects: {
               a: {
-                languages: ['en', 'fr', 'de'],
-                generationRules: { en: '', fr: '', de: '' },
+                languages,
+                generationRules: languages.reduce(
+                  (acc, l) => ({ ...acc, [l]: '' }),
+                  {}
+                ),
               },
             },
             ...state,
@@ -36,6 +41,16 @@ describe('Editor', () => {
   const isSelectedNode = (path) => {
     const node = getNode(path);
     return node.getAttribute('data-testselected') === 'true';
+  };
+
+  const isGroup = (path) => {
+    const node = getNode(path);
+    expect(node.getAttribute('data-testhaschildren') === 'true').toBeTruthy();
+  };
+
+  const isKey = (path) => {
+    const node = getNode(path);
+    expect(node.getAttribute('data-testhaschildren') === 'false').toBeTruthy();
   };
 
   const isExpandedNode = (path) => {
@@ -62,6 +77,7 @@ describe('Editor', () => {
     nodes.forEach((n) => {
       expect(paths).toContain(n.getAttribute('data-testpath'));
     });
+    expect(paths.length).toBe(nodes.length);
   };
 
   const hasNode = (path) => {
@@ -85,14 +101,26 @@ describe('Editor', () => {
     userEvent.click(getByRole(dialog, 'button', { name: /confirm/i }));
   };
 
-  const renameNode = (oldPath, newPath) => {
+  const invokePathAction = (pathActionId, oldPath, newPath) => {
     clickNode(oldPath);
-    userEvent.click(screen.getByTestId('rename-node'));
+    userEvent.click(screen.getByTestId(pathActionId));
     const dialog = getDialog();
     const pathInput = getByRole(dialog, 'textbox');
     userEvent.clear(pathInput);
     userEvent.type(pathInput, newPath);
     confirmDialog();
+  };
+
+  const addKey = (parentPath, childPath) => {
+    invokePathAction('add-key', parentPath, childPath);
+  };
+
+  const addGroup = (parentPath, childPath) => {
+    invokePathAction('add-group', parentPath, childPath);
+  };
+
+  const renameNode = (oldPath, newPath) => {
+    invokePathAction('rename-node', oldPath, newPath);
   };
 
   const deleteNode = (path) => {
@@ -119,6 +147,41 @@ describe('Editor', () => {
     const input = clearSearch();
     userEvent.type(input, s);
     return input;
+  };
+
+  const getControls = () => screen.getAllByTestId('translation-control');
+
+  const getLanguageControl = (l) =>
+    getControls().find((c) => c.getAttribute('data-testlanguage') === l);
+
+  const getLanguageInput = (l) => getByRole(getLanguageControl(l), 'textbox');
+
+  const changeTranslation = (language, text) => {
+    const input = getLanguageInput(language);
+    userEvent.clear(input);
+    userEvent.type(input, text);
+  };
+
+  const changeTranslations = (translations) => {
+    Object.keys(translations).forEach((language) => {
+      changeTranslation(language, translations[language]);
+    });
+  };
+
+  const getTranslationValue = (language) => {
+    const input = getLanguageInput(language);
+    return input.value;
+  };
+
+  const getTranslations = () => {
+    return languages.reduce(
+      (acc, l) => ({ ...acc, [l]: getTranslationValue(l) }),
+      {}
+    );
+  };
+
+  const saveTranslation = () => {
+    userEvent.click(screen.getByTestId('save-node'));
   };
 
   test('render', () => {
@@ -472,4 +535,392 @@ describe('Editor', () => {
     search('second');
     hasOnlyNodes(['A', 'A.A1', 'A.A1.SECOND_ONE', 'B', 'B.SECOND_TWO']);
   });
+
+  test('edit child translation without saving', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'FIRST_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    expandAll();
+    clickNode('A.SECOND_ONE');
+    expect(getTranslations()).toEqual({
+      en: '',
+      de: '',
+      fr: '',
+    });
+
+    changeTranslation('fr', 'hi there');
+    expect(getTranslations()).toEqual({
+      en: '',
+      de: '',
+      fr: 'hi there',
+    });
+    clickNode('B');
+    clickNode('A.SECOND_ONE');
+    expect(getTranslations()).toEqual({
+      en: '',
+      de: '',
+      fr: '',
+    });
+  });
+
+  test('edit child translation with saving', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'FIRST_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    expandAll();
+    clickNode('A.SECOND_ONE');
+    expect(getTranslations()).toEqual({
+      en: '',
+      de: '',
+      fr: '',
+    });
+
+    changeTranslation('fr', 'hi there');
+    expect(getTranslations()).toEqual({
+      en: '',
+      de: '',
+      fr: 'hi there',
+    });
+    saveTranslation();
+    clickNode('B');
+    clickNode('A.SECOND_ONE');
+    expect(getTranslations()).toEqual({
+      en: '',
+      de: '',
+      fr: 'hi there',
+    });
+  });
+
+  test('add child translation without saving', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'FIRST_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    addKey('A', 'A.NEW');
+
+    const translations = {
+      fr: 'new fr',
+      de: 'new de!',
+      en: 'new en?',
+    };
+    changeTranslations(translations);
+
+    // to check if node remains in tree after selecting another node
+    clickNode('B');
+
+    expandAll();
+    hasOnlyNodes([
+      'A',
+      'A.FIRST_ONE',
+      'A.SECOND_ONE',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
+    ]);
+  });
+
+  test('add child translation with saving', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'FIRST_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    addKey('A', 'A.NEW');
+
+    const translations = {
+      fr: 'new fr',
+      de: 'new de!',
+      en: 'new en?',
+    };
+    changeTranslations(translations);
+    saveTranslation();
+    isKey('A.NEW');
+    expect(isSelectedNode('A.NEW')).toBeTruthy();
+
+    // to check if node remains in tree after selecting another node
+    clickNode('B');
+
+    expandAll();
+    hasOnlyNodes([
+      'A',
+      'A.NEW',
+      'A.FIRST_ONE',
+      'A.SECOND_ONE',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
+    ]);
+
+    clickNode('A.NEW');
+    expect(getTranslations()).toEqual(translations);
+  });
+
+  test('add root group', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'FIRST_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    addGroup('A', 'A.NEW');
+    expect(isSelectedNode('A.NEW')).toBeTruthy();
+    isGroup('A.NEW');
+    expandAll();
+    hasOnlyNodes([
+      'A',
+      'A.NEW',
+      'A.FIRST_ONE',
+      'A.SECOND_ONE',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
+    ]);
+  });
+
+  test('add child group', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'GROUP'],
+              children: [
+                createNode({
+                  path: ['A', 'GROUP', 'KEY'],
+                  translations: { en: '', fr: '', de: '' },
+                }),
+              ],
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    expandAll();
+    addGroup('A.GROUP', 'A.GROUP.NEW_GROUP');
+    expect(isSelectedNode('A.GROUP.NEW_GROUP'));
+    isGroup('A.GROUP.NEW_GROUP');
+    hasOnlyNodes([
+      'A',
+      'A.GROUP',
+      'A.SECOND_ONE',
+      'A.GROUP.KEY',
+      'A.GROUP.NEW_GROUP',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
+    ]);
+  });
+
+  test('add nested group', () => {
+    create({
+      translations: [
+        createNode({
+          path: ['A'],
+          children: [
+            createNode({
+              path: ['A', 'GROUP'],
+              children: [
+                createNode({
+                  path: ['A', 'GROUP', 'KEY'],
+                  translations: { en: '', fr: '', de: '' },
+                }),
+              ],
+            }),
+            createNode({
+              path: ['A', 'SECOND_ONE'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+        createNode({
+          path: ['B'],
+          children: [
+            createNode({
+              path: ['B', 'FIRST_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+            createNode({
+              path: ['B', 'SECOND_TWO'],
+              translations: { en: '', fr: '', de: '' },
+            }),
+          ],
+        }),
+      ],
+    });
+
+    expandAll();
+    addGroup('A.GROUP', 'A.GROUP.A.B.C.D.NEW_GROUP');
+    expect(isSelectedNode('A.GROUP.A.B.C.D.NEW_GROUP'));
+    isGroup('A.GROUP.A.B.C.D.NEW_GROUP');
+    expandAll();
+    hasOnlyNodes([
+      'A',
+      'A.GROUP',
+      'A.SECOND_ONE',
+      'A.GROUP.KEY',
+      'A.GROUP.A',
+      'A.GROUP.A.B',
+      'A.GROUP.A.B.C',
+      'A.GROUP.A.B.C.D',
+      'A.GROUP.A.B.C.D.NEW_GROUP',
+      'B',
+      'B.FIRST_TWO',
+      'B.SECOND_TWO',
+    ]);
+  });
+
+  test.todo('should not let me add existing group or key');
 });

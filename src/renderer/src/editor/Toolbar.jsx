@@ -77,13 +77,13 @@ function Toolbar({ openSettings, pull, push, addGroup, addKey }) {
       </Tooltip>
 
       <Tooltip tooltip="Add group">
-        <Button size={SIZE.compact} onClick={addGroup}>
+        <Button data-testid="add-group" size={SIZE.compact} onClick={addGroup}>
           <FiBox />
         </Button>
       </Tooltip>
 
       <Tooltip tooltip="Add key">
-        <Button size={SIZE.compact} onClick={addKey}>
+        <Button data-testid="add-key" size={SIZE.compact} onClick={addKey}>
           <FiKey />
         </Button>
       </Tooltip>

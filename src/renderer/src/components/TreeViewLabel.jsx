@@ -25,6 +25,7 @@ function TreeViewLabel({ node, onClick, keyMode }) {
       data-testpath={node.path.join('.')}
       data-testexpanded={node.isExpanded}
       data-testselected={node.isSelected}
+      data-testhaschildren={!!node.children}
     >
       <div
         style={{

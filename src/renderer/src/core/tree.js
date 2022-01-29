@@ -33,7 +33,7 @@ export function filterChildrenTree(node, fn) {
   return node;
 }
 
-function nodeToJson(node, language, json = {}) {
+export function nodeToJson(node, language, json = {}) {
   if (!node.children) {
     const translation = node.translations[language];
     json[node.label] = translation;
@@ -54,21 +54,32 @@ export function treeToJsons(tree, languages) {
     });
     return { ...acc, [language]: rootNode };
   }, {});
+
   return jsons;
 }
 
 export function jsonsToTree(jsons, languages, path = []) {
-  const firstJson = jsons[0];
-  const keys = Object.keys(firstJson);
+  const nonEmptyJsons = jsons.filter(Boolean);
+
+  const allKeys = nonEmptyJsons
+    .map((json) => Object.keys(json))
+    .reduce((acc, keys) => [...acc, ...keys], []);
+
+  const keys = [...new Set(allKeys)].sort(byAlphabet);
 
   return keys.map((key) => {
-    const isString = typeof firstJson[key] === 'string';
+    const areGroups = nonEmptyJsons
+      .filter((json) => json.hasOwnProperty(key))
+      .map((json) => typeof json[key] === 'string');
+
+    const isGroup = areGroups.some((isGroup) => isGroup === true);
+
     const newPath = [...path, key];
-    const values = jsons.map((json) => json[key]);
+    const values = jsons.map((json) => json?.[key] ?? '');
 
     return createNode({
       path: newPath,
-      translations: isString
+      translations: isGroup
         ? languages.reduce(
             (acc, language, i) => ({
               ...acc,
@@ -77,20 +88,21 @@ export function jsonsToTree(jsons, languages, path = []) {
             {}
           )
         : undefined,
-      children: isString ? undefined : jsonsToTree(values, languages, newPath),
+      children: isGroup ? undefined : jsonsToTree(values, languages, newPath),
     });
   });
 }
 
-export function createNode({ translations, path, children }) {
+export function createNode({ translations, path, children, ...rest }) {
   return {
     id: uuidv4(),
     path,
-    label: path[path.length - 1],
+    label: path ? path[path.length - 1] : '',
     isExpanded: false,
     isSelected: false,
     translations,
     children,
+    ...rest,
   };
 }
 
@@ -164,11 +176,11 @@ export function createNestedPath(node, path, pathIndex = 0) {
   } else if (isRootNode) {
     nestedNode = newNode;
     node.push(nestedNode);
-    sortTreeArray(node);
+    sortTreeByAlphabet(node);
   } else {
     nestedNode = newNode;
     node.children = [...(node.children ?? []), nestedNode];
-    sortTreeArray(node.children);
+    sortTreeByAlphabet(node.children);
     nestedNode = newNode;
   }
 
@@ -250,6 +262,10 @@ export function countLeafs(node) {
   return 1;
 }
 
-export function sortTreeArray(tree) {
-  tree.sort((a, b) => a.label.localeCompare(b.label, 'en-US-u-kn-true'));
+export function sortTreeByAlphabet(tree) {
+  return tree.sort((a, b) => byAlphabet(a.label, b.label));
+}
+
+export function byAlphabet(a, b) {
+  return a.localeCompare(b, 'en-US-u-kn-true');
 }

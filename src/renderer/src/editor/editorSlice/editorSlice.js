@@ -13,7 +13,7 @@ import {
   rebuildChildrenPath,
   removeNode,
   replaceNodeOrPush,
-  sortTreeArray,
+  sortTreeByAlphabet,
 } from 'src/core/tree';
 
 import {
@@ -96,7 +96,7 @@ export const editorSlice = createSlice({
       const parentNode = getParentNode(state.translations, newPath);
       const parentNodeContainer = parentNode?.children ?? state.translations;
       replaceNodeOrPush(parentNodeContainer, node);
-      sortTreeArray(parentNodeContainer);
+      sortTreeByAlphabet(parentNodeContainer);
       rebuildChildrenPath(node, newPath);
       selectTranslationByPath(state, newPath);
       expandPath(state.translations, newPath);
@@ -130,7 +130,7 @@ export const editorSlice = createSlice({
         ? state.translations
         : getParentNode(state.translations, node.path).children;
       replaceNodeOrPush(parentNodeContainer, node);
-      sortTreeArray(parentNodeContainer);
+      sortTreeByAlphabet(parentNodeContainer);
       selectTranslationByPath(state, node.path);
       expandPath(state.translations, node.path);
     },

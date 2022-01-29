@@ -26,6 +26,20 @@ export default function TranslationPathModal({
   const [pathStr, setPathStr] = useState('');
   const [pathExists, setPathExists] = useState(false);
 
+  function isValid() {
+    return !pathExists && pathExistError;
+  }
+
+  function confirm() {
+    if (isValid()) {
+      onConfirm(pathStr.split('.'));
+    }
+  }
+
+  function cancel() {
+    onCancel();
+  }
+
   useEffect(() => {
     if (pathExistError) {
       const path = pathStr.split('.');
@@ -39,7 +53,7 @@ export default function TranslationPathModal({
 
   return (
     <Modal
-      onClose={onCancel}
+      onClose={cancel}
       closeable
       isOpen={isOpen}
       animate
@@ -50,22 +64,24 @@ export default function TranslationPathModal({
     >
       <ModalHeader>Enter the translation key </ModalHeader>
       <ModalBody>
-        <FormControl error={pathExists ? 'Path already exists' : ''}>
+        <FormControl error={!isValid() ? 'Path already exists' : ''}>
           <Input
             error={pathExists}
             value={pathStr}
             onChange={(e) => setPathStr(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                confirm();
+              }
+            }}
           />
         </FormControl>
       </ModalBody>
       <ModalFooter>
-        <ModalButton kind={KIND.tertiary} onClick={onCancel}>
+        <ModalButton kind={KIND.tertiary} onClick={cancel}>
           Cancel
         </ModalButton>
-        <ModalButton
-          onClick={() => onConfirm(pathStr.split('.'))}
-          disabled={pathExists}
-        >
+        <ModalButton onClick={confirm} disabled={!isValid()}>
           Confirm
         </ModalButton>
       </ModalFooter>

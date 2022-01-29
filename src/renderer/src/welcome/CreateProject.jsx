@@ -81,6 +81,8 @@ function CreateProject({ createProject }) {
   function onFilesLoaded(filesToRead) {
     filesToRead.forEach((f) => {
       f.id = uuidv4();
+      const parts = f.name.split('.');
+      f.language = parts.slice(0, parts.length - 1).join('.');
     });
 
     setFiles([...files, ...filesToRead]);
@@ -152,7 +154,7 @@ function CreateProject({ createProject }) {
                 },
               }}
             >
-              {translateLanguage(file.name)}
+              {translateLanguage(file.language)}
             </Tag>
           ))}
         </section>

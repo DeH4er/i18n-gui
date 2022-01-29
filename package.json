@@ -20,6 +20,7 @@
     "@babel/core": "^7.16.12",
     "@babel/preset-env": "^7.16.11",
     "electron-store": "^8.0.1",
+    "langmap": "^0.0.16",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

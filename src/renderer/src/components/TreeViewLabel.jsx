@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
 import { useStyletron } from 'baseui';
 import { ChevronDown, ChevronRight } from 'baseui/icon';
@@ -49,4 +49,4 @@ function TreeViewLabel({ node, onClick, keyMode }) {
   );
 }
 
-export default React.memo(TreeViewLabel);
+export default memo(TreeViewLabel);

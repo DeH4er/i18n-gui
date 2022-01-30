@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Button, KIND } from 'baseui/button';
 import { Paragraph1 } from 'baseui/typography';

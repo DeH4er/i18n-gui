@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { KIND } from 'baseui/button';
 import {
   Modal,

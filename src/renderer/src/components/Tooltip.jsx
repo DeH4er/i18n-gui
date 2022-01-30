@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
 import { useStyletron } from 'baseui';
 import { PLACEMENT, StatefulPopover, TRIGGER_TYPE } from 'baseui/popover';
@@ -28,4 +28,4 @@ function Tooltip({ tooltip, children, ...rest }) {
   );
 }
 
-export default React.memo(Tooltip);
+export default memo(Tooltip);

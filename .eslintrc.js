@@ -13,6 +13,7 @@ module.exports = {
     jest: true,
     node: true,
   },
+  ignorePatterns: ['configs/**'],
   extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
   parserOptions: {
     ecmaFeatures: {
@@ -27,6 +28,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-no-bind': 'off',
+    'react/react-in-jsx-scope': 'off',
     'linebreak-style': 'off',
     'no-unsafe-finally': 'off',
     'no-param-reassign': ['error', { props: false }],

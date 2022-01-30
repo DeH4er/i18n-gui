@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button, KIND } from 'baseui/button';
 import { FiLock, FiUnlock } from 'react-icons/fi';
 

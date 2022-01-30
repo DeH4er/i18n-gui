@@ -1,11 +1,11 @@
-import React from 'react';
+import { forwardRef } from 'react';
 
 import { Button, KIND } from 'baseui/button';
 import { FiLock, FiUnlock } from 'react-icons/fi';
 
 import Tooltip from 'src/components/Tooltip';
 
-export default React.forwardRef(
+export default forwardRef(
   ({ connectedLanguages, setConnectedLanguages }, ref) => {
     const connectAllMode = isConnectAllMode();
 

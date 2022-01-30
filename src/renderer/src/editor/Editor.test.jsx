@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

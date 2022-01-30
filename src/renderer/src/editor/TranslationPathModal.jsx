@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { KIND } from 'baseui/button';
 import { FormControl } from 'baseui/form-control';

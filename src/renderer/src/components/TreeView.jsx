@@ -1,8 +1,8 @@
-import React from 'react';
+import { memo } from 'react';
 
 import TreeViewLabel from './TreeViewLabel';
 
-const MemoizedTreeView = React.memo(TreeView);
+const MemoizedTreeView = memo(TreeView);
 
 function TreeView({ data, onClick, keyMode }) {
   return (

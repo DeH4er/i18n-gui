@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 
 import { Breadcrumbs } from 'baseui/breadcrumbs';
 import { StyledLink } from 'baseui/link';

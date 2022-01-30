@@ -1,14 +1,14 @@
-import react from "@vitejs/plugin-react";
-import { builtinModules } from "module";
-import { join } from "path";
-import { defineConfig } from "vite";
-import resolve from "vite-plugin-resolve";
-import pkg from "../package.json";
+import react from '@vitejs/plugin-react';
+import { builtinModules } from 'module';
+import { join } from 'path';
+import { defineConfig } from 'vite';
+import resolve from 'vite-plugin-resolve';
+import pkg from '../package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   mode: process.env.NODE_ENV,
-  root: join(__dirname, "../src/renderer"),
+  root: join(__dirname, '../src/renderer'),
   plugins: [
     react(),
     resolveElectron(),
@@ -21,15 +21,15 @@ export default defineConfig({
      * }
      */
   ],
-  base: "./",
+  base: './',
   build: {
     emptyOutDir: true,
-    outDir: "../../dist/renderer",
+    outDir: '../../dist/renderer',
   },
   resolve: {
     alias: {
-      src: join(__dirname, "../src/renderer/src"),
-      "@": join(__dirname, "../src/main"),
+      src: join(__dirname, '../src/renderer/src'),
+      '@': join(__dirname, '../src/main'),
     },
   },
   server: {
@@ -41,16 +41,16 @@ export default defineConfig({
 // ------- For use Electron, NodeJs in Renderer-process -------
 // https://github.com/caoxiemeihao/electron-vue-vite/issues/52
 export function resolveElectron(dict = {}) {
-  const builtins = builtinModules.filter((t) => !t.startsWith("_"));
+  const builtins = builtinModules.filter((t) => !t.startsWith('_'));
 
   return [
     {
-      name: "vite-plugin-electron-config",
+      name: 'vite-plugin-electron-config',
       config(config) {
         if (!config.optimizeDeps) config.optimizeDeps = {};
         if (!config.optimizeDeps.exclude) config.optimizeDeps.exclude = [];
 
-        config.optimizeDeps.exclude.push("electron", ...builtins);
+        config.optimizeDeps.exclude.push('electron', ...builtins);
       },
     },
     // https://github.com/caoxiemeihao/vite-plugins/tree/main/packages/resolve#readme
@@ -103,7 +103,7 @@ export function resolveElectron(dict = {}) {
         const exportMembers =
           Object.keys(nodeModule)
             .map((attr) => `export const ${attr} = __builtinModule.${attr}`)
-            .join(";\n") + ";";
+            .join(';\n') + ';';
         const nodeModuleCode = `
 ${requireModule}
 

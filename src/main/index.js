@@ -2,7 +2,8 @@ import os from 'os';
 import { join } from 'path';
 
 import { app, BrowserWindow, ipcMain } from 'electron';
-import './offline-storage';
+
+import offlineStorage, { listenStoreEvent } from './offline-storage';
 
 const isWin7 = os.release().startsWith('6.1');
 if (isWin7) app.disableHardwareAcceleration();
@@ -14,17 +15,29 @@ if (!app.requestSingleInstanceLock()) {
 
 let win = null;
 
+listenStoreEvent();
+
 async function createWindow() {
+  const { width, height, x, y, isMaximized } = await offlineStorage.get(
+    'window-options'
+  );
+
   win = new BrowserWindow({
+    width,
+    height,
+    x,
+    y,
     title: 'Main window a',
-    width: 1000,
     titleBarStyle: 'hidden',
-    height: 700,
     webPreferences: {
       preload: join(__dirname, '../preload/index.cjs'),
     },
     autoHideMenuBar: true,
   });
+
+  if (isMaximized) {
+    win.maximize();
+  }
 
   if (app.isPackaged) {
     win.loadFile(join(__dirname, '../renderer/index.html'));
@@ -81,7 +94,16 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('close', () => {
+ipcMain.on('close', async () => {
+  const [width, height] = win.getSize();
+  const [x, y] = win.getPosition();
+  await offlineStorage.set('window-options', {
+    isMaximized: win.isMaximized(),
+    width,
+    height,
+    x,
+    y,
+  });
   win.close();
 });
 

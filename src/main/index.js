@@ -3,6 +3,7 @@ import { join } from 'path';
 
 import { app, BrowserWindow, ipcMain } from 'electron';
 
+import registerEvents from './auto-update';
 import offlineStorage, { listenStoreEvent } from './offline-storage';
 
 const isWin7 = os.release().startsWith('6.1');
@@ -62,13 +63,17 @@ async function loadDevtools() {
       REACT_DEVELOPER_TOOLS,
       REDUX_DEVTOOLS,
     } = await import('electron-devtools-installer');
-    installExtension([REDUX_DEVTOOLS.id, REACT_DEVELOPER_TOOLS.id])
+    await installExtension([REDUX_DEVTOOLS.id, REACT_DEVELOPER_TOOLS.id])
       .then((name) => console.log(`Added Extension:  ${name}`))
       .catch((err) => console.log('An error occurred: ', err));
   }
 }
 
-app.whenReady().then(createWindow).then(loadDevtools);
+app.on('ready', async () => {
+  await createWindow();
+  loadDevtools();
+  registerEvents(win);
+});
 
 app.on('window-all-closed', () => {
   win = null;

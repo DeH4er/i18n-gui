@@ -4,6 +4,7 @@ import { BaseProvider, DarkTheme } from 'baseui';
 import { Client as Styletron } from 'styletron-engine-atomic';
 import { Provider as StyletronProvider } from 'styletron-react';
 
+import AutoUpdate from './auto-update/AutoUpdate';
 import RootRouter from './RootRouter';
 import ScreenWrapper from './ScreenWrapper';
 import createStore from './store';
@@ -17,7 +18,9 @@ export default function App() {
       <BaseProvider theme={DarkTheme}>
         <ReduxProvider store={store}>
           <ScreenWrapper>
-            <RootRouter />
+            <AutoUpdate>
+              <RootRouter />
+            </AutoUpdate>
           </ScreenWrapper>
         </ReduxProvider>
       </BaseProvider>

@@ -1,5 +1,5 @@
 import { Button, KIND } from 'baseui/button';
-import { FiEdit, FiSave, FiTrash } from 'react-icons/fi';
+import { FiCheck, FiEdit, FiTrash } from 'react-icons/fi';
 
 import Tooltip from 'src/components/Tooltip';
 
@@ -54,7 +54,7 @@ export default function TranslationEditHeader({
             save(edited);
           }}
         >
-          <FiSave />
+          <FiCheck />
         </Button>
       </Tooltip>
     </TranslationHeader>

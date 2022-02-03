@@ -18,8 +18,8 @@ export default function registerEvents(win) {
     sendAutoUpdateEvent('update-not-available');
   });
 
-  autoUpdater.on('error', (err) => {
-    sendAutoUpdateEvent('error', `${err}`);
+  autoUpdater.on('error', () => {
+    sendAutoUpdateEvent('error');
   });
 
   autoUpdater.on('download-progress', (progressObj) => {

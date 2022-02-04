@@ -39,13 +39,13 @@ export default function TranslationEditHeader({
               <FiEdit />
             </Button>
           </Tooltip>
-          {Object.keys(connectedLanguages).length > 0 && (
-            <ConnectAction
-              connectedLanguages={connectedLanguages}
-              setConnectedLanguages={setConnectedLanguages}
-            />
-          )}
         </>
+      )}
+      {Object.keys(connectedLanguages).length > 0 && (
+        <ConnectAction
+          connectedLanguages={connectedLanguages}
+          setConnectedLanguages={setConnectedLanguages}
+        />
       )}
       <Tooltip tooltip="Confirm changes">
         <Button

@@ -10,13 +10,13 @@ export function getChildArray(node) {
   return [node];
 }
 
-export function filterChildrenTree(node, fn) {
+export function filterTree(node, fn) {
   if (node.children) {
     const newChildren = node.children
-      .map((child) => filterChildrenTree(child, fn))
+      .map((child) => filterTree(child, fn))
       .filter(Boolean);
 
-    if (newChildren.length === 0) {
+    if (!fn(node) && newChildren.length === 0) {
       return null;
     }
 

@@ -3,7 +3,10 @@ import { memo, useCallback } from 'react';
 import { useStyletron } from 'baseui';
 import { ChevronDown, ChevronRight } from 'baseui/icon';
 
-function TreeViewLabel({ node, onClick, keyMode }) {
+function TreeViewLabel({
+  data: { node, nestingLevel, keyMode, onClick },
+  style,
+}) {
   const [, theme] = useStyletron();
 
   const onNodeClick = useCallback(() => {
@@ -13,24 +16,31 @@ function TreeViewLabel({ node, onClick, keyMode }) {
   return (
     <div
       style={{
+        ...style,
         ...theme.typography.font300,
-        color: theme.colors.primary,
-        userSelect: 'none',
-        padding: node.children ? '3px 5px' : '3px 5px 3px 30px',
-        cursor: 'pointer',
-        background: node.isSelected ? theme.colors.mono300 : '',
+        boxSizing: 'border-box',
+        paddingLeft:
+          keyMode === 'tree' ? nestingLevel * 20 + (node.children ? 0 : 25) : 0,
       }}
-      onClick={onNodeClick}
       data-testid="tree-node"
       data-testpath={node.path.join('.')}
       data-testexpanded={node.isExpanded}
       data-testselected={node.isSelected}
       data-testhaschildren={!!node.children}
+      onClick={onNodeClick}
     >
       <div
         style={{
-          display: 'flex',
+          background: node.isSelected ? theme.colors.mono300 : '',
+          color: theme.colors.primary,
+          userSelect: 'none',
+          cursor: 'pointer',
+          width: '100%',
+          height: '100%',
+          paddingLeft: '10px',
           alignItems: 'center',
+          display: 'flex',
+          boxSizing: 'border-box',
         }}
       >
         {node.children && (

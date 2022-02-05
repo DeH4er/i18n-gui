@@ -8,6 +8,15 @@ import { render, screen } from 'src/test-utils';
 import Editor from './Editor';
 
 describe('Editor', () => {
+  beforeEach(() => {
+    jest
+      .spyOn(HTMLElement.prototype, 'offsetHeight', 'get')
+      .mockReturnValue(1500);
+    jest
+      .spyOn(HTMLElement.prototype, 'offsetWidth', 'get')
+      .mockReturnValue(1500);
+  });
+
   const languages = ['en', 'fr', 'de'];
 
   const create = (state = {}) => {

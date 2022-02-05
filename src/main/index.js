@@ -28,7 +28,6 @@ async function createWindow() {
     height,
     x,
     y,
-    title: 'Main window a',
     titleBarStyle: 'hidden',
     webPreferences: {
       preload: join(__dirname, '../preload/index.cjs'),
@@ -49,11 +48,6 @@ async function createWindow() {
     win.loadURL(url);
     win.webContents.openDevTools();
   }
-
-  // Test active push message to Renderer-process.
-  win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString());
-  });
 }
 
 async function loadDevtools() {

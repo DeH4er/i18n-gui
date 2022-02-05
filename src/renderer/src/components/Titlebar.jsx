@@ -55,7 +55,7 @@ export default function Titlebar() {
           paddingLeft: '10px',
         }}
       >
-        i18n Editor
+        {document.title}
       </div>
       <div
         style={{

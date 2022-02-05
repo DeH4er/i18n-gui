@@ -3,6 +3,8 @@ import path from 'path';
 
 import { contextBridge, ipcRenderer } from 'electron';
 
+import { version } from '../../package.json';
+
 import domReady from './domReady';
 import useLoading from './loading';
 
@@ -10,6 +12,7 @@ const { appendLoading, removeLoading } = useLoading();
 
 (async () => {
   await domReady();
+  document.title = `i18n Editor v${version}`;
 
   appendLoading();
 })();

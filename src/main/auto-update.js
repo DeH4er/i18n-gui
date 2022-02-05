@@ -12,6 +12,10 @@ export default function registerEvents(win) {
     win.webContents.send('update', ...events);
   }
 
+  autoUpdater.on('update-available', (info) => {
+    sendAutoUpdateEvent('update-available', JSON.stringify(info));
+  });
+
   autoUpdater.on('checking-for-update', () => {
     sendAutoUpdateEvent('checking-for-update');
   });

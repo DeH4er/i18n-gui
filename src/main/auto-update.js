@@ -1,8 +1,10 @@
 import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 
+autoUpdater.autoInstallOnAppQuit = false;
+
 function checkForUpdates() {
-  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdates();
 }
 
 export default function registerEvents(win) {

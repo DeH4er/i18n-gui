@@ -4,6 +4,7 @@ import { Button, KIND } from 'baseui/button';
 import { Paragraph1 } from 'baseui/typography';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
+import CopyPathButton from 'src/components/CopyPathButton';
 import Tooltip from 'src/components/Tooltip';
 import { countLeafs } from 'src/core/tree';
 
@@ -46,6 +47,7 @@ export default function TranslationGroup({
             <FiEdit />
           </Button>
         </Tooltip>
+        <CopyPathButton path={translation.path} />
       </TranslationHeader>
 
       <section style={{ padding: '20px' }}>

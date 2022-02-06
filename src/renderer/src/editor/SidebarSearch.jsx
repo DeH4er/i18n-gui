@@ -58,7 +58,7 @@ function SidebarSearch({
 
       {keyMode === 'tree' && (
         <>
-          <Tooltip tooltip="Expand all" placement={PLACEMENT.right}>
+          <Tooltip tooltip="Expand all">
             <Button
               data-testid="expand-all"
               size={SIZE.compact}
@@ -69,7 +69,7 @@ function SidebarSearch({
             </Button>
           </Tooltip>
 
-          <Tooltip tooltip="Collapse all" placement={PLACEMENT.right}>
+          <Tooltip tooltip="Collapse all">
             <Button
               data-testid="collapse-all"
               size={SIZE.compact}
@@ -80,7 +80,7 @@ function SidebarSearch({
             </Button>
           </Tooltip>
 
-          <Tooltip tooltip="List view" placement={PLACEMENT.right}>
+          <Tooltip tooltip="List view">
             <Button
               size={SIZE.compact}
               kind={KIND.secondary}

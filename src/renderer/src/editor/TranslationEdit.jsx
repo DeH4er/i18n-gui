@@ -28,10 +28,10 @@ function TranslationEdit({
 }) {
   const [edited, setEdited] = useEdited(translation);
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
-  const [connectedLanguages, setConnectedLanguages] = useState({});
+  const [lockedLanguages, setLockedLanguages] = useState({});
 
   useEffect(() => {
-    setConnectedLanguages(
+    setLockedLanguages(
       languages
         .filter((l) => generationRules[l])
         .reduce((acc, language) => ({ ...acc, [language]: !isUpdating }), {})
@@ -62,8 +62,8 @@ function TranslationEdit({
       <TranslationEditHeader
         translation={translation}
         select={select}
-        connectedLanguages={connectedLanguages}
-        setConnectedLanguages={setConnectedLanguages}
+        lockedLanguages={lockedLanguages}
+        setLockedLanguages={setLockedLanguages}
         setRemoveModalOpen={setRemoveModalOpen}
         rename={rename}
         isUpdating={isUpdating}
@@ -85,11 +85,11 @@ function TranslationEdit({
             <TranslationControl
               language={language}
               translation={edited.translations[language]}
-              connected={connectedLanguages[language]}
-              setConnected={(isConnected) =>
-                setConnectedLanguages({
-                  ...connectedLanguages,
-                  [language]: isConnected,
+              locked={lockedLanguages[language]}
+              setLocked={(isLocked) =>
+                setLockedLanguages({
+                  ...lockedLanguages,
+                  [language]: isLocked,
                 })
               }
               setTranslation={(translation) =>

@@ -6,7 +6,7 @@ import { Textarea } from 'baseui/textarea';
 import LanguageLabel from 'src/components/LanguageLabel';
 import { replaceTags } from 'src/core/generation';
 
-import ConnectButton from './ConnectButton';
+import ToggleLockButton from './ToggleLockButton';
 
 export default function TranslationControl({
   language,
@@ -14,18 +14,18 @@ export default function TranslationControl({
   translations,
   setTranslation,
   rule,
-  connected,
-  setConnected,
+  locked,
+  setLocked,
 }) {
   const [, theme] = useStyletron();
   useEffect(() => {
-    if (rule && connected) {
+    if (rule && locked) {
       const replacedTags = replaceTags(rule, translations);
       if (replacedTags !== translation) {
         setTranslation(replacedTags);
       }
     }
-  }, [rule, translations, connected]);
+  }, [rule, translations, locked]);
 
   return (
     <div data-testid="translation-control" data-testlanguage={language}>
@@ -40,9 +40,7 @@ export default function TranslationControl({
         }}
       >
         <LanguageLabel language={language} />
-        {rule && (
-          <ConnectButton connected={connected} setConnected={setConnected} />
-        )}
+        {rule && <ToggleLockButton locked={locked} setLocked={setLocked} />}
       </div>
 
       <span data-testid="translation-input">

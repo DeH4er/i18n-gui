@@ -1,4 +1,4 @@
-# i18n gui :watch:
+# i18n gui :evergreen_tree:
 
 A tool which simplifies management of your translation files :godmode:
 

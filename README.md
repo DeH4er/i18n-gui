@@ -39,7 +39,7 @@ User can write language generation rules in case some language may be derived fr
 
 It's possible to create a translation group or leaf not only within already existing translation group. Ex. creation of a node with path "A.B.C.D" will create A, B and C groups if these groups do not exist
 
-## Auto-Update
+### Auto-Update
 
 Whenever there's a new version published, the app will update itself
 
